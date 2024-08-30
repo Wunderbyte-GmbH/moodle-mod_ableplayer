@@ -20,7 +20,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace mod_ableplayer\backup;
+
+use backup_activity_structure_step;
+use backup_nested_element;
+use backup;
 
 /**
  * Define the complete ableplayer structure for backup, with file and id annotations
@@ -30,9 +34,9 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
     protected function define_structure() {
 
         // To know if we are including userinfo
-        // ableplayer user data is in the xmldata field in DB - anyway lets skip that
+        // ableplayer user data is in the xmldata field in DB - anyway lets skip that.
 
-        // Define each element separated
+        // Define each element separated.
         $ableplayer = new backup_nested_element('ableplayer', array('id'), array(
             'name', 'intro', 'introformat', 'playlist',
             'mode', 'lang', 'timecreated', 'timemodified'));
@@ -49,7 +53,7 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
         $caption = new backup_nested_element('caption', array('id'), array(
             'ableplayerid', 'label', 'kind', 'srclang'));
 
-        // Build the tree
+        // Build the tree.
         $ableplayer->add_child($medias);
         $medias->add_child($media);
 
@@ -59,21 +63,21 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
         $ableplayer->add_child($captions);
         $captions->add_child($caption);
 
-        // Define sources
+        // Define sources.
         $ableplayer->set_source_table('ableplayer', array('id' => backup::VAR_ACTIVITYID));
         $media->set_source_table('ableplayer_media', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
         $desc->set_source_table('ableplayer_desc', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
         $caption->set_source_table('ableplayer_caption', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
-        // Define id annotations
+        // Define id annotations.
 
-        // Define file annotations
+        // Define file annotations.
         $ableplayer->annotate_files('mod_ableplayer', 'intro', null);
         $ableplayer->annotate_files('mod_ableplayer', 'poster', null);
         $ableplayer->annotate_files('mod_ableplayer', 'media', 'id');
         $ableplayer->annotate_files('mod_ableplayer', 'desc', 'id');
         $ableplayer->annotate_files('mod_ableplayer', 'caption', 'id');
 
-        // Return the root element (ableplayer), wrapped into standard activity structure
+        // Return the root element (ableplayer), wrapped into standard activity structure.
         return $this->prepare_activity_structure($ableplayer);
     }
 }

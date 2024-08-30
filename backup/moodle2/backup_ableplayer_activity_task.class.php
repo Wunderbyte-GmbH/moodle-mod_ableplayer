@@ -14,6 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
+namespace mod_ableplayer\backup;
+
+use backup_ableplayer_activity_structure_step;
+use backup_activity_task;
+
 /**
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
@@ -22,7 +28,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/ableplayer/backup/moodle2/backup_ableplayer_stepslib.php'); // Because it exists (must)
+require_once($CFG->dirroot . '/mod/ableplayer/backup/moodle2/backup_ableplayer_stepslib.php');
 /**
  * ableplayer backup task that provides all the settings and steps to perform one
  * complete backup of the activity
@@ -33,14 +39,14 @@ class backup_ableplayer_activity_task extends backup_activity_task {
      * Define (add) particular settings this activity can have
      */
     protected function define_my_settings() {
-        // No particular settings for this activity
+        // No particular settings for this activity.
     }
 
     /**
      * Define (add) particular steps this activity can have
      */
     protected function define_my_steps() {
-        // ableplayer only has one structure step
+        // Ableplayer only has one structure step.
         $this->add_step(new backup_ableplayer_activity_structure_step('ableplayer_structure', 'ableplayer.xml'));
     }
 
@@ -48,21 +54,19 @@ class backup_ableplayer_activity_task extends backup_activity_task {
      * Code the transformations to perform in the activity in
      * order to get transportable (encoded) links
      */
-    static public function encode_content_links($content) {
+    public static function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot,"/");
+        $base = preg_quote($CFG->wwwroot, "/");
 
-        // Link to the list of ableplayer
-        $search="/(".$base."\/mod\/ableplayer\/index.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@ableplayerINDEX*$2@$', $content);
+        // Link to the list of ableplayer.
+        $search = "/(".$base."\/mod\/ableplayer\/index.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@ableplayerINDEX*$2@$', $content);
 
-        // Link to ableplayer view by moduleid
-        $search="/(".$base."\/mod\/ableplayer\/view.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@ableplayerVIEWBYID*$2@$', $content);
+        // Link to ableplayer view by moduleid.
+        $search = "/(".$base."\/mod\/ableplayer\/view.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@ableplayerVIEWBYID*$2@$', $content);
 
         return $content;
     }
 }
-
-?>

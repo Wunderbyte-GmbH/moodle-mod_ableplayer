@@ -20,6 +20,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_ableplayer\backup;
+
+use restore_activity_structure_step;
+use restore_path_element;
+
+
 /**
  * Structure step to restore one ableplayer activity
  */
@@ -27,12 +33,12 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
 
     protected function define_structure() {
 
-        $paths = array();
+        $paths = [];
         $paths[] = new restore_path_element('ableplayer', '/activity/ableplayer');
         $paths[] = new restore_path_element('ableplayer_media', '/activity/ableplayer/medias/media');
         $paths[] = new restore_path_element('ableplayer_desc', '/activity/ableplayer/descs/desc');
         $paths[] = new restore_path_element('ableplayer_caption', '/activity/ableplayer/captions/caption');
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
@@ -40,14 +46,11 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
         global $DB;
 
         $data = (object)$data;
-        $oldid = $data->id;
         $data->course = $this->get_courseid();
         $data->timecreated = $this->apply_date_offset($data->timecreated);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 
-        // insert the ableplayer record
         $newitemid = $DB->insert_record('ableplayer', $data);
-        // immediately after inserting "activity" record, call this
         $this->apply_activity_instance($newitemid);
     }
 
@@ -56,7 +59,6 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
 
         $data = (object)$data;
         $oldid = $data->id;
-
         $data->ableplayerid = $this->get_new_parentid('ableplayer');
 
         $newitemid = $DB->insert_record('ableplayer_media', $data);
@@ -80,7 +82,6 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
 
         $data = (object)$data;
         $oldid = $data->id;
-
         $data->ableplayerid = $this->get_new_parentid('ableplayer');
 
         $newitemid = $DB->insert_record('ableplayer_caption', $data);
@@ -88,7 +89,7 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
     }
 
     protected function after_execute() {
-        // Add ableplayer related files, no need to match by itemname (just internally handled context)
+        // Add ableplayer related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_ableplayer', 'intro', null);
         $this->add_related_files('mod_ableplayer', 'poster', null);
         $this->add_related_files('mod_ableplayer', 'media', 'ableplayer_media');
