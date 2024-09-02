@@ -259,9 +259,9 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $options
                 );
                 if ($draftitemid) {
-                    $default_values['media[' . $key . ']'] = $draftitemid;
+                    $defaultvalues['media[' . $key . ']'] = $draftitemid;
                 }
-                $default_values['mediaid['.$key.']'] = $value->id;
+                $defaultvalues['mediaid['.$key.']'] = $value->id;
             }
             // Desc
             $options = array('subdirs' => false,
@@ -288,9 +288,9 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $options
                 );
                 if ($draftitemid) {
-                    $default_values['desc[' . $key . ']'] = $draftitemid;
+                    $defaultvalues['desc[' . $key . ']'] = $draftitemid;
                 }
-                $default_values['descid['.$key.']'] = $value->id;
+                $defaultvalues['descid['.$key.']'] = $value->id;
             }
             // Poster
             $options = array('subdirs' => false,
@@ -303,7 +303,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 'poster',
                 0,
                 $options);
-            $default_values['poster'] = $draftitemid;
+            $defaultvalues['poster'] = $draftitemid;
             // Caption
             $options = array('subdirs' => false,
                 'maxbytes' => 0,
@@ -329,12 +329,12 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $options
                 );
                 if ($draftitemid) {
-                    $default_values['caption[' . $key . ']'] = $draftitemid;
+                    $defaultvalues['caption[' . $key . ']'] = $draftitemid;
                 }
-                $default_values['kind['.$key.']'] = $value->kind;
-                $default_values['srclang['.$key.']'] = $value->srclang;
-                $default_values['label['.$key.']'] = $value->label;
-                $default_values['captionid['.$key.']'] = $value->id;
+                $defaultvalues['kind['.$key.']'] = $value->kind;
+                $defaultvalues['srclang['.$key.']'] = $value->srclang;
+                $defaultvalues['label['.$key.']'] = $value->label;
+                $defaultvalues['captionid['.$key.']'] = $value->id;
             }
         }
     }
