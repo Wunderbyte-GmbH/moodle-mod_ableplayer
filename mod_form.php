@@ -128,25 +128,33 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             $options
         );
         $repeatarray[] = $mform->createElement('hidden', 'descid', 0);
-        if ($this->_instance){
-            $repeatno = $DB->count_records('ableplayer_media', array('ableplayerid'=>$this->_instance));
+        if ($this->_instance) {
+            $repeatno = $DB->count_records('ableplayer_media', ['ableplayerid' => $this->_instance]);
         } else {
             $repeatno = 1;
         }
-        $repeateloptions = array();
+        $repeateloptions = [];
         $mform->setType('mediaurlid', PARAM_INT);
         $mform->setType('mediaid', PARAM_INT);
         $mform->setType('descid', PARAM_INT);
 
-        $this->repeat_elements($repeatarray, $repeatno,
-            $repeateloptions, 'ableplayermedias_repeats', 'ableplayermedias_add_fields', 1, null, true);
+        $this->repeat_elements(
+            $repeatarray,
+            $repeatno,
+            $repeateloptions,
+            'ableplayermedias_repeats',
+            'ableplayermedias_add_fields',
+            1,
+            null,
+            true,
+        );
 
         // Captions
-        $repeatarray = array();
-        $options = array('subdirs' => false,
+        $repeatarray = [];
+        $options = ['subdirs' => false,
             'maxbytes' => 0,
             'maxfiles' => 1,
-            'accepted_types' => array('.vtt'));
+            'accepted_types' => ['.vtt']];
         $repeatarray[] = $mform->createElement('header', 'ableplayercaptions', get_string('ableplayercaptions', 'ableplayer'));
         $repeatarray[] = $mform->createElement(
             'filemanager',
@@ -156,17 +164,17 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             $options
         );
 
-        $kindarray = array(
+        $kindarray = [
             '' => '',
             'captions' => 'captions',
             'subtitles' => 'subtitles',
             'descriptions' => 'descriptions',
-            'chapters' => 'chapters'
-            );
+            'chapters' => 'chapters',
+        ];
         $repeatarray[] = $mform->createElement('select', 'kind', get_string('kind', 'ableplayer'), $kindarray);
 
         // Lang array based on /translations folder files.
-        $langarray = array(
+        $langarray = [
             '' => '',
             'en' => 'en',
             'ca' => 'ca',
@@ -176,14 +184,14 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             'it' => 'it',
             'ja' => 'ja',
             'nb' => 'nb',
-            'nl' => 'nl'
-        );
+            'nl' => 'nl',
+        ];
         $repeatarray[] = $mform->createElement('select', 'srclang', get_string('srclang', 'ableplayer'), $langarray);
         $repeatarray[] = $mform->createElement('text', 'label', get_string('label', 'ableplayer'));
         $repeatarray[] = $mform->createElement('hidden', 'captionid', 0);
 
-        if ($this->_instance){
-            $repeatno = $DB->count_records('ableplayer_caption', array('ableplayerid'=>$this->_instance));
+        if ($this->_instance) {
+            $repeatno = $DB->count_records('ableplayer_caption', ['ableplayerid' => $this->_instance]);
         } else {
             $repeatno = 1;
         }
