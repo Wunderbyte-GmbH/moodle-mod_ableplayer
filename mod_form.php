@@ -196,21 +196,41 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             $repeatno = 1;
         }
 
-        $repeateloptions = array();
+        $repeateloptions = [];
         $mform->setType('label', PARAM_TEXT);
         $mform->setType('captionid', PARAM_INT);
 
-        $this->repeat_elements($repeatarray, $repeatno,
-            $repeateloptions, 'ableplayercaptions_repeats', 'ableplayercaptions_add_fields', 1, null, true);
-        //-------------------------------------------------------------------------------
-        // add standard elements, common to all modules
+        $this->repeat_elements(
+            $repeatarray,
+            $repeatno,
+            $repeateloptions,
+            'ableplayercaptions_repeats',
+            'ableplayercaptions_add_fields',
+            1,
+            null,
+            true,
+        );
+        // -------------------------------------------------------------------------------
+        // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
-        //-------------------------------------------------------------------------------
-        // add standard buttons, common to all modules
+        // -------------------------------------------------------------------------------
+        // Add standard buttons, common to all modules.
         $this->add_action_buttons();
     }
 
-    function data_preprocessing(&$default_values) {
+    /**
+     * Prepares default values for form elements related to media, descriptions, poster, and captions
+     * for the AblePlayer module. This function retrieves existing records from the database,
+     * prepares draft areas for file uploads, and sets up the form's default values based on the
+     * current instance's data.
+     *
+     * @param array &$defaultvalues An associative array that holds the default values for the form elements.
+     *                              This array is modified by reference to include default values for media,
+     *                              descriptions, poster, and captions based on the existing records in the database.
+     *
+     * @global moodle_database $DB Global Moodle database object for performing database operations.
+     */
+    function data_preprocessing(&$defaultvalues) {
         global $DB;
 
         if ($this->current->instance) {
