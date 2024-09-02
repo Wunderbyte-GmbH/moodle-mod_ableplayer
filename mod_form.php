@@ -104,6 +104,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
 
         // Media files & description files
         $repeatarray[] = $mform->createElement('text', 'url', get_string('ableplayermediaurl', 'ableplayer'));
+        $mform->setType('url', PARAM_URL);
         $repeatarray[] = $mform->createElement('hidden', 'mediaurlid', 0);
 
         $options = ['subdirs' => false,
