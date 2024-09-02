@@ -73,11 +73,11 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         $mform->addHelpButton('poster', 'poster', 'ableplayer');
 
         // Is this playlist?
-        $playlist_array = [
+        $playlistarray = [
             0 => 'No',
             1 => 'Yes',
         ];
-        $mform->addElement('select', 'playlist', get_string('playlist', 'ableplayer'), $playlist_array);
+        $mform->addElement('select', 'playlist', get_string('playlist', 'ableplayer'), $playlistarray);
 
         // Mode.
         $mode_array = [
