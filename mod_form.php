@@ -80,12 +80,12 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         $mform->addElement('select', 'playlist', get_string('playlist', 'ableplayer'), $playlistarray);
 
         // Mode.
-        $mode_array = [
+        $modearray = [
             '' => '',
             'playsinline' => get_string('playsinline', 'ableplayer'),
             'data-lyrics-mode' => get_string('lyricsmode', 'ableplayer'),
         ];
-        $mform->addElement('select', 'mode', get_string('mode', 'ableplayer'), $mode_array);
+        $mform->addElement('select', 'mode', get_string('mode', 'ableplayer'), $modearray);
 
         $langarray = [
             'en' => 'en',
