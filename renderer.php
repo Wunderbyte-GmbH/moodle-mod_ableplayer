@@ -34,13 +34,13 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
     /**
      * Render the ableplayer page
      *
-     * @param ableplayer
+     * @param ableplayer $ableplayermedia
      * @return string The page output.
      */
-    public function ableplayer_page($ableplayer_media) {
+    public function ableplayer_page($ableplayermedia) {
         $output = '';
 
-        $output .= $this->ableplayer($ableplayer_media);
+        $output .= $this->ableplayer($ableplayermedia);
 
         return $output;
     }
