@@ -19,7 +19,7 @@
  *
  * All the ableplayer specific functions, needed to implement the module
  * logic, should go here. Never include this file from your lib.php!
- *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -98,10 +98,12 @@ class ableplayer {
         $add->lang = $formdata->lang;
         $returnid = $DB->insert_record('ableplayer', $add);
 
-        $this->instance = $DB->get_record('ableplayer',
-            array('id' => $returnid),
+        $this->instance = $DB->get_record(
+            'ableplayer',
+            ['id' => $returnid],
             '*',
-            MUST_EXIST);
+            MUST_EXIST
+        );
         $this->save_files($formdata);
 
         // Media save
@@ -167,10 +169,12 @@ class ableplayer {
         }
 
         // Cache the course record.
-        $this->course = $DB->get_record('course',
-            array('id' => $formdata->course),
+        $this->course = $DB->get_record(
+            'course',
+            ['id' => $formdata->course],
             '*',
-            MUST_EXIST);
+            MUST_EXIST
+        );
         return $returnid;
     }
     /**
@@ -183,15 +187,15 @@ class ableplayer {
         $result = true;
         // Delete files associated with this ableplayer.
         $fs = get_file_storage();
-        if (! $fs->delete_area_files($this->context->id) ) {
+        if (! $fs->delete_area_files($this->context->id)) {
             $result = false;
         }
         // Delete the instance.
         // Note: all context files are deleted automatically.
-        $DB->delete_records('ableplayer', array('id' => $this->get_instance()->id));
-        $DB->delete_records('ableplayer_caption', array('ableplayerid' => $this->get_instance()->id));
-        $DB->delete_records('ableplayer_media', array('ableplayerid' => $this->get_instance()->id));
-        $DB->delete_records('ableplayer_desc', array('ableplayerid' => $this->get_instance()->id));
+        $DB->delete_records('ableplayer', ['id' => $this->get_instance()->id]);
+        $DB->delete_records('ableplayer_caption', ['ableplayerid' => $this->get_instance()->id]);
+        $DB->delete_records('ableplayer_media', ['ableplayerid' => $this->get_instance()->id]);
+        $DB->delete_records('ableplayer_desc', ['ableplayerid' => $this->get_instance()->id]);
         return $result;
     }
     /**
@@ -213,15 +217,17 @@ class ableplayer {
         $update->mode = $formdata->mode;
         $update->lang = $formdata->lang;
         $result = $DB->update_record('ableplayer', $update);
-        $this->instance = $DB->get_record('ableplayer',
-            array('id' => $update->id),
+        $this->instance = $DB->get_record(
+            'ableplayer',
+            ['id' => $update->id],
             '*',
-            MUST_EXIST);
+            MUST_EXIST
+        );
         $this->save_files($formdata);
 
         if (!empty($formdata->media)) {
             foreach ($formdata->media as $key => $value) {
-                if (isset($formdata->mediaid[$key]) && !empty($formdata->mediaid[$key])) {//existing choice record
+                if (isset($formdata->mediaid[$key]) && !empty($formdata->mediaid[$key])) {// Existing choice record.
                     $media = new stdClass();
                     $media->ableplayerid = $formdata->instance;
                     $media->url = $formdata->url;
@@ -241,7 +247,7 @@ class ableplayer {
                     if (!empty($file)) {
                         $DB->update_record("ableplayer_media", $media);
                     } else {
-                        $DB->delete_records("ableplayer_media", array('id' => $media->id));
+                        $DB->delete_records("ableplayer_media", ['id' => $media->id]);
                     }
                 } else {
                     $media = new stdClass();
@@ -264,7 +270,7 @@ class ableplayer {
         }
         if (!empty($formdata->desc)) {
             foreach ($formdata->desc as $key => $value) {
-                if (isset($formdata->descid[$key]) && !empty($formdata->descid[$key])) {//existing choice record
+                if (isset($formdata->descid[$key]) && !empty($formdata->descid[$key])) {// Existing choice record.
                     $desc = new stdClass();
                     $desc->ableplayerid = $formdata->instance;
                     $desc->id = $formdata->descid[$key];
@@ -283,7 +289,7 @@ class ableplayer {
                     if (!empty($file)) {
                         $DB->update_record("ableplayer_desc", $desc);
                     } else {
-                        $DB->delete_records("ableplayer_desc", array('id' => $desc->id));
+                        $DB->delete_records("ableplayer_desc", ['id' => $desc->id]);
                     }
                 } else {
                     $desc = new stdClass();
@@ -305,7 +311,7 @@ class ableplayer {
         }
         if (!empty($formdata->caption)) {
             foreach ($formdata->caption as $key => $value) {
-                if (isset($formdata->captionid[$key]) && !empty($formdata->captionid[$key])) {//existing choice record
+                if (isset($formdata->captionid[$key]) && !empty($formdata->captionid[$key])) {// Existing choice record.
                     $caption = new stdClass();
                     $caption->ableplayerid = $formdata->instance;
                     $caption->label = $formdata->label[$key];
@@ -327,7 +333,7 @@ class ableplayer {
                     if (!empty($filex)) {
                         $DB->update_record("ableplayer_caption", $caption);
                     } else {
-                        $DB->delete_records("ableplayer_caption", array('id' => $caption->id));
+                        $DB->delete_records("ableplayer_caption", ['id' => $caption->id]);
                     }
                 } else {
                     $caption = new stdClass();
@@ -396,7 +402,7 @@ class ableplayer {
             return $this->instance;
         }
         if ($this->get_course_module()) {
-            $params = array('id' => $this->get_course_module()->instance);
+            $params = ['id' => $this->get_course_module()->instance];
             $this->instance = $DB->get_record('ableplayer', $params, '*', MUST_EXIST);
         }
         if (!$this->instance) {
@@ -434,11 +440,13 @@ class ableplayer {
             return null;
         }
         if ($this->context->contextlevel == CONTEXT_MODULE) {
-            $this->coursemodule = get_coursemodule_from_id('ableplayer',
+            $this->coursemodule = get_coursemodule_from_id(
+                'ableplayer',
                 $this->context->instanceid,
                 0,
                 false,
-                MUST_EXIST);
+                MUST_EXIST
+            );
             return $this->coursemodule;
         }
         return null;
@@ -452,9 +460,18 @@ class ableplayer {
         return $this->context;
     }
 
+    /**
+     * Retrieves caption settings for a given Able Player instance.
+     *
+     * This function fetches the caption records associated with a specific
+     * Able Player instance from the database.
+     *
+     * @param int $id The ID of the Able Player instance for which to retrieve captions.
+     * @return array An array of caption records associated with the given Able Player instance.
+     */
     public function get_captions_settings($id) {
         global $DB;
-        $captions = $DB->get_records('ableplayer_caption', array('ableplayerid' => $id));
+        $captions = $DB->get_records('ableplayer_caption', ['ableplayerid' => $id]);
         return $captions;
     }
     /**
@@ -470,7 +487,7 @@ class ableplayer {
         if (!$this->context) {
             return null;
         }
-        $params = array('id' => $this->get_course_context()->instanceid);
+        $params = ['id' => $this->get_course_context()->instanceid];
         $this->course = $DB->get_record('course', $params, '*', MUST_EXIST);
         return $this->course;
     }

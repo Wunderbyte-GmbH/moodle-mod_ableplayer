@@ -19,7 +19,7 @@
  *
  * It uses the standard core Moodle formslib. For more info about them, please
  * visit: http://docs.moodle.org/en/Development:lib/formslib.php
- *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,7 +27,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
 
 /**
  * Module instance settings form
@@ -40,53 +40,54 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         global $CFG, $DB;
 
         $mform = $this->_form;
-        //-------------------------------------------------------------------------------
-        // Adding the "general" fieldset, where all the common settings are showed
+        // -------------------------------------------------------------------------------
+        // Adding the "general" fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        // Adding the standard "name" field
-        $mform->addElement('text', 'name', get_string('ableplayername', 'ableplayer'), array('size'=>'64'));
+        // Adding the standard "name" field.
+        $mform->addElement('text', 'name', get_string('ableplayername', 'ableplayer'), ['size' => '64']);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('name', 'ableplayername', 'ableplayer');
 
-        // Adding the standard "intro" and "introformat" fields
+        // Adding the standard "intro" and "introformat" fields.
         $this->standard_intro_elements();
 
         //
-        //--------------------------------------- MEDIA SOURCE ----------------------------------------
+        // --------------------------------------- MEDIA SOURCE ----------------------------------------
         $mform->addElement('header', 'ableplayergeneral', get_string('ableplayergeneral', 'ableplayer'));
 
         // Poster file manager.
-        $options = array('subdirs' => false,
+        $options = ['subdirs' => false,
             'maxbytes' => 0,
             'maxfiles' => 1,
-            'accepted_types' => array('image'));
+            'accepted_types' => ['image']];
         $mform->addElement(
             'filemanager',
             'poster',
             get_string('poster', 'ableplayer'),
             null,
-            $options);
+            $options
+        );
         $mform->addHelpButton('poster', 'poster', 'ableplayer');
 
         // Is this playlist?
-        $playlist_array = array(
+        $playlist_array = [
             0 => 'No',
             1 => 'Yes',
-        );
+        ];
         $mform->addElement('select', 'playlist', get_string('playlist', 'ableplayer'), $playlist_array);
 
-        //Mode
-        $mode_array = array(
+        // Mode.
+        $mode_array = [
             '' => '',
             'playsinline' => get_string('playsinline', 'ableplayer'),
             'data-lyrics-mode' => get_string('lyricsmode', 'ableplayer'),
-        );
+        ];
         $mform->addElement('select', 'mode', get_string('mode', 'ableplayer'), $mode_array);
 
-        $langarray = array(
+        $langarray = [
             'en' => 'en',
             'ca' => 'ca',
             'de' => 'de',
@@ -95,20 +96,20 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             'it' => 'it',
             'ja' => 'ja',
             'nb' => 'nb',
-            'nl' => 'nl'
-        );
+            'nl' => 'nl',
+        ];
         $mform->addElement('select', 'lang', get_string('lang', 'ableplayer'), $langarray);
 
-        $repeatarray = array();
+        $repeatarray = [];
 
         // Media files & description files
         $repeatarray[] = $mform->createElement('text', 'url', get_string('ableplayermediaurl', 'ableplayer'));
         $repeatarray[] = $mform->createElement('hidden', 'mediaurlid', 0);
 
-        $options = array('subdirs' => false,
+        $options = ['subdirs' => false,
             'maxbytes' => 0,
             'maxfiles' => 1,
-            'accepted_types' => array('.mp4', '.webm', '.webv', '.ogg', '.ogv', '.oga', '.wav', '.mp3'));
+            'accepted_types' => ['.mp4', '.webm', '.webv', '.ogg', '.ogv', '.oga', '.wav', '.mp3']];
         $repeatarray[] = $mform->createElement('header', 'ableplayermedia', get_string('ableplayermedia', 'ableplayer'));
         $repeatarray[] = $mform->createElement(
             'filemanager',

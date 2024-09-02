@@ -15,6 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This class contains a list of webservice functions related to the adele Module by Wunderbyte.
+ *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -22,12 +25,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->libdir.'/filelib.php');
+require_once($CFG->libdir . '/filelib.php');
 require_once('locallib.php');
 
-////////////////////////////////////////////////////////////////////////////////
+// Comment.
 // Moodle core API                                                            //
-////////////////////////////////////////////////////////////////////////////////
+// Comment.
 
 /**
  * Returns the information on whether the module supports a feature
@@ -37,16 +40,25 @@ require_once('locallib.php');
  * @return mixed true if the feature is supported, null if unknown
  */
 function ableplayer_supports($feature) {
-    switch($feature) {
-        case FEATURE_MOD_INTRO:               return true;
-        case FEATURE_GROUPS:                  return false;
-        case FEATURE_GROUPINGS:               return false;
-        case FEATURE_COMPLETION_TRACKS_VIEWS: return true;
-        case FEATURE_GRADE_HAS_GRADE:         return false;
-        case FEATURE_GRADE_OUTCOMES:          return false;
-        case FEATURE_BACKUP_MOODLE2:          return true;
-        case FEATURE_SHOW_DESCRIPTION:        return true;
-        default: return null;
+    switch ($feature) {
+        case FEATURE_MOD_INTRO:
+            return true;
+        case FEATURE_GROUPS:
+            return false;
+        case FEATURE_GROUPINGS:
+            return false;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
+        case FEATURE_GRADE_HAS_GRADE:
+            return false;
+        case FEATURE_GRADE_OUTCOMES:
+            return false;
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+        case FEATURE_SHOW_DESCRIPTION:
+            return true;
+        default:
+            return null;
     }
 }
 
@@ -121,11 +133,12 @@ function ableplayer_user_outline($course, $user, $mod, $ableplayer) {
     global $DB;
     $logs = $DB->get_records(
         'log',
-        array('userid' => $user->id,
+        ['userid' => $user->id,
             'module' => 'ableplayer',
             'action' => 'view',
-            'info' => $ableplayer->id),
-        'time ASC');
+            'info' => $ableplayer->id]
+    );
+        'time ASC';
     if ($logs) {
         $numviews = count($logs);
         $lastlog = array_pop($logs);
@@ -151,17 +164,18 @@ function ableplayer_user_complete($course, $user, $mod, $ableplayer) {
     global $DB;
     $logs = $DB->get_records(
         'log',
-        array('userid' => $user->id,
+        ['userid' => $user->id,
             'module' => 'ableplayer',
             'action' => 'view',
-            'info' => $ableplayer->id),
-        'time ASC');
+            'info' => $ableplayer->id],
+        'time ASC'
+    );
     if ($logs) {
         $numviews = count($logs);
         $lastlog = array_pop($logs);
         $strmostrecently = get_string('mostrecently');
         $strnumviews = get_string('numviews', '', $numviews);
-        echo "$strnumviews - $strmostrecently ".userdate($lastlog->time);
+        echo "$strnumviews - $strmostrecently " . userdate($lastlog->time);
     } else {
         print_string('neverseen', 'ableplayer');
     }
@@ -175,7 +189,7 @@ function ableplayer_user_complete($course, $user, $mod, $ableplayer) {
  * @return boolean
  */
 function ableplayer_print_recent_activity($course, $viewfullnames, $timestart) {
-    return false;  //  True if anything was printed, otherwise false
+    return false;  // True if anything was printed, otherwise false.
 }
 
 /**
@@ -194,7 +208,7 @@ function ableplayer_print_recent_activity($course, $viewfullnames, $timestart) {
  * @param int $groupid check for a particular group's activity only, defaults to 0 (all groups)
  * @return void adds items into $activities and increases $index
  */
-function ableplayer_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid=0, $groupid=0) {
+function ableplayer_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid = 0, $groupid = 0) {
 }
 
 /**
@@ -213,7 +227,7 @@ function ableplayer_print_recent_mod_activity($activity, $courseid, $detail, $mo
  * @return boolean
  * @todo Finish documenting this function
  **/
-function ableplayer_cron () {
+function ableplayer_cron() {
     return false;
 }
 
@@ -224,12 +238,12 @@ function ableplayer_cron () {
  * @return array
  */
 function ableplayer_get_extra_capabilities() {
-    return array();
+    return [];
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//
 // Gradebook API                                                              //
-////////////////////////////////////////////////////////////////////////////////
+//
 
 /**
  * Is a given scale used by the instance of ableplayer?
@@ -283,9 +297,9 @@ function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
     return false;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//
 // File API                                                                   //
-////////////////////////////////////////////////////////////////////////////////
+//
 
 /**
  * Returns the lists of all browsable file areas within the given module context
@@ -299,12 +313,12 @@ function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
  * @return array of [(string)filearea] => (string)description
  */
 function ableplayer_get_file_areas($course, $cm, $context) {
-    return array(
+    return [
         'media' => get_string('filearea_medias', 'ableplayer'),
         'desc' => get_string('filearea_descs', 'ableplayer'),
         'poster' => get_string('filearea_posters', 'ableplayer'),
         'caption' => get_string('filearea_captions', 'ableplayer'),
-    );
+    ];
 }
 
 /**
@@ -341,17 +355,22 @@ function ableplayer_get_file_info($browser, $areas, $course, $cm, $context, $fil
     if ($filearea === 'media' || $filearea === 'poster' || $filearea === 'caption' || $filearea === 'desc') {
         $filepath = is_null($filepath) ? '/' : $filepath;
         $filename = is_null($filename) ? '.' : $filename;
-        if (!$storedfile = $fs->get_file($context->id,
-            'mod_ableplayer',
-            $filearea,
-            0,
-            $filepath,
-            $filename)) {
+        if (
+            !$storedfile = $fs->get_file(
+                $context->id,
+                'mod_ableplayer',
+                $filearea,
+                0,
+                $filepath,
+                $filename
+            )
+        ) {
             // Not found.
             return null;
         }
         $urlbase = $CFG->wwwroot . '/pluginfile.php';
-        return new file_info_stored($browser,
+        return new file_info_stored(
+            $browser,
             $context,
             $storedfile,
             $urlbase,
@@ -359,7 +378,8 @@ function ableplayer_get_file_info($browser, $areas, $course, $cm, $context, $fil
             false,
             true,
             true,
-            false);
+            false
+        );
     }
     // Not found.
     return null;
@@ -379,7 +399,7 @@ function ableplayer_get_file_info($browser, $areas, $course, $cm, $context, $fil
  * @param bool $forcedownload whether or not force download
  * @param array $options additional options affecting the file serving
  */
-function ableplayer_pluginfile($course, $cm, $context, $filearea, array $args, $forcedownload, array $options=array()) {
+function ableplayer_pluginfile($course, $cm, $context, $filearea, array $args, $forcedownload, array $options = []) {
     global $CFG, $DB, $USER;
     require_once(dirname(__FILE__) . '/locallib.php');
     if ($context->contextlevel != CONTEXT_MODULE) {
@@ -407,19 +427,31 @@ function ableplayer_pluginfile($course, $cm, $context, $filearea, array $args, $
  * File browsing support class
  */
 class ableplayer_content_file_info extends file_info_stored {
+    /**
+     * Gets the parent file info.
+     *
+     * @return file_info|null Parent file info or null if not found.
+     */
     public function get_parent() {
-        if ($this->lf->get_filepath() === '/' and $this->lf->get_filename() === '.') {
+        if ($this->lf->get_filepath() === '/' && $this->lf->get_filename() === '.') {
             return $this->browser->get_file_info($this->context);
         }
         return parent::get_parent();
     }
+
+    /**
+     * Gets the visible name of the file.
+     *
+     * @return string Visible name of the file.
+     */
     public function get_visible_name() {
-        if ($this->lf->get_filepath() === '/' and $this->lf->get_filename() === '.') {
+        if ($this->lf->get_filepath() === '/' && $this->lf->get_filename() === '.') {
             return $this->topvisiblename;
         }
         return parent::get_visible_name();
     }
 }
+
 /**
  * This function is used by the reset_course_userdata function in moodlelib.
  *
@@ -427,12 +459,12 @@ class ableplayer_content_file_info extends file_info_stored {
  * @return array Status array
  */
 function ableplayer_reset_userdata($data) {
-    return array();
+    return [];
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//
 // Navigation API                                                             //
-////////////////////////////////////////////////////////////////////////////////
+//
 
 /**
  * Extends the global navigation tree by adding ableplayer nodes if there is a relevant content
@@ -456,5 +488,5 @@ function ableplayer_extend_navigation(navigation_node $navref, stdclass $course,
  * @param settings_navigation $settingsnav {@link settings_navigation}
  * @param navigation_node $ableplayernode {@link navigation_node}
  */
-function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $ableplayernode=null) {
+function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $ableplayernode = null) {
 }
