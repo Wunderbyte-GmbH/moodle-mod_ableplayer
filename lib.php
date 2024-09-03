@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This class contains a list of webservice functions related to the adele Module by Wunderbyte.
+ * This class contains a list of webservice functions related to the ableplayer Module by Wunderbyte.
  *
  * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
@@ -251,7 +251,7 @@ function ableplayer_get_extra_capabilities() {
 
 //
 // Gradebook API                                                              //
-//
+// .
 
 /**
  * Is a given scale used by the instance of ableplayer?
@@ -494,7 +494,7 @@ function ableplayer_extend_navigation(navigation_node $navref, stdclass $course,
  * so it is safe to rely on the $PAGE.
  *
  * @param settings_navigation $settingsnav {@link settings_navigation}
- * @param navigation_node $ableplayernode {@link navigation_node}
+ * @param navigation_node|null $ableplayernode {@link navigation_node}
  */
-function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, ?navigation_node $ableplayernode = null) {
+function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, $ableplayernode = null) {
 }

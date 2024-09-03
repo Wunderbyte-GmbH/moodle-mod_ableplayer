@@ -19,7 +19,7 @@
  *
  * This code fragment is called by moodle_needs_upgrading() and
  * /admin/index.php
- *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
