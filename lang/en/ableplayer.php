@@ -34,6 +34,7 @@ $string['ableplayername'] = 'AblePlayer name';
 $string['ableplayername_help'] = 'This is the content of the help tooltip associated with the ableplayername field.';
 $string['pluginadministration'] = 'AblePlayer administration';
 $string['pluginname'] = 'AblePlayer';
+$string['ableplayer:addinstance'] = 'Add Able-Player Instance';
 
 $string['filearea_medias'] = 'Media files';
 $string['filearea_descs'] = 'Description files';

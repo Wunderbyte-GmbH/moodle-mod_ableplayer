@@ -1,5 +1,5 @@
 <?php
-// This file is part of ableplayer module for Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,22 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    mod_ableplayer
- * @author     Tõnis Tartes <tonis.tartes@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Entities Class to display list of entity records.
+ *
+ * @package     mod_ableplayer
+ * @copyright  2023 Wunderbyte GmbH
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- namespace mod_ableplayer\backup;
+defined('MOODLE_INTERNAL') || die();
 
-use restore_ableplayer_activity_structure_step;
-use restore_activity_task;
- use restore_activity_structure_step;
- use restore_decode_content;
- use restore_decode_rule;
- use restore_log_rule;
+require_once($CFG->dirroot.'/mod/ableplayer/backup/moodle2/restore_ableplayer_stepslib.php');
 /**
  * ableplayer restore task that provides all the settings and steps to perform one
- * complete restore of the activity
+ * @package    mod_ableplayer
+ * @copyright  2023 Wunderbyte GmbH
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_ableplayer_activity_task extends restore_activity_task {
 
@@ -80,7 +79,6 @@ class restore_ableplayer_activity_task extends restore_activity_task {
      */
     public static function define_restore_log_rules() {
         $rules = array();
-
         $rules[] = new restore_log_rule('ableplayer', 'add', 'view.php?id={course_module}', '{ableplayer}');
         $rules[] = new restore_log_rule('ableplayer', 'edit', 'edit.php?id={course_module}', '{ableplayer}');
         $rules[] = new restore_log_rule('ableplayer', 'view', 'view.php?id={course_module}', '{ableplayer}');

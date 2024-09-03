@@ -1,5 +1,5 @@
 <?php
-// This file is part of ableplayer module for Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,16 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
-namespace mod_ableplayer\backup;
-
-use backup_ableplayer_activity_structure_step;
-use backup_activity_task;
-
 /**
- * @package    mod_ableplayer
- * @author     T6nis Tartes <tonis.tartes@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Entities Class to display list of entity records.
+ *
+ * @package     mod_ableplayer
+ * @copyright  2023 Wunderbyte GmbH
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

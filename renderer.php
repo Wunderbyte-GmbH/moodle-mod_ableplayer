@@ -126,9 +126,11 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * Utility function for creating the video source elements HTML.
      *
      * @param int $contextid
+     * @param int $captionssettings
+     * @param object $ableplayer
      * @return string HTML
      */
-    private function get_ableplayer_html($contextid, $captions_settings, $ableplayer) {
+    private function get_ableplayer_html($contextid, $captionssettings, $ableplayer) {
         $output = '';
 
         $videos = $this->util_get_area_files($contextid, 'media');
@@ -138,7 +140,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
         $videoscnt = count($videos);
 
         if ($videoscnt > 1) {
-            $sorted_arr = array();
+            $sortedarr = array();
             $i = 0;
             foreach ($videos as $file) {
                 if ($mimetype = $file->get_mimetype()) {
@@ -165,7 +167,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                 $options['data-lang'] = $ableplayer->lang;
                 $options['data-force-lang'] = '';
             }
-            
+
             if (!empty($sorted_arr['video'])) {
                 $options['id'] = 'ableplayer_video';
                 $options['poster'] = $posterurl;
@@ -181,7 +183,8 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                             $output .= $this->get_captions_html($contextid, $value['caption'], $captions_settings);
                         }
                     }
-                    $output .= html_writer::end_tag('video'); // IF playlist end video tag early
+                    $output .= html_writer::end_tag('video');
+                    // IF playlist end video tag early.
                     $output .= html_writer::empty_tag('ul', array(
                         'class' => 'able-playlist',
                         'data-player' => 'ableplayer_video',

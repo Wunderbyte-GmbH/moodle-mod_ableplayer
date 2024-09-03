@@ -1,5 +1,5 @@
 <?php
-// This file is part of ableplayer module for Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,43 +15,40 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    mod_ableplayer
- * @author     T6nis Tartes <tonis.tartes@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Entities Class to display list of entity records.
+ *
+ * @package     mod_ableplayer
+ * @copyright  2023 Wunderbyte GmbH
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-namespace mod_ableplayer\backup;
-
-use backup_activity_structure_step;
-use backup_nested_element;
-use backup;
 
 /**
  * Define the complete ableplayer structure for backup, with file and id annotations
  */
 class backup_ableplayer_activity_structure_step extends backup_activity_structure_step {
 
+    /**
+     * Define each element separated.
+     * @return array
+     */
     protected function define_structure() {
-
-        // To know if we are including userinfo
-        // ableplayer user data is in the xmldata field in DB - anyway lets skip that.
-
-        // Define each element separated.
-        $ableplayer = new backup_nested_element('ableplayer', array('id'), array(
+        $nodes = [
             'name', 'intro', 'introformat', 'playlist',
-            'mode', 'lang', 'timecreated', 'timemodified'));
+            'mode', 'lang', 'timecreated', 'timemodified'
+        ];
+        $ableplayer = new backup_nested_element('ableplayer', ['id'], $nodes);
 
         $medias = new backup_nested_element('medias');
-        $media = new backup_nested_element('media', array('id'), array(
-            'ableplayerid'));
+        $media = new backup_nested_element('media', ['id'],
+        ['ableplayerid']);
 
         $descs = new backup_nested_element('descs');
-        $desc = new backup_nested_element('desc', array('id'), array(
-            'ableplayerid'));
+        $desc = new backup_nested_element('desc', ['id'],
+        ['ableplayerid']);
 
         $captions = new backup_nested_element('captions');
-        $caption = new backup_nested_element('caption', array('id'), array(
-            'ableplayerid', 'label', 'kind', 'srclang'));
+        $caption = new backup_nested_element('caption', ['id'],
+          ['ableplayerid', 'label', 'kind', 'srclang']);
 
         // Build the tree.
         $ableplayer->add_child($medias);
@@ -64,10 +61,10 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
         $captions->add_child($caption);
 
         // Define sources.
-        $ableplayer->set_source_table('ableplayer', array('id' => backup::VAR_ACTIVITYID));
-        $media->set_source_table('ableplayer_media', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
-        $desc->set_source_table('ableplayer_desc', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
-        $caption->set_source_table('ableplayer_caption', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
+        $ableplayer->set_source_table('ableplayer', ['id' => backup::VAR_ACTIVITYID]);
+        $media->set_source_table('ableplayer_media', ['ableplayerid' => backup::VAR_PARENTID], 'id ASC');
+        $desc->set_source_table('ableplayer_desc', ['ableplayerid' => backup::VAR_PARENTID], 'id ASC');
+        $caption->set_source_table('ableplayer_caption', ['ableplayerid' => backup::VAR_PARENTID], 'id ASC');
         // Define id annotations.
 
         // Define file annotations.
