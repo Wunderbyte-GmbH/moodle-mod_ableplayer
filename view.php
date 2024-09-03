@@ -37,7 +37,7 @@ if ($id) {
 
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
-$ableplayer_media = new ableplayer($context, $cm, $course);
+$ableplayermedia = new ableplayer($context, $cm, $course);
 
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
@@ -63,8 +63,8 @@ if ($ableplayer->intro) { // Conditions to show the intro can change to look for
 }
 
 $renderer = $PAGE->get_renderer('mod_ableplayer');
-echo $renderer->ableplayer_page($ableplayer_media);
+echo $renderer->ableplayer_page($ableplayermedia);
 echo '<div id="transcript-placeholder"></div>';
 
-// Finish the page
+// Finish the page.
 echo $OUTPUT->footer();
