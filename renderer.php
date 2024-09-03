@@ -373,14 +373,14 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @param ableplayer $videofile
      * @return string HTML
      */
-    public function ableplayer(ableplayer $ableplayer_media) {
+    public function ableplayer(ableplayer $ableplayermedia) {
         $output  = '';
 
-        $contextid = $ableplayer_media->get_context()->id;
-        $captions_settings = $ableplayer_media->get_captions_settings($ableplayer_media->get_instance()->id);
-        $ableplayer = $ableplayer_media->get_instance();
+        $contextid = $ableplayermedia->get_context()->id;
+        $captionssettings = $ableplayermedia->get_captions_settings($ableplayermedia->get_instance()->id);
+        $ableplayer = $ableplayermedia->get_instance();
 
-        $output .= $this->get_ableplayer_html($contextid, $captions_settings, $ableplayer);
+        $output .= $this->get_ableplayer_html($contextid, $captionssettings, $ableplayer);
 
         return $output;
     }
