@@ -185,7 +185,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                             $output .= $this->get_captions_html($contextid, $value['caption'], $captionssettings);
                         }
                     }
-                    $output .= html_writer::end_tag('video'); // IF playlist end video tag early
+                    $output .= html_writer::end_tag('video'); // IF playlist end video tag early.
                     $output .= html_writer::empty_tag('ul', [
                         'class' => 'able-playlist',
                         'data-player' => 'ableplayer_video',

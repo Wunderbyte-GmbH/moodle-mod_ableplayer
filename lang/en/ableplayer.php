@@ -19,7 +19,7 @@
  *
  * You can have a rather longer description of the file as well,
  * if you like, and it can span multiple lines.
- *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

@@ -70,12 +70,16 @@ function ableplayer_supports($feature) {
  * will create a new instance and return the id number
  * of the new instance.
  *
- * @param object $ableplayer An object from the form in mod_form.php
- * @param mod_ableplayer_mod_form $mform
- * @return int The id of the newly inserted ableplayer record
+ * @param stdClass $data An object from the form in mod_form.php.
+ * @param mod_ableplayer_mod_form|null $mform Optional form object.
+ * @return int The id of the newly inserted ableplayer record.
  */
-function ableplayer_add_instance(stdClass $data, mod_ableplayer_mod_form $mform = null) {
+function ableplayer_add_instance(stdClass $data, $mform = null) {
     require_once(dirname(__FILE__) . '/locallib.php');
+
+    if ($mform !== null && !($mform instanceof mod_ableplayer_mod_form)) {
+        throw new InvalidArgumentException('The second parameter must be an instance of mod_ableplayer_mod_form or null.');
+    }
 
     $context = context_module::instance($data->coursemodule);
     $ableplayer = new ableplayer($context, null, null);
@@ -90,12 +94,16 @@ function ableplayer_add_instance(stdClass $data, mod_ableplayer_mod_form $mform 
  * (defined by the form in mod_form.php) this function
  * will update an existing instance with new data.
  *
- * @param object $ableplayer An object from the form in mod_form.php
- * @param mod_ableplayer_mod_form $mform
- * @return boolean Success/Fail
+ * @param stdClass $data An object from the form in mod_form.php.
+ * @param mod_ableplayer_mod_form|null $mform Optional form object.
+ * @return boolean Success/Fail.
  */
-function ableplayer_update_instance(stdClass $data, mod_ableplayer_mod_form $mform = null) {
+function ableplayer_update_instance(stdClass $data, $mform = null) {
     require_once(dirname(__FILE__) . '/locallib.php');
+
+    if ($mform !== null && !($mform instanceof mod_ableplayer_mod_form)) {
+        throw new InvalidArgumentException('The second parameter must be an instance of mod_ableplayer_mod_form or null.');
+    }
 
     $context = context_module::instance($data->coursemodule);
     $ableplayer = new ableplayer($context, null, null);
@@ -226,7 +234,6 @@ function ableplayer_print_recent_mod_activity($activity, $courseid, $detail, $mo
  * as sending out mail, toggling flags etc ...
  *
  * @return boolean
- * @todo Finish documenting this function
  **/
 function ableplayer_cron() {
     return false;
@@ -279,7 +286,7 @@ function ableplayer_scale_used_anywhere($scaleid) {
  * Needed by grade_update_mod_grades() in lib/gradelib.php
  *
  * @param stdClass $ableplayer instance object with extra cmidnumber and modname property
- * @return void
+ * @return bool
  */
 function ableplayer_grade_item_update(stdClass $ableplayer) {
     return false;
@@ -292,7 +299,7 @@ function ableplayer_grade_item_update(stdClass $ableplayer) {
  *
  * @param stdClass $ableplayer instance object with extra cmidnumber and modname property
  * @param int $userid update grade of specific user only, 0 means all participants
- * @return void
+ * @return bool
  */
 function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
     return false;
@@ -300,7 +307,7 @@ function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
 
 //
 // File API                                                                   //
-//
+// .
 
 /**
  * Returns the lists of all browsable file areas within the given module context
@@ -465,7 +472,7 @@ function ableplayer_reset_userdata($data) {
 
 //
 // Navigation API                                                             //
-//
+// .
 
 /**
  * Extends the global navigation tree by adding ableplayer nodes if there is a relevant content
@@ -489,5 +496,5 @@ function ableplayer_extend_navigation(navigation_node $navref, stdclass $course,
  * @param settings_navigation $settingsnav {@link settings_navigation}
  * @param navigation_node $ableplayernode {@link navigation_node}
  */
-function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $ableplayernode = null) {
+function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, ?navigation_node $ableplayernode = null) {
 }
