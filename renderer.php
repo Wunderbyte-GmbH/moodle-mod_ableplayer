@@ -208,23 +208,23 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                     foreach ($videos as $file) {
                         if ($mimetype = $file->get_mimetype()) {
                             $videourl = $this->util_get_file_url($file);
-                            $source_opts = array(
+                            $sourceopts = [
                                 'src' => $videourl,
-                                'type' => $mimetype
-                            );
+                                'type' => $mimetype,
+                            ];
                             if (!empty($desc[$i])) {
-                                $source_opts['data-desc-src'] = $this->util_get_file_url($desc[$i]);
+                                $sourceopts['data-desc-src'] = $this->util_get_file_url($desc[$i]);
                             }
                             $output .= html_writer::empty_tag(
                                 'source',
-                                $source_opts
-                                );
+                                $sourceopts
+                            );
                             $i++;
                         }
                     }
-                    foreach ($sorted_arr['video'] as $key => $value) {
+                    foreach ($sortedarr['video'] as $key => $value) {
                         if (!empty($value['caption'])) {
-                            $output .= $this->get_captions_html($contextid, $value['caption'], $captions_settings);
+                            $output .= $this->get_captions_html($contextid, $value['caption'], $captionssettings);
                         }
                     }
                     $output .= html_writer::end_tag('video');
