@@ -87,9 +87,9 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @return url to the poster image (or the default image)
      */
     private function get_captions($contextid) {
-        $captions = array();
-        $captions_files = $this->util_get_area_files($contextid, 'caption');
-        foreach ($captions_files as $file) {
+        $captions = [];
+        $captionsfiles = $this->util_get_area_files($contextid, 'caption');
+        foreach ($captionsfiles as $file) {
             $captions[] = $file;
         }
 
@@ -102,9 +102,9 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @return url to the poster image (or the default image)
      */
     private function get_descs($contextid) {
-        $captions = array();
-        $captions_files = $this->util_get_area_files($contextid, 'desc');
-        foreach ($captions_files as $file) {
+        $captions = [];
+        $captionsfiles = $this->util_get_area_files($contextid, 'desc');
+        foreach ($captionsfiles as $file) {
             $captions[] = $file;
         }
 
