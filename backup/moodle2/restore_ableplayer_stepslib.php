@@ -15,6 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This class contains a list of webservice functions related to the ableplayer Module by Wunderbyte.
+ *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     Tõnis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,7 +33,13 @@ use restore_path_element;
  * Structure step to restore one ableplayer activity
  */
 class restore_ableplayer_activity_structure_step extends restore_activity_structure_step {
-
+    /**
+     * Defines the restore structure for the AblePlayer activity module.
+     * These paths are then wrapped into the standard activity structure for the
+     * Moodle restore process.
+     *
+     * @return restore_structure_step The complete restore structure for the AblePlayer activity module.
+     */
     protected function define_structure() {
 
         $paths = [];
@@ -41,7 +50,19 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
-
+    /**
+     * Processes the AblePlayer data during the restore process.
+     *
+     * This function takes the AblePlayer data from the restore process, adjusts the
+     * course ID and date fields to align with the current restore context, and inserts
+     * the data into the 'ableplayer' table in the database. After the insertion, it maps
+     * the newly created activity instance to ensure proper referencing in the restored course.
+     *
+     * @param array $data The data array containing AblePlayer activity information
+     *                    from the restore file, which includes course ID, time created,
+     *                    time modified, and other necessary fields.
+     * @return void
+     */
     protected function process_ableplayer($data) {
         global $DB;
 
@@ -53,7 +74,20 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
         $newitemid = $DB->insert_record('ableplayer', $data);
         $this->apply_activity_instance($newitemid);
     }
-
+    /**
+     * Processes AblePlayer media data during the restore process.
+     *
+     * This function takes media data related to the AblePlayer activity from the
+     * restore process, updates the parent AblePlayer ID to match the newly restored
+     * instance, inserts the media data into the 'ableplayer_media' table in the
+     * database, and sets up the necessary mapping for the restored media item.
+     *
+     * @param array $data The data array containing media information from the
+     *                    restore file, which includes the media ID, related AblePlayer
+     *                    activity ID, and other necessary fields.
+     *
+     * @return void
+     */
     protected function process_ableplayer_media($data) {
         global $DB;
 
@@ -64,7 +98,21 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
         $newitemid = $DB->insert_record('ableplayer_media', $data);
         $this->set_mapping('ableplayer_media', $oldid, $newitemid, true);
     }
-
+    /**
+     * Processes AblePlayer description data during the restore process.
+     *
+     * This function is responsible for handling description data related to the
+     * AblePlayer activity during the restoration of a course backup. It updates
+     * the parent AblePlayer ID to reflect the new restored instance, inserts the
+     * description data into the 'ableplayer_desc' table in the database, and
+     * creates a mapping for the restored description item.
+     *
+     * @param array $data The data array containing description information from
+     *                    the restore file. This includes the description ID,
+     *                    related AblePlayer activity ID, and other relevant fields.
+     *
+     * @return void
+     */
     protected function process_ableplayer_desc($data) {
         global $DB;
 
