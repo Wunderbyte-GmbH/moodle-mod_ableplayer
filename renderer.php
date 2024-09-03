@@ -16,7 +16,7 @@
 
 /**
  * Ableplayer module renderering methods are defined here.
- *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,7 +30,6 @@ require_once($CFG->dirroot . '/mod/ableplayer/locallib.php');
  * ableplayer module renderer class
  */
 class mod_ableplayer_renderer extends plugin_renderer_base {
-
     /**
      * Render the ableplayer page
      *
@@ -58,7 +57,8 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
             $file->get_itemid(),
             $file->get_filepath(),
             $file->get_filename(),
-            false);
+            false
+        );
     }
     /**
      * Utility function for getting area files
@@ -69,12 +69,16 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      */
     private function util_get_area_files($contextid, $areaname) {
         $fs = get_file_storage();
-        return $fs->get_area_files($contextid,
+        return $fs->get_area_files(
+            $contextid,
             'mod_ableplayer',
             $areaname,
             false,
-            'itemid, filepath, filename',
-            false);
+            'itemid,
+            filepath,
+            filename',
+            false
+        );
     }
     /**
      * Utility function for getting the captions
@@ -138,7 +142,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
         $videoscnt = count($videos);
 
         if ($videoscnt > 1) {
-            $sorted_arr = array();
+            $sortedarr = [];
             $i = 0;
             foreach ($videos as $file) {
                 if ($mimetype = $file->get_mimetype()) {
@@ -152,12 +156,12 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
             }
 
             // General settings.
-            $options = array(
+            $options = [
                 'data-able-player' => '',
                 'preload' => 'auto',
                 'width' => 'auto',
                 'height' => 'auto',
-            );
+            ];
             if (!empty($ableplayer->mode)) {
                 $options[$ableplayer->mode] = '';
             }
@@ -192,8 +196,8 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                         $mimtype = explode('/', $value['file']->get_mimetype());
                         $output .= html_writer::empty_tag(
                             'li',
-                            array('data-' . $mimtype[1] => $videourl,
-                                'class' => 'data-' . $mimtype[0])
+                            ['data-' . $mimtype[1] => $videourl,
+                                'class' => 'data-' . $mimtype[0]]
                         );
                         $output .= $value['file']->get_filename();
                         $output .= html_writer::end_tag('li');
@@ -249,8 +253,8 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                     $mimtype = explode('/', $value['file']->get_mimetype());
                     $output .= html_writer::empty_tag(
                         'li',
-                        array('data-' . $mimtype[1] => $videourl,
-                            'class' => 'data-' . $mimtype[0])
+                        ['data-' . $mimtype[1] => $videourl,
+                            'class' => 'data-' . $mimtype[0]]
                     );
                     $output .= $value['file']->get_filename();
                     $output .= html_writer::end_tag('li');
@@ -258,14 +262,14 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                 $output .= html_writer::end_tag('ul');
             }
         } else {
-            $options = array('id' => 'ableplayer',
+            $options = ['id' => 'ableplayer',
                 'data-able-player' => '',
-                //'data-transcript-div' => 'transcript-placeholder',
+                // 'data-transcript-div' => 'transcript-placeholder'
                 'preload' => 'auto',
                 'width' => 'auto',
                 'height' => 'auto',
                 'poster' => $posterurl,
-            );
+            ];
             if (!empty($ableplayer->mode)) {
                 $options[$ableplayer->mode] = '';
             }
@@ -278,7 +282,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                 $options
             );
 
-            // Descriptive file url
+            // Descriptive file url.
             $descurl = '';
             $desc = $this->util_get_area_files($contextid, 'desc');
             foreach ($desc as $file) {
@@ -292,9 +296,9 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                     $videourl = $this->util_get_file_url($file);
                     $output .= html_writer::empty_tag(
                         'source',
-                        array('src' => $videourl,
+                        ['src' => $videourl,
                             'type' => $mimetype,
-                            'data-desc-src' => $descurl)
+                            'data-desc-src' => $descurl]
                     );
                 }
             }
@@ -335,8 +339,10 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
 
                 /* Strings not in language files come back as [[string]], don't
                    use those for labels. */
-                if (substr($maybelabel, 0, 2) !== '[[' ||
-                    substr($maybelabel, -2, 2) === ']]') {
+                if (
+                    substr($maybelabel, 0, 2) !== '[[' ||
+                    substr($maybelabel, -2, 2) === ']]'
+                ) {
                     $label = $maybelabel;
                 }
             }
