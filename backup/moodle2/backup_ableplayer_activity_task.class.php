@@ -14,17 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * This class contains a list of webservice functions related to the ableplayer Module by Wunderbyte.
+ *
+ * @copyright  2024 Wunderbyte GmbH
+ * @package    mod_ableplayer
+ * @author     T6nis Tartes <tonis.tartes@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace mod_ableplayer\backup;
 
 use backup_ableplayer_activity_structure_step;
 use backup_activity_task;
-
-/**
- * @package    mod_ableplayer
- * @author     T6nis Tartes <tonis.tartes@gmail.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -34,7 +36,6 @@ require_once($CFG->dirroot . '/mod/ableplayer/backup/moodle2/backup_ableplayer_s
  * complete backup of the activity
  */
 class backup_ableplayer_activity_task extends backup_activity_task {
-
     /**
      * Define (add) particular settings this activity can have
      */
@@ -60,11 +61,11 @@ class backup_ableplayer_activity_task extends backup_activity_task {
         $base = preg_quote($CFG->wwwroot, "/");
 
         // Link to the list of ableplayer.
-        $search = "/(".$base."\/mod\/ableplayer\/index.php\?id\=)([0-9]+)/";
+        $search = "/(" . $base . "\/mod\/ableplayer\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@ableplayerINDEX*$2@$', $content);
 
         // Link to ableplayer view by moduleid.
-        $search = "/(".$base."\/mod\/ableplayer\/view.php\?id\=)([0-9]+)/";
+        $search = "/(" . $base . "\/mod\/ableplayer\/view.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@ableplayerVIEWBYID*$2@$', $content);
 
         return $content;

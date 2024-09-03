@@ -15,6 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * This class contains a list of webservice functions related to the ableplayer Module by Wunderbyte.
+ *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,28 +33,45 @@ use backup;
  * Define the complete ableplayer structure for backup, with file and id annotations
  */
 class backup_ableplayer_activity_structure_step extends backup_activity_structure_step {
-
+    /**
+     * Defines the complete backup structure for the AblePlayer activity module,
+     * including file and ID annotations.
+     *
+     * This function specifies the data structure for backing up an AblePlayer activity.
+     * It includes the main AblePlayer activity settings, media files, descriptions, and
+     * captions. Each of these components is structured hierarchically to ensure a
+     * comprehensive backup.
+     *
+     * The function defines:
+     * - The root element 'ableplayer' containing its settings and child elements.
+     * - Child elements 'medias', 'descs', and 'captions' with their respective data.
+     * - The data sources for each element, mapping to the appropriate database tables.
+     * - File annotations for different areas (intro, poster, media, description, caption)
+     *   to include files associated with the AblePlayer activity in the backup.
+     *
+     * @return backup_structure The complete backup structure for the AblePlayer activity module.
+     */
     protected function define_structure() {
 
         // To know if we are including userinfo
         // ableplayer user data is in the xmldata field in DB - anyway lets skip that.
 
         // Define each element separated.
-        $ableplayer = new backup_nested_element('ableplayer', array('id'), array(
+        $ableplayer = new backup_nested_element('ableplayer', ['id'], [
             'name', 'intro', 'introformat', 'playlist',
-            'mode', 'lang', 'timecreated', 'timemodified'));
+            'mode', 'lang', 'timecreated', 'timemodified']);
 
         $medias = new backup_nested_element('medias');
-        $media = new backup_nested_element('media', array('id'), array(
-            'ableplayerid'));
+        $media = new backup_nested_element('media', ['id'], [
+            'ableplayerid']);
 
         $descs = new backup_nested_element('descs');
-        $desc = new backup_nested_element('desc', array('id'), array(
-            'ableplayerid'));
+        $desc = new backup_nested_element('desc', ['id'], [
+            'ableplayerid']);
 
         $captions = new backup_nested_element('captions');
-        $caption = new backup_nested_element('caption', array('id'), array(
-            'ableplayerid', 'label', 'kind', 'srclang'));
+        $caption = new backup_nested_element('caption', ['id'], [
+            'ableplayerid', 'label', 'kind', 'srclang']);
 
         // Build the tree.
         $ableplayer->add_child($medias);
@@ -64,10 +84,10 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
         $captions->add_child($caption);
 
         // Define sources.
-        $ableplayer->set_source_table('ableplayer', array('id' => backup::VAR_ACTIVITYID));
-        $media->set_source_table('ableplayer_media', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
-        $desc->set_source_table('ableplayer_desc', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
-        $caption->set_source_table('ableplayer_caption', array('ableplayerid' => backup::VAR_PARENTID), 'id ASC');
+        $ableplayer->set_source_table('ableplayer', ['id' => backup::VAR_ACTIVITYID]);
+        $media->set_source_table('ableplayer_media', ['ableplayerid' => backup::VAR_PARENTID], 'id ASC');
+        $desc->set_source_table('ableplayer_desc', ['ableplayerid' => backup::VAR_PARENTID], 'id ASC');
+        $caption->set_source_table('ableplayer_caption', ['ableplayerid' => backup::VAR_PARENTID], 'id ASC');
         // Define id annotations.
 
         // Define file annotations.
