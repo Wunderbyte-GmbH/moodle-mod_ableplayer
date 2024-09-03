@@ -16,23 +16,23 @@
 
 /**
  * Prints a particular instance of ableplayer
- *
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     T6nis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
-require_once(dirname(__FILE__).'/lib.php');
-require_once(dirname(__FILE__).'/locallib.php');
+require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once(dirname(__FILE__) . '/lib.php');
+require_once(dirname(__FILE__) . '/locallib.php');
 require_once($CFG->libdir . '/completionlib.php');
 
 $id = optional_param('id', 0, PARAM_INT);
 
 if ($id) {
     $cm = get_coursemodule_from_id('ableplayer', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $ableplayer = $DB->get_record('ableplayer', array('id' => $cm->instance), '*', MUST_EXIST);
+    $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+    $ableplayer = $DB->get_record('ableplayer', ['id' => $cm->instance], '*', MUST_EXIST);
 }
 
 require_login($course, true, $cm);
@@ -42,14 +42,14 @@ $ableplayer_media = new ableplayer($context, $cm, $course);
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
-/// Print the page header
-$PAGE->set_url('/mod/ableplayer/view.php', array('id' => $cm->id));
+// Print the page header.
+$PAGE->set_url('/mod/ableplayer/view.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($ableplayer->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->set_cacheable(true);
 
-// Output starts here
+// Output starts here.
 echo $OUTPUT->header();
 
 echo '<script src="js/modernizr.custom.js"></script>';
@@ -58,7 +58,7 @@ echo '<script src="js/js.cookie.js"></script>';
 echo '<link rel="stylesheet" href="styles/ableplayer.css" type="text/css"/>';
 echo '<script src="js/ableplayer.min.js"></script>';
 
-if ($ableplayer->intro) { // Conditions to show the intro can change to look for own settings or whatever
+if ($ableplayer->intro) { // Conditions to show the intro can change to look for own settings or whatever.
     echo $OUTPUT->box(format_module_intro('ableplayer', $ableplayer, $cm->id), 'generalbox mod_introbox', 'ableplayerintro');
 }
 
