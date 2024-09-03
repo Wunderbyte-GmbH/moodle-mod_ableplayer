@@ -148,9 +148,9 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                 if ($mimetype = $file->get_mimetype()) {
                     $mimetag = explode('/', $mimetype);
                     if (!empty($captions[$i])) {
-                        $sorted_arr[$mimetag[0]][$i]['caption'] = $captions[$i];
+                        $sortedarr[$mimetag[0]][$i]['caption'] = $captions[$i];
                     }
-                    $sorted_arr[$mimetag[0]][$i]['file'] = $file;
+                    $sortedarr[$mimetag[0]][$i]['file'] = $file;
                     $i++;
                 }
             }
@@ -169,8 +169,8 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                 $options['data-lang'] = $ableplayer->lang;
                 $options['data-force-lang'] = '';
             }
-            
-            if (!empty($sorted_arr['video'])) {
+
+            if (!empty($sortedarr['video'])) {
                 $options['id'] = 'ableplayer_video';
                 $options['poster'] = $posterurl;
                 $output .= html_writer::start_tag(
@@ -180,18 +180,18 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
 
                 // Playlist?
                 if ($ableplayer->playlist == 1) {
-                    foreach ($sorted_arr['video'] as $key => $value) {
+                    foreach ($sortedarr['video'] as $key => $value) {
                         if (!empty($value['caption'])) {
-                            $output .= $this->get_captions_html($contextid, $value['caption'], $captions_settings);
+                            $output .= $this->get_captions_html($contextid, $value['caption'], $captionssettings);
                         }
                     }
                     $output .= html_writer::end_tag('video'); // IF playlist end video tag early
-                    $output .= html_writer::empty_tag('ul', array(
+                    $output .= html_writer::empty_tag('ul', [
                         'class' => 'able-playlist',
                         'data-player' => 'ableplayer_video',
-                        'data-embedded' => ''
-                    ));
-                    foreach ($sorted_arr['video'] as $key => $value) {
+                        'data-embedded' => '',
+                    ]);
+                    foreach ($sortedarr['video'] as $key => $value) {
                         $videourl = $this->util_get_file_url($value['file']);
                         $mimtype = explode('/', $value['file']->get_mimetype());
                         $output .= html_writer::empty_tag(
@@ -230,25 +230,25 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                     $output .= html_writer::end_tag('video');
                 }
             }
-            if (!empty($sorted_arr['audio'])) {
+            if (!empty($sortedarr['audio'])) {
                 $options['id'] = 'ableplayer_audio';
                 $output .= html_writer::start_tag(
                     'audio',
                     $options
                 );
-                foreach ($sorted_arr['audio'] as $key => $value) {
+                foreach ($sortedarr['audio'] as $key => $value) {
                     if (!empty($value['caption'])) {
-                        $output .= $this->get_captions_html($contextid, $value['caption'], $captions_settings);
+                        $output .= $this->get_captions_html($contextid, $value['caption'], $captionssettings);
                     }
                 }
                 $output .= html_writer::end_tag('audio');
-                // Audios
-                $output .= html_writer::empty_tag('ul', array(
+                // Audios.
+                $output .= html_writer::empty_tag('ul', [
                     'class' => 'able-playlist',
                     'data-player' => 'ableplayer_audio',
-                    'data-embedded' => ''
-                ));
-                foreach ($sorted_arr['audio'] as $key => $value) {
+                    'data-embedded' => '',
+                ]);
+                foreach ($sortedarr['audio'] as $key => $value) {
                     $videourl = $this->util_get_file_url($value['file']);
                     $mimtype = explode('/', $value['file']->get_mimetype());
                     $output .= html_writer::empty_tag(
