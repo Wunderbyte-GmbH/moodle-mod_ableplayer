@@ -54,7 +54,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->standard_intro_elements();
 
-        //
+        // ...
         // --------------------------------------- MEDIA SOURCE ----------------------------------------
         $mform->addElement('header', 'ableplayergeneral', get_string('ableplayergeneral', 'ableplayer'));
 
@@ -102,7 +102,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
 
         $repeatarray = [];
 
-        // Media files & description files
+        // Media files & description files.
         $repeatarray[] = $mform->createElement('text', 'url', get_string('ableplayermediaurl', 'ableplayer'));
         $mform->setType('url', PARAM_URL);
         $repeatarray[] = $mform->createElement('hidden', 'mediaurlid', 0);
@@ -150,7 +150,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             true,
         );
 
-        // Captions
+        // Captions.
         $repeatarray = [];
         $options = ['subdirs' => false,
             'maxbytes' => 0,
@@ -225,22 +225,19 @@ class mod_ableplayer_mod_form extends moodleform_mod {
      * prepares draft areas for file uploads, and sets up the form's default values based on the
      * current instance's data.
      *
-     * @param array &$defaultvalues An associative array that holds the default values for the form elements.
-     *                              This array is modified by reference to include default values for media,
-     *                              descriptions, poster, and captions based on the existing records in the database.
-     *
-     * @global moodle_database $DB Global Moodle database object for performing database operations.
+     * @param array &$defaultvalues
+     * @global moodle_database $DB The Moodle database object for performing database operations.
      */
-    function data_preprocessing(&$defaultvalues) {
+    public function data_preprocessing(&$defaultvalues) {
         global $DB;
 
         if ($this->current->instance) {
-            // Media
-            $options = array('subdirs' => false,
+            // Media.
+            $options = ['subdirs' => false,
                 'maxbytes' => 0,
-                'maxfiles' => 1);
-            $medias = $DB->get_records('ableplayer_media',array('ableplayerid'=>$this->_instance));
-            // A bit of hack file_get_submitted_draft_itemid()
+                'maxfiles' => 1];
+            $medias = $DB->get_records('ableplayer_media', ['ableplayerid' => $this->_instance]);
+            // A bit of hack file_get_submitted_draft_itemid().
             if (!empty($_REQUEST['media']) && is_array($_REQUEST['media'])) {
                 $draftitemids = optional_param_array('media', 0, PARAM_INT);
             } else {
@@ -252,7 +249,8 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 } else {
                     $draftitemid = 0;
                 }
-                file_prepare_draft_area($draftitemid,
+                file_prepare_draft_area(
+                    $draftitemid,
                     $this->context->id,
                     'mod_ableplayer',
                     'media',
@@ -262,14 +260,14 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 if ($draftitemid) {
                     $defaultvalues['media[' . $key . ']'] = $draftitemid;
                 }
-                $defaultvalues['mediaid['.$key.']'] = $value->id;
+                $defaultvalues['mediaid[' . $key . ']'] = $value->id;
             }
-            // Desc
-            $options = array('subdirs' => false,
+            // Desc.
+            $options = ['subdirs' => false,
                 'maxbytes' => 0,
-                'maxfiles' => 1);
-            $mediadescs = $DB->get_records('ableplayer_desc',array('ableplayerid'=>$this->_instance));
-            // A bit of hack file_get_submitted_draft_itemid()
+                'maxfiles' => 1];
+            $mediadescs = $DB->get_records('ableplayer_desc', ['ableplayerid' => $this->_instance]);
+            // A bit of hack file_get_submitted_draft_itemid().
             if (!empty($_REQUEST['desc']) && is_array($_REQUEST['desc'])) {
                 $draftitemids = optional_param_array('desc', 0, PARAM_INT);
             } else {
@@ -281,7 +279,8 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 } else {
                     $draftitemid = 0;
                 }
-                file_prepare_draft_area($draftitemid,
+                file_prepare_draft_area(
+                    $draftitemid,
                     $this->context->id,
                     'mod_ableplayer',
                     'desc',
@@ -291,26 +290,28 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 if ($draftitemid) {
                     $defaultvalues['desc[' . $key . ']'] = $draftitemid;
                 }
-                $defaultvalues['descid['.$key.']'] = $value->id;
+                $defaultvalues['descid[' . $key . ']'] = $value->id;
             }
-            // Poster
-            $options = array('subdirs' => false,
+            // Poster.
+            $options = ['subdirs' => false,
                 'maxbytes' => 0,
-                'maxfiles' => 1);
+                'maxfiles' => 1];
             $draftitemid = file_get_submitted_draft_itemid('poster');
-            file_prepare_draft_area($draftitemid,
+            file_prepare_draft_area(
+                $draftitemid,
                 $this->context->id,
                 'mod_ableplayer',
                 'poster',
                 0,
-                $options);
+                $options
+            );
             $defaultvalues['poster'] = $draftitemid;
-            // Caption
-            $options = array('subdirs' => false,
+            // Caption.
+            $options = ['subdirs' => false,
                 'maxbytes' => 0,
-                'maxfiles' => 1);
-            $captions = $DB->get_records('ableplayer_caption',array('ableplayerid'=>$this->_instance));
-            // A bit of hack file_get_submitted_draft_itemid()
+                'maxfiles' => 1];
+            $captions = $DB->get_records('ableplayer_caption', ['ableplayerid' => $this->_instance]);
+            // A bit of hack file_get_submitted_draft_itemid().
             if (!empty($_REQUEST['caption']) && is_array($_REQUEST['caption'])) {
                 $draftitemids = optional_param_array('caption', 0, PARAM_INT);
             } else {
@@ -322,7 +323,8 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 } else {
                     $draftitemid = 0;
                 }
-                file_prepare_draft_area($draftitemid,
+                file_prepare_draft_area(
+                    $draftitemid,
                     $this->context->id,
                     'mod_ableplayer',
                     'caption',
@@ -332,10 +334,10 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 if ($draftitemid) {
                     $defaultvalues['caption[' . $key . ']'] = $draftitemid;
                 }
-                $defaultvalues['kind['.$key.']'] = $value->kind;
-                $defaultvalues['srclang['.$key.']'] = $value->srclang;
-                $defaultvalues['label['.$key.']'] = $value->label;
-                $defaultvalues['captionid['.$key.']'] = $value->id;
+                $defaultvalues['kind[' . $key . ']'] = $value->kind;
+                $defaultvalues['srclang[' . $key . ']'] = $value->srclang;
+                $defaultvalues['label[' . $key . ']'] = $value->label;
+                $defaultvalues['captionid[' . $key . ']'] = $value->id;
             }
         }
     }
