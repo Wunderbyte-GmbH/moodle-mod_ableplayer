@@ -106,7 +106,7 @@ class ableplayer {
         );
         $this->save_files($formdata);
 
-        // Media save
+        // Media save.
         if (!empty($formdata->media)) {
             foreach ($formdata->media as $key => $value) {
                 $media = new stdClass();
@@ -126,7 +126,7 @@ class ableplayer {
                 }
             }
         }
-        // Desc save
+        // Desc save.
         if (!empty($formdata->media)) {
             foreach ($formdata->media as $key => $value) {
                 $desc = new stdClass();
@@ -145,7 +145,7 @@ class ableplayer {
                 }
             }
         }
-        // Caption save
+        // Caption save.
         if (!empty($formdata->caption)) {
             foreach ($formdata->caption as $key => $value) {
                 $caption = new stdClass();
@@ -243,7 +243,16 @@ class ableplayer {
                         );
                     }
                     $fs = get_file_storage();
-                    $file = $fs->get_area_files($this->context->id, 'mod_ableplayer', 'media', $formdata->mediaid[$key], 'itemid, filepath, filename', false);
+                    $file = $fs->get_area_files(
+                        $this->context->id,
+                        'mod_ableplayer',
+                        'media',
+                        $formdata->mediaid[$key],
+                        'itemid,
+                        filepath,
+                        filename',
+                        false
+                    );
                     if (!empty($file)) {
                         $DB->update_record("ableplayer_media", $media);
                     } else {
@@ -285,7 +294,16 @@ class ableplayer {
                         );
                     }
                     $fs = get_file_storage();
-                    $file = $fs->get_area_files($this->context->id, 'mod_ableplayer', 'desc', $formdata->descid[$key], 'itemid, filepath, filename', false);
+                    $file = $fs->get_area_files(
+                        $this->context->id,
+                        'mod_ableplayer',
+                        'desc',
+                        $formdata->descid[$key],
+                        'itemid,
+                        filepath,
+                        filename',
+                        false
+                    );
                     if (!empty($file)) {
                         $DB->update_record("ableplayer_desc", $desc);
                     } else {
@@ -329,7 +347,16 @@ class ableplayer {
                         );
                     }
                     $fs = get_file_storage();
-                    $filex = $fs->get_area_files($this->context->id, 'mod_ableplayer', 'caption', $formdata->captionid[$key], 'itemid, filepath, filename', false);
+                    $filex = $fs->get_area_files(
+                        $this->context->id,
+                        'mod_ableplayer',
+                        'caption',
+                        $formdata->captionid[$key],
+                        'itemid,
+                        filepath,
+                        filename',
+                        false
+                    );
                     if (!empty($filex)) {
                         $DB->update_record("ableplayer_caption", $caption);
                     } else {

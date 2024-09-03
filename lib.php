@@ -63,7 +63,7 @@ function ableplayer_supports($feature) {
 }
 
 /**
- * Saves a new instance of the ableplayer into the database
+ * Saves a new instance of the ableplayer into the database.
  *
  * Given an object containing all the necessary data,
  * (defined by the form in mod_form.php) this function
@@ -82,8 +82,9 @@ function ableplayer_add_instance(stdClass $data, mod_ableplayer_mod_form $mform 
     return $ableplayer->add_instance($data);
 }
 
+
 /**
- * Updates an instance of the ableplayer in the database
+ * Updates an instance of the ableplayer in the database.
  *
  * Given an object containing all the necessary data,
  * (defined by the form in mod_form.php) this function
