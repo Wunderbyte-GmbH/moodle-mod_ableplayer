@@ -132,7 +132,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @param int $contextid
      * @return string HTML
      */
-    private function get_ableplayer_html($contextid, $captions_settings, $ableplayer) {
+    private function get_ableplayer_html($contextid, $captionssettings, $ableplayer) {
         $output = '';
 
         $videos = $this->util_get_area_files($contextid, 'media');
@@ -305,7 +305,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
             if (!empty($captions)) {
                 foreach ($captions as $key => $value) {
                     if (!empty($value)) {
-                        $output .= $this->get_captions_html($contextid, $value, $captions_settings);
+                        $output .= $this->get_captions_html($contextid, $value, $captionssettings);
                     }
                 }
             }
@@ -320,7 +320,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @param int $contextid
      * @return string HTML
      */
-    private function get_captions_html($contextid, $file, $captions_settings) {
+    private function get_captions_html($contextid, $file, $captionssettings) {
         $output = '';
 
         if ($mimetype = $file->get_mimetype()) {
@@ -347,17 +347,17 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
                 }
             }
 
-            $options = array();
+            $options = [];
             $options['kind'] = 'captions';
             $options['src'] = $captionurl;
-            if (in_array($file->get_itemid(), array_keys($captions_settings))) {
+            if (in_array($file->get_itemid(), array_keys($captionssettings))) {
                 $itemid = $file->get_itemid();
-                if (!empty($captions_settings[$itemid]->kind)) {
-                    $options['kind'] = $captions_settings[$itemid]->kind;
+                if (!empty($captionssettings[$itemid]->kind)) {
+                    $options['kind'] = $captionssettings[$itemid]->kind;
                 }
-                $label = (!empty($captions_settings[$itemid]->label) ? $captions_settings[$itemid]->label : $label);
-                if (!empty($captions_settings[$itemid]->srclang)) {
-                    $options['srclang'] = $captions_settings[$itemid]->srclang;
+                $label = (!empty($captionssettings[$itemid]->label) ? $captionssettings[$itemid]->label : $label);
+                if (!empty($captionssettings[$itemid]->srclang)) {
+                    $options['srclang'] = $captionssettings[$itemid]->srclang;
                 }
             }
             $options['label'] = $label;
