@@ -23,11 +23,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_ableplayer\backup;
-
-use backup_ableplayer_activity_structure_step;
-use backup_activity_task;
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/ableplayer/backup/moodle2/backup_ableplayer_stepslib.php');

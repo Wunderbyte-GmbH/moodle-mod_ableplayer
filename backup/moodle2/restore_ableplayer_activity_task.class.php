@@ -23,14 +23,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- namespace mod_ableplayer\backup;
+ defined('MOODLE_INTERNAL') || die();
 
-use restore_ableplayer_activity_structure_step;
-use restore_activity_task;
- use restore_activity_structure_step;
- use restore_decode_content;
- use restore_decode_rule;
- use restore_log_rule;
+ require_once($CFG->dirroot . '/mod/ableplayer/backup/moodle2/restore_ableplayer_stepslib.php');
+
 /**
  * ableplayer restore task that provides all the settings and steps to perform one
  * complete restore of the activity
