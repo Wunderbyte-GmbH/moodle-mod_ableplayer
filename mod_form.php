@@ -226,7 +226,6 @@ class mod_ableplayer_mod_form extends moodleform_mod {
      * current instance's data.
      *
      * @param array &$defaultvalues
-     * @global moodle_database $DB The Moodle database object for performing database operations.
      */
     public function data_preprocessing(&$defaultvalues) {
         global $DB;
