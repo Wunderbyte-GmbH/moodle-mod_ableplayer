@@ -242,7 +242,6 @@ function ableplayer_cron() {
 /**
  * Returns all other caps used in the module
  *
- * @example return array('moodle/site:accessallgroups');
  * @return array
  */
 function ableplayer_get_extra_capabilities() {

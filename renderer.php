@@ -264,6 +264,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
         } else {
             $options = ['id' => 'ableplayer',
                 'data-able-player' => '',
+                // phpcs:ignore
                 // 'data-transcript-div' => 'transcript-placeholder'
                 'preload' => 'auto',
                 'width' => 'auto',
