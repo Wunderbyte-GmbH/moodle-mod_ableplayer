@@ -124,7 +124,21 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
         $newitemid = $DB->insert_record('ableplayer_desc', $data);
         $this->set_mapping('ableplayer_desc', $oldid, $newitemid, true);
     }
-
+    /**
+     * Processes AblePlayer caption data during the restore process.
+     *
+     * This function handles the restoration of caption data associated with
+     * the AblePlayer activity. It updates the parent AblePlayer ID to match
+     * the newly restored instance, inserts the caption data into the
+     * 'ableplayer_caption' table in the database, and creates a mapping
+     * for the restored caption item.
+     *
+     * @param array $data The data array containing caption information from
+     *                    the restore file, including the caption ID,
+     *                    related AblePlayer activity ID, and other caption details.
+     *
+     * @return void
+     */
     protected function process_ableplayer_caption($data) {
         global $DB;
 
@@ -135,7 +149,19 @@ class restore_ableplayer_activity_structure_step extends restore_activity_struct
         $newitemid = $DB->insert_record('ableplayer_caption', $data);
         $this->set_mapping('ableplayer_caption', $oldid, $newitemid, true);
     }
-
+    /**
+     * Finalize the restore process by adding related files for the AblePlayer activity.
+     *
+     * This function is called after the main restore process is completed. It handles the
+     * restoration of related files associated with the AblePlayer activity, including the
+     * intro, poster, media, description, and caption files. The files are added to the
+     * appropriate file areas within the restored context.
+     *
+     * The related files are added without requiring a match by item name, as the context
+     * is handled internally by the Moodle restore system.
+     *
+     * @return void
+     */
     protected function after_execute() {
         // Add ableplayer related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_ableplayer', 'intro', null);

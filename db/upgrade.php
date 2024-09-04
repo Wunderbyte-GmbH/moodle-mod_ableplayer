@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,15 +23,11 @@
  * upgrade your older installation to the current version. If there's something
  * it cannot do itself, it will tell you what you need to do.  The commands in
  * here will all be database-neutral, using the functions defined in DLL libraries.
- */
-
-/**
+ * @copyright  2024 Wunderbyte GmbH
  * @package    mod_ableplayer
  * @author     Tõnis Tartes <tonis.tartes@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Execute ableplayer upgrade from the given old version
@@ -43,10 +38,10 @@ defined('MOODLE_INTERNAL') || die();
 function xmldb_ableplayer_upgrade($oldversion) {
     global $DB;
 
-    $dbman = $DB->get_manager(); // loads ddl manager and xmldb classes
-    
-    //Nothing to do..
-    
+    $dbman = $DB->get_manager(); // Loads ddl manager and xmldb classes.
+
+    // Nothing to do..
+
     // Final return of upgrade result (true, all went good) to Moodle.
     return true;
 }
