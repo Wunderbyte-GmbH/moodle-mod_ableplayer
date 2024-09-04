@@ -20,12 +20,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_ableplayer\backup;
-
-use restore_activity_structure_step;
-use restore_path_element;
-
-
 /**
  * Structure step to restore one ableplayer activity
  */

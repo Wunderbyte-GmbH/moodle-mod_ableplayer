@@ -20,12 +20,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_ableplayer\backup;
-
-use backup_activity_structure_step;
-use backup_nested_element;
-use backup;
-
 /**
  * Define the complete ableplayer structure for backup, with file and id annotations
  */
