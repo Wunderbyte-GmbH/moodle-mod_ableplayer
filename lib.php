@@ -136,7 +136,14 @@ function ableplayer_delete_instance($id) {
  * $return->time = the time they did it
  * $return->info = a short text description
  *
- * @return stdClass|null
+ * Provides a summary of the user's interaction with the AblePlayer module.
+ *
+ * @param stdClass $course The course object containing the AblePlayer module.
+ * @param stdClass $user The user object whose activity is being summarized.
+ * @param stdClass $mod The module object that represents the AblePlayer instance in the course.
+ * @param stdClass $ableplayer The AblePlayer instance object.
+ * @return stdClass|null A summary object containing the time of the last view and the number of views,
+ *                       or null if no views were recorded.
  */
 function ableplayer_user_outline($course, $user, $mod, $ableplayer) {
     global $DB;
@@ -194,10 +201,12 @@ function ableplayer_user_complete($course, $user, $mod, $ableplayer) {
  * Given a course and a time, this module should find recent activity
  * that has occurred in ableplayer activities and print it out.
  * Return true if there was output, or false is there was none.
- *
+ * @param stdClass $course
+ * @param stdClass $viewfullnames
+ * @param stdClass $timestart
  * @return boolean
  */
-function ableplayer_print_recent_activity($course, $viewfullnames, $timestart) {
+function ableplayer_print_recent_activity(stdClass $course, stdClass $viewfullnames, stdClass $timestart) {
     return false;  // True if anything was printed, otherwise false.
 }
 
@@ -206,7 +215,7 @@ function ableplayer_print_recent_activity($course, $viewfullnames, $timestart) {
  *
  * This callback function is supposed to populate the passed array with
  * custom activity records. These records are then rendered into HTML via
- * {@link ableplayer_print_recent_mod_activity()}.
+ * ableplayer_print_recent_mod_activity.
  *
  * @param array $activities sequentially indexed array of objects with the 'cmid' property
  * @param int $index the index in the $activities to use for the next record
@@ -217,15 +226,19 @@ function ableplayer_print_recent_activity($course, $viewfullnames, $timestart) {
  * @param int $groupid check for a particular group's activity only, defaults to 0 (all groups)
  * @return void adds items into $activities and increases $index
  */
-function ableplayer_get_recent_mod_activity(&$activities, &$index, $timestart, $courseid, $cmid, $userid = 0, $groupid = 0) {
+function ableplayer_get_recent_mod_activity(array &$activities, int &$index, int $timestart, int $courseid, int $cmid, int $userid = 0, int $groupid = 0) {
 }
 
 /**
  * Prints single activity item prepared by {@see ableplayer_get_recent_mod_activity()}
-
+ * @param array $activities sequentially indexed array of objects with the 'cmid' property
+ * @param int $courseid the id of the course we produce the report for
+ * @param stdClass $detail
+ * @param stdClass $modnames
+ * @param stdClass $viewfullnames
  * @return void
  */
-function ableplayer_print_recent_mod_activity($activity, $courseid, $detail, $modnames, $viewfullnames) {
+function ableplayer_print_recent_mod_activity(array $activity, int $courseid, stdClass $detail, stdClass $modnames, stdClass $viewfullnames) {
 }
 
 /**
@@ -261,9 +274,10 @@ function ableplayer_get_extra_capabilities() {
  * as reference.
  *
  * @param int $ableplayerid ID of an instance of this module
+ * @param int $scaleid
  * @return bool true if the scale is used by the given ableplayer instance
  */
-function ableplayer_scale_used($ableplayerid, $scaleid) {
+function ableplayer_scale_used(int $ableplayerid, int $scaleid) {
     return false;
 }
 
@@ -272,7 +286,7 @@ function ableplayer_scale_used($ableplayerid, $scaleid) {
  *
  * This is used to find out if scale used anywhere.
  *
- * @param $scaleid int
+ * @param int $scaleid int
  * @return boolean true if the scale is used by any ableplayer instance
  */
 function ableplayer_scale_used_anywhere($scaleid) {
@@ -312,7 +326,7 @@ function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
  * Returns the lists of all browsable file areas within the given module context
  *
  * The file area 'intro' for the activity introduction field is added automatically
- * by {@link file_browser::get_file_info_context_module()}
+ * by file_browser::get_file_info_context_module
  *
  * @param stdClass $course
  * @param stdClass $cm
@@ -462,10 +476,10 @@ class ableplayer_content_file_info extends file_info_stored {
 /**
  * This function is used by the reset_course_userdata function in moodlelib.
  *
- * @param $data The data submitted from the reset course.
+ * @param stdClass $data The data submitted from the reset course.
  * @return array Status array
  */
-function ableplayer_reset_userdata($data) {
+function ableplayer_reset_userdata(stdClass $data) {
     return [];
 }
 
@@ -492,8 +506,8 @@ function ableplayer_extend_navigation(navigation_node $navref, stdclass $course,
  * This function is called when the context for the page is a ableplayer module. This is not called by AJAX
  * so it is safe to rely on the $PAGE.
  *
- * @param settings_navigation $settingsnav {@link settings_navigation}
- * @param navigation_node|null $ableplayernode {@link navigation_node}
+ * @param settings_navigation $settingsnav settings_navigation
+ * @param navigation_node|null $ableplayernode navigation_node
  */
 function ableplayer_extend_settings_navigation(settings_navigation $settingsnav, $ableplayernode = null) {
 }

@@ -225,7 +225,8 @@ class mod_ableplayer_mod_form extends moodleform_mod {
      * prepares draft areas for file uploads, and sets up the form's default values based on the
      * current instance's data.
      *
-     * @param array &$defaultvalues
+     * @param array $defaultvalues An array to hold the default values for the form elements.
+     *                              This array is modified by reference.
      */
     public function data_preprocessing(&$defaultvalues) {
         global $DB;

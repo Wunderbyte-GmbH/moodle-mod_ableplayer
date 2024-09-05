@@ -129,10 +129,12 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
     /**
      * Utility function for creating the video source elements HTML.
      *
-     * @param int $contextid
-     * @return string HTML
+     * @param int $contextid The context ID.
+     * @param array $captionssettings The settings for captions.
+     * @param ableplayer $ableplayer The ableplayer object containing player settings.
+     * @return string HTML markup for the AblePlayer video elements.
      */
-    private function get_ableplayer_html($contextid, $captionssettings, $ableplayer) {
+    private function get_ableplayer_html(int $contextid, array $captionssettings, ableplayer $ableplayer): string {
         $output = '';
 
         $videos = $this->util_get_area_files($contextid, 'media');
@@ -319,9 +321,11 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * HTML.
      *
      * @param int $contextid
+     * @param stored_file $file
+     * @param array $captionsettings
      * @return string HTML
      */
-    private function get_captions_html($contextid, $file, $captionssettings) {
+    private function get_captions_html(int $contextid, stored_file $file, array $captionssettings): string {
         $output = '';
 
         if ($mimetype = $file->get_mimetype()) {
@@ -371,7 +375,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
     /**
      * Renders ableplayer video.
      *
-     * @param ableplayer $videofile
+     * @param ableplayer $ableplayermedia
      * @return string HTML
      */
     public function ableplayer(ableplayer $ableplayermedia) {
