@@ -134,7 +134,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @param ableplayer $ableplayer The ableplayer object containing player settings.
      * @return string HTML markup for the AblePlayer video elements.
      */
-    private function get_ableplayer_html(int $contextid, array $captionssettings, ableplayer $ableplayer): string {
+    private function get_ableplayer_html($contextid, $captionssettings, $ableplayer) {
         $output = '';
 
         $videos = $this->util_get_area_files($contextid, 'media');
@@ -325,7 +325,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @param array $captionsettings
      * @return string HTML
      */
-    private function get_captions_html(int $contextid, stored_file $file, array $captionssettings): string {
+    private function get_captions_html($contextid, $file, $captionssettings) {
         $output = '';
 
         if ($mimetype = $file->get_mimetype()) {

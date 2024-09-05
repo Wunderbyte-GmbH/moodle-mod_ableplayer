@@ -141,7 +141,7 @@ function ableplayer_delete_instance($id) {
  * @param stdClass $course The course object containing the AblePlayer module.
  * @param stdClass $user The user object whose activity is being summarized.
  * @param stdClass $mod The module object that represents the AblePlayer instance in the course.
- * @param stdClass $ableplayer The AblePlayer instance object.
+ * @param ableplayer $ableplayer The AblePlayer instance object.
  * @return stdClass|null A summary object containing the time of the last view and the number of views,
  *                       or null if no views were recorded.
  */
@@ -173,7 +173,7 @@ function ableplayer_user_outline($course, $user, $mod, $ableplayer) {
  * @param stdClass $course the current course record
  * @param stdClass $user the record of the user we are generating report for
  * @param cm_info $mod course module info
- * @param stdClass $ableplayer the module instance record
+ * @param ableplayer $ableplayer the module instance record
  * @return void, is supposed to echp directly
  */
 function ableplayer_user_complete($course, $user, $mod, $ableplayer) {
@@ -203,10 +203,10 @@ function ableplayer_user_complete($course, $user, $mod, $ableplayer) {
  * Return true if there was output, or false is there was none.
  * @param stdClass $course
  * @param stdClass $viewfullnames
- * @param stdClass $timestart
+ * @param int $timestart
  * @return boolean
  */
-function ableplayer_print_recent_activity(stdClass $course, stdClass $viewfullnames, stdClass $timestart) {
+function ableplayer_print_recent_activity(stdClass $course, stdClass $viewfullnames, int $timestart) {
     return false;  // True if anything was printed, otherwise false.
 }
 
@@ -298,7 +298,7 @@ function ableplayer_scale_used_anywhere($scaleid) {
  *
  * Needed by grade_update_mod_grades() in lib/gradelib.php
  *
- * @param stdClass $ableplayer instance object with extra cmidnumber and modname property
+ * @param ableplayer $ableplayer instance object with extra cmidnumber and modname property
  * @return bool
  */
 function ableplayer_grade_item_update(stdClass $ableplayer) {
@@ -310,7 +310,7 @@ function ableplayer_grade_item_update(stdClass $ableplayer) {
  *
  * Needed by grade_update_mod_grades() in lib/gradelib.php
  *
- * @param stdClass $ableplayer instance object with extra cmidnumber and modname property
+ * @param ableplayer $ableplayer instance object with extra cmidnumber and modname property
  * @param int $userid update grade of specific user only, 0 means all participants
  * @return bool
  */
