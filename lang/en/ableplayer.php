@@ -58,3 +58,4 @@ $string['ableplayermediaurl'] = 'Media URL';
 $string['ableplayerdescriptionfile'] = 'Description file';
 $string['poster'] = 'Poster Image';
 $string['poster_help'] = 'Poster Image (.jpg, .jpeg, .png only)';
+$string['ableplayer:addinstance'] = 'Add a new Able Player instance';
