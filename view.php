@@ -58,10 +58,6 @@ echo '<script src="js/js.cookie.js"></script>';
 echo '<link rel="stylesheet" href="styles/ableplayer.css" type="text/css"/>';
 echo '<script src="js/ableplayer.min.js"></script>';
 
-if ($ableplayer->intro) { // Conditions to show the intro can change to look for own settings or whatever.
-    echo $OUTPUT->box(format_module_intro('ableplayer', $ableplayer, $cm->id), 'generalbox mod_introbox', 'ableplayerintro');
-}
-
 $renderer = $PAGE->get_renderer('mod_ableplayer');
 echo $renderer->ableplayer_page($ableplayermedia);
 echo '<div id="transcript-placeholder"></div>';
