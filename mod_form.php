@@ -102,6 +102,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         $repeatarray = array();
 
         // Media files & description files
+        $mform->addElement('header', 'ableplayermedia', get_string('ableplayermedia', 'ableplayer'));
         $repeatarray[] = $mform->createElement('text', 'url', get_string('ableplayermediaurl', 'ableplayer'));
         $repeatarray[] = $mform->createElement('hidden', 'mediaurlid', 0);
 
@@ -109,7 +110,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             'maxbytes' => 0,
             'maxfiles' => 1,
             'accepted_types' => array('.mp4', '.webm', '.webv', '.ogg', '.ogv', '.oga', '.wav', '.mp3'));
-        $repeatarray[] = $mform->createElement('header', 'ableplayermedia', get_string('ableplayermedia', 'ableplayer'));
+
         $repeatarray[] = $mform->createElement(
             'filemanager',
             'media',
@@ -127,26 +128,38 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             $options
         );
         $repeatarray[] = $mform->createElement('hidden', 'descid', 0);
+
         if ($this->_instance){
             $repeatno = $DB->count_records('ableplayer_media', array('ableplayerid'=>$this->_instance));
-        } else {
-            $repeatno = 1;
         }
+        $repeatno = !empty($repeatno) ? $repeatno : 1;
+
         $repeateloptions = array();
         $mform->setType('mediaurlid', PARAM_INT);
         $mform->setType('mediaid', PARAM_INT);
         $mform->setType('descid', PARAM_INT);
+        $mform->setType('url', PARAM_URL);
 
-        $this->repeat_elements($repeatarray, $repeatno,
-            $repeateloptions, 'ableplayermedias_repeats', 'ableplayermedias_add_fields', 1, null, true);
+        // Repeat the elements without repeating the header
+        $this->repeat_elements(
+            $repeatarray,           // The elements to be repeated
+            $repeatno,              // Number of repetitions
+            $repeateloptions,                // Repeat element options (empty if not needed)
+            'ableplayermedias_repeats', // Element name prefix for repeated elements
+            'ableplayermedias_add_fields', // Field name for "Add more" button
+            1,                      // Number of blank fields to allow for extra entries
+            null,                   // Add button options
+            true                    // Allow deletion of repeated elements
+        );
+
 
         // Captions
+        $mform->addElement('header', 'ableplayercaptions', get_string('ableplayercaptions', 'ableplayer'));
         $repeatarray = array();
         $options = array('subdirs' => false,
             'maxbytes' => 0,
             'maxfiles' => 1,
             'accepted_types' => array('.vtt'));
-        $repeatarray[] = $mform->createElement('header', 'ableplayercaptions', get_string('ableplayercaptions', 'ableplayer'));
         $repeatarray[] = $mform->createElement(
             'filemanager',
             'caption',
@@ -175,29 +188,39 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             'it' => 'it',
             'ja' => 'ja',
             'nb' => 'nb',
-            'nl' => 'nl'
+            'nl' => 'nl',
         );
         $repeatarray[] = $mform->createElement('select', 'srclang', get_string('srclang', 'ableplayer'), $langarray);
+
         $repeatarray[] = $mform->createElement('text', 'label', get_string('label', 'ableplayer'));
         $repeatarray[] = $mform->createElement('hidden', 'captionid', 0);
 
         if ($this->_instance){
             $repeatno = $DB->count_records('ableplayer_caption', array('ableplayerid'=>$this->_instance));
-        } else {
-            $repeatno = 1;
         }
+        $repeatno = !empty($repeatno) ? $repeatno : 1;
 
         $repeateloptions = array();
         $mform->setType('label', PARAM_TEXT);
         $mform->setType('captionid', PARAM_INT);
 
-        $this->repeat_elements($repeatarray, $repeatno,
-            $repeateloptions, 'ableplayercaptions_repeats', 'ableplayercaptions_add_fields', 1, null, true);
-        //-------------------------------------------------------------------------------
-        // add standard elements, common to all modules
+        // Define the repeat element options (empty in this case)
+        $repeateloptions = array();
+
+        // Repeat the elements without repeating the header
+        $this->repeat_elements(
+            $repeatarray,                  // The elements to be repeated
+            $repeatno,                     // Number of repetitions
+            $repeateloptions,              // Repeat element options (empty if not needed)
+            'ableplayercaptions_repeats',  // Element name prefix for repeated elements
+            'ableplayercaptions_add_fields', // Field name for "Add more" button
+            1,                             // Number of blank fields to allow for extra entries
+            null,                          // Add button options
+            true                           // Allow deletion of repeated elements
+        );
+
+        // Add standard elements and buttons for the form
         $this->standard_coursemodule_elements();
-        //-------------------------------------------------------------------------------
-        // add standard buttons, common to all modules
         $this->add_action_buttons();
     }
 
@@ -233,6 +256,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $default_values['media[' . $key . ']'] = $draftitemid;
                 }
                 $default_values['mediaid['.$key.']'] = $value->id;
+                $default_values['url'][$key] = $value->url;
             }
             // Desc
             $options = array('subdirs' => false,
@@ -262,6 +286,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $default_values['desc[' . $key . ']'] = $draftitemid;
                 }
                 $default_values['descid['.$key.']'] = $value->id;
+
             }
             // Poster
             $options = array('subdirs' => false,
