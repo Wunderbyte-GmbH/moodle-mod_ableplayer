@@ -82,98 +82,106 @@ class ableplayer {
      */
     public function add_instance(stdClass $formdata) {
         global $DB;
-        // Add the database record.
-        $add = new stdClass();
-        $add->name = $formdata->name;
-        $add->timemodified = time();
-        $add->timecreated = time();
-        $add->course = $formdata->course;
-        $add->courseid = $formdata->course;
-        $add->intro = $formdata->intro;
-        $add->introformat = $formdata->introformat;
-        $add->playlist = $formdata->playlist;
-        $add->mode = $formdata->mode;
-        $add->lang = $formdata->lang;
-        $returnid = $DB->insert_record('ableplayer', $add);
+        // Check if the instance already exists.
+        if (!empty($formdata->instance)) {
+            // Update the isntance if it exists.
+            $result = $this->update_instance($formdata);
+        } else {
+            // Otherwise, create a new instance.
+            $add = new stdClass();
+            $add->name = $formdata->name;
+            $add->timemodified = time();
+            $add->timecreated = time();
+            $add->course = $formdata->course;
+            $add->courseid = $formdata->course;
+            $add->intro = $formdata->intro;
+            $add->introformat = $formdata->introformat;
+            $add->playlist = $formdata->playlist;
+            $add->mode = $formdata->mode;
+            $add->lang = $formdata->lang;
+            $returnid = $DB->insert_record('ableplayer', $add);
 
-        $this->instance = $DB->get_record(
-            'ableplayer',
-            ['id' => $returnid],
-            '*',
-            MUST_EXIST
-        );
-        $this->save_files($formdata);
+            $this->instance = $DB->get_record(
+                'ableplayer',
+                ['id' => $returnid],
+                '*',
+                MUST_EXIST
+            );
 
-        // Media save.
-        if (!empty($formdata->media)) {
-            foreach ($formdata->media as $key => $value) {
-                $media = new stdClass();
-                $media->ableplayerid = $returnid;
-                $media->url = $formdata->url[$key];
-                $mediaid = $DB->insert_record("ableplayer_media", $media, true);
-                // Storage of files from the filemanager (captions).
-                $draftitemid = $value;
-                if ($draftitemid) {
-                    file_save_draft_area_files(
-                        $draftitemid,
-                        $this->context->id,
-                        'mod_ableplayer',
-                        'media',
-                        $mediaid
-                    );
+            $this->save_files($formdata);
+
+            // Media save.
+            if (!empty($formdata->media)) {
+                foreach ($formdata->media as $key => $value) {
+                    $media = new stdClass();
+                    $media->ableplayerid = $returnid;
+                    $media->url = $formdata->url[$key];
+                    $mediaid = $DB->insert_record("ableplayer_media", $media, true);
+                    // Storage of files from the filemanager (captions).
+                    $draftitemid = $value;
+                    if ($draftitemid) {
+                        file_save_draft_area_files(
+                            $draftitemid,
+                            $this->context->id,
+                            'mod_ableplayer',
+                            'media',
+                            $mediaid
+                        );
+                    }
                 }
             }
-        }
-        // Desc save.
-        if (!empty($formdata->media)) {
-            foreach ($formdata->media as $key => $value) {
-                $desc = new stdClass();
-                $desc->ableplayerid = $returnid;
-                $descid = $DB->insert_record("ableplayer_desc", $desc, true);
-                // Storage of files from the filemanager (captions).
-                $draftitemid = $value;
-                if ($draftitemid) {
-                    file_save_draft_area_files(
-                        $draftitemid,
-                        $this->context->id,
-                        'mod_ableplayer',
-                        'desc',
-                        $mediaid
-                    );
+            // Desc save.
+            if (!empty($formdata->media)) {
+                foreach ($formdata->media as $key => $value) {
+                    $desc = new stdClass();
+                    $desc->ableplayerid = $returnid;
+                    $descid = $DB->insert_record("ableplayer_desc", $desc, true);
+                    // Storage of files from the filemanager (captions).
+                    $draftitemid = $value;
+                    if ($draftitemid) {
+                        file_save_draft_area_files(
+                            $draftitemid,
+                            $this->context->id,
+                            'mod_ableplayer',
+                            'desc',
+                            $mediaid
+                        );
+                    }
                 }
             }
-        }
-        // Caption save.
-        if (!empty($formdata->caption)) {
-            foreach ($formdata->caption as $key => $value) {
-                $caption = new stdClass();
-                $caption->ableplayerid = $returnid;
-                $caption->label = $formdata->label[$key];
-                $caption->kind = $formdata->kind[$key];
-                $caption->srclang = $formdata->srclang[$key];
-                $captionid = $DB->insert_record("ableplayer_caption", $caption, true);
-                // Storage of files from the filemanager (captions).
-                $draftitemid = $value;
-                if ($draftitemid) {
-                    file_save_draft_area_files(
-                        $draftitemid,
-                        $this->context->id,
-                        'mod_ableplayer',
-                        'caption',
-                        $captionid
-                    );
+            // Caption save.
+            if (!empty($formdata->caption)) {
+                foreach ($formdata->caption as $key => $value) {
+                    $caption = new stdClass();
+                    $caption->ableplayerid = $returnid;
+                    $caption->label = $formdata->label[$key];
+                    $caption->kind = $formdata->kind[$key];
+                    $caption->srclang = $formdata->srclang[$key];
+                    $captionid = $DB->insert_record("ableplayer_caption", $caption, true);
+                    // Storage of files from the filemanager (captions).
+                    $draftitemid = $value;
+                    if ($draftitemid) {
+                        file_save_draft_area_files(
+                            $draftitemid,
+                            $this->context->id,
+                            'mod_ableplayer',
+                            'caption',
+                            $captionid
+                        );
+                    }
                 }
             }
-        }
 
-        // Cache the course record.
-        $this->course = $DB->get_record(
-            'course',
-            ['id' => $formdata->course],
-            '*',
-            MUST_EXIST
-        );
-        return $returnid;
+            // Cache the course record.
+            $this->course = $DB->get_record(
+                'course',
+                ['id' => $formdata->course],
+                '*',
+                MUST_EXIST
+            );
+            return $returnid;
+        }
+        return $result;
     }
     /**
      * Delete this instance from the database.

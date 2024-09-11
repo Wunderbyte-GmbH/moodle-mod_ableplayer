@@ -111,7 +111,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         $options = ['subdirs' => false,
             'maxbytes' => 0,
             'maxfiles' => 1,
-            'accepted_types' => array('.mp4', '.webm', '.webv', '.ogg', '.ogv', '.oga', '.wav', '.mp3'));
+            'accepted_types' => array('.mp4', '.webm', '.webv', '.ogg', '.ogv', '.oga', '.wav', '.mp3')];
 
         $repeatarray[] = $mform->createElement(
             'filemanager',
@@ -191,7 +191,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             'ja' => 'ja',
             'nb' => 'nb',
             'nl' => 'nl',
-        );
+        ];
         $repeatarray[] = $mform->createElement('select', 'srclang', get_string('srclang', 'ableplayer'), $langarray);
 
         $repeatarray[] = $mform->createElement('text', 'label', get_string('label', 'ableplayer'));
@@ -265,10 +265,10 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $options
                 );
                 if ($draftitemid) {
-                    $defaultvalues['media[' . $key . ']'] = $draftitemid;
+                    $defaultvalues['media'][$key] = $draftitemid;
                 }
-                $default_values['mediaid['.$key.']'] = $value->id;
-                $default_values['url'][$key] = $value->url;
+                $defaultvalues['mediaid'][$key] = $value->id;
+                $defaultvalues['url'][$key] = $value->url;
             }
             // Desc.
             $options = ['subdirs' => false,
@@ -298,7 +298,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                 if ($draftitemid) {
                     $defaultvalues['desc[' . $key . ']'] = $draftitemid;
                 }
-                $default_values['descid['.$key.']'] = $value->id;
+                $defaultvalues['descid['.$key.']'] = $value->id;
 
             }
             // Poster.
