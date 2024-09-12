@@ -1,7 +1,9 @@
-(function ($) {
+// eslint-disable-next-line no-unused-vars
+(function($) {
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.initDescription = function() {
 
-    // set default mode for delivering description (open vs closed)
+    // Set default mode for delivering description (open vs closed)
     // based on availability and user preference
 
     // called when player is being built, or when a user
@@ -18,47 +20,41 @@
     // this.useDescFormat == either 'video' or 'text'; the format ultimately delivered
     // descOn == true if description of either type is on
     if (!this.refreshingDesc) {
-      // this is the initial build
+      // This is the initial build
       // first, check to see if there's an open-described version of this video
       // checks only the first source since if a described version is provided,
       // it must be provided for all sources
       this.descFile = this.$sources.first().attr('data-desc-src');
       if (typeof this.descFile !== 'undefined') {
         this.hasOpenDesc = true;
-      }
-      else {
-        // there's no open-described version via data-desc-src, but what about data-youtube-desc-src?
+      } else {
+        // There's no open-described version via data-desc-src, but what about data-youtube-desc-src?
         if (this.youTubeDescId) {
           this.hasOpenDesc = true;
-        }
-        else { // there are no open-described versions from any source
+        } else { // There are no open-described versions from any source
           this.hasOpenDesc = false;
         }
       }
     }
-    // update this.useDescFormat based on media availability & user preferences
+    // Update this.useDescFormat based on media availability & user preferences
     if (this.prefDesc) {
       if (this.hasOpenDesc && this.hasClosedDesc) {
-        // both formats are available. Use whichever one user prefers
+        // Both formats are available. Use whichever one user prefers
         this.useDescFormat = this.prefDescFormat;
         this.descOn = true;
-      }
-      else if (this.hasOpenDesc) {
+      } else if (this.hasOpenDesc) {
         this.useDescFormat = 'video';
         this.descOn = true;
-      }
-      else if (this.hasClosedDesc) {
+      } else if (this.hasClosedDesc) {
         this.useDescFormat = 'text';
         this.descOn = true;
       }
-    }
-    else { // description button is off
-      if (this.refreshingDesc) { // user just now toggled it off
+    } else { // Description button is off
+      if (this.refreshingDesc) { // User just now toggled it off
         this.prevDescFormat = this.useDescFormat;
         this.useDescFormat = false;
         this.descOn = false;
-      }
-      else { // desc has always been off
+      } else { // Desc has always been off
         this.useDescFormat = false;
       }
     }
@@ -68,34 +64,30 @@
       if (this.useDescFormat === 'video') {
 
         if (!this.usingAudioDescription()) {
-          // switched from non-described to described version
+          // Switched from non-described to described version
           this.swapDescription();
         }
-        // hide description div
+        // Hide description div
         this.$descDiv.hide();
         this.$descDiv.removeClass('able-clipped');
-      }
-      else if (this.useDescFormat === 'text') {
+      } else if (this.useDescFormat === 'text') {
         this.$descDiv.show();
-        if (this.prefVisibleDesc) { // make it visible to everyone
+        if (this.prefVisibleDesc) { // Make it visible to everyone
           this.$descDiv.removeClass('able-clipped');
-        }
-        else { // keep it visible to screen readers, but hide from everyone else
+        } else { // Keep it visible to screen readers, but hide from everyone else
           this.$descDiv.addClass('able-clipped');
         }
         if (!this.swappingSrc) {
           this.showDescription(this.getElapsed());
         }
       }
-    }
-    else { // description is off.
+    } else { // Description is off.
 
-      if (this.prevDescFormat === 'video') { // user was previously using description via video
+      if (this.prevDescFormat === 'video') { // User was previously using description via video
         if (this.usingAudioDescription()) {
           this.swapDescription();
         }
-      }
-      else if (this.prevDescFormat === 'text') { // user was previously using text description
+      } else if (this.prevDescFormat === 'text') { // User was previously using text description
         // hide description div from everyone, including screen reader users
         this.$descDiv.hide();
         this.$descDiv.removeClass('able-clipped');
@@ -105,18 +97,19 @@
   };
 
   // Returns true if currently using audio description, false otherwise.
-  AblePlayer.prototype.usingAudioDescription = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.usingAudioDescription = function() {
 
     if (this.player === 'youtube') {
       return (this.activeYouTubeId === this.youTubeDescId);
-    }
-    else {
+    } else {
       return (this.$sources.first().attr('data-desc-src') === this.$sources.first().attr('src'));
     }
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.swapDescription = function() {
-    // swap described and non-described source media, depending on which is playing
+    // Swap described and non-described source media, depending on which is playing
     // this function is only called in two circumstances:
     // 1. Swapping to described version when initializing player (based on user prefs & availability)
     // 2. User is toggling description
@@ -124,32 +117,31 @@
 
     thisObj = this;
 
-    // get current time, and start new video at the same time
+    // Get current time, and start new video at the same time
     // NOTE: There is some risk in resuming playback at the same start time
     // since the described version might include extended audio description (with pauses)
     // and might therefore be longer than the non-described version
     // The benefits though would seem to outweigh this risk
-    this.swapTime = this.getElapsed(); // video will scrub to this time after loaded (see event.js)
+    this.swapTime = this.getElapsed(); // Video will scrub to this time after loaded (see event.js)
 
     if (this.descOn) {
-      // user has requested the described version
+      // User has requested the described version
       this.showAlert(this.tt.alertDescribedVersion);
-    }
-    else {
-      // user has requested the non-described version
+    } else {
+      // User has requested the non-described version
       this.showAlert(this.tt.alertNonDescribedVersion);
     }
 
     if (this.player === 'html5') {
 
       if (this.usingAudioDescription()) {
-        // the described version is currently playing. Swap to non-described
-        for (i=0; i < this.$sources.length; i++) {
-          // for all <source> elements, replace src with data-orig-src
+        // The described version is currently playing. Swap to non-described
+        for (i = 0; i < this.$sources.length; i++) {
+          // For all <source> elements, replace src with data-orig-src
           origSrc = this.$sources[i].getAttribute('data-orig-src');
           srcType = this.$sources[i].getAttribute('type');
           if (origSrc) {
-            this.$sources[i].setAttribute('src',origSrc);
+            this.$sources[i].setAttribute('src', origSrc);
           }
           if (srcType === 'video/mp4') {
             jwSourceIndex = i;
@@ -159,18 +151,17 @@
         // This function is only called during initialization
         // if swapping from non-described to described
         this.swappingSrc = true;
-      }
-      else {
-        // the non-described version is currently playing. Swap to described.
-        for (i=0; i < this.$sources.length; i++) {
-          // for all <source> elements, replace src with data-desc-src (if one exists)
+      } else {
+        // The non-described version is currently playing. Swap to described.
+        for (i = 0; i < this.$sources.length; i++) {
+          // For all <source> elements, replace src with data-desc-src (if one exists)
           // then store original source in a new data-orig-src attribute
           origSrc = this.$sources[i].getAttribute('src');
           descSrc = this.$sources[i].getAttribute('data-desc-src');
           srcType = this.$sources[i].getAttribute('type');
           if (descSrc) {
-            this.$sources[i].setAttribute('src',descSrc);
-            this.$sources[i].setAttribute('data-orig-src',origSrc);
+            this.$sources[i].setAttribute('src', descSrc);
+            this.$sources[i].setAttribute('data-orig-src', origSrc);
           }
           if (srcType === 'video/mp4') {
             jwSourceIndex = i;
@@ -179,51 +170,48 @@
         this.swappingSrc = true;
       }
 
-      // now reload the source file.
+      // Now reload the source file.
       if (this.player === 'html5') {
         this.media.load();
-      }
-      else if (this.player === 'youtube') {
+      } else if (this.player === 'youtube') {
         // TODO: Load new youTubeId
-      }
-      else if (this.player === 'jw' && this.jwPlayer) {
+      } else if (this.player === 'jw' && this.jwPlayer) {
         newSource = this.$sources[jwSourceIndex].getAttribute('src');
         this.jwPlayer.load({file: newSource});
       }
-    }
-    else if (this.player === 'youtube') {
+    } else if (this.player === 'youtube') {
 
       if (this.usingAudioDescription()) {
-        // the described version is currently playing. Swap to non-described
+        // The described version is currently playing. Swap to non-described
         this.activeYouTubeId = this.youTubeId;
         this.showAlert(this.tt.alertNonDescribedVersion);
-      }
-      else {
-        // the non-described version is currently playing. Swap to described.
+      } else {
+        // The non-described version is currently playing. Swap to described.
         this.activeYouTubeId = this.youTubeDescId;
         this.showAlert(this.tt.alertDescribedVersion);
       }
       if (typeof this.youTubePlayer !== 'undefined') {
-
-        // retrieve/setup captions for the new video from YouTube
+        // Retrieve/setup captions for the new video from YouTube
+        // eslint-disable-next-line promise/catch-or-return
         this.setupAltCaptions().then(function() {
 
+          // eslint-disable-next-line promise/always-return
           if (thisObj.playing) {
-            // loadVideoById() loads and immediately plays the new video at swapTime
-            thisObj.youTubePlayer.loadVideoById(thisObj.activeYouTubeId,thisObj.swapTime);
-          }
-          else {
-            // cueVideoById() loads the new video and seeks to swapTime, but does not play
-            thisObj.youTubePlayer.cueVideoById(thisObj.activeYouTubeId,thisObj.swapTime);
+            // LoadVideoById() loads and immediately plays the new video at swapTime
+            thisObj.youTubePlayer.loadVideoById(thisObj.activeYouTubeId, thisObj.swapTime);
+          } else {
+            // CueVideoById() loads the new video and seeks to swapTime, but does not play
+            thisObj.youTubePlayer.cueVideoById(thisObj.activeYouTubeId, thisObj.swapTime);
           }
         });
       }
     }
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.showDescription = function(now) {
 
-    // there's a lot of redundancy between this function and showCaptions
+    // There's a lot of redundancy between this function and showCaptions
     // Trying to combine them ended up in a mess though. Keeping as is for now.
 
     if (this.swappingSrc) {
@@ -231,12 +219,11 @@
     }
 
     var d, thisDescription;
-    var flattenComponentForDescription = function (component) {
+    var flattenComponentForDescription = function(component) {
       var result = [];
       if (component.type === 'string') {
         result.push(component.value);
-      }
-      else {
+      } else {
         for (var ii = 0; ii < component.children.length; ii++) {
           result.push(flattenComponentForDescription(component.children[ii]));
         }
@@ -247,11 +234,9 @@
     var cues;
     if (this.selectedDescriptions) {
       cues = this.selectedDescriptions.cues;
-    }
-    else if (this.descriptions.length >= 1) {
+    } else if (this.descriptions.length >= 1) {
       cues = this.descriptions[0].cues;
-    }
-    else {
+    } else {
       cues = [];
     }
     for (d = 0; d < cues.length; d++) {
@@ -262,22 +247,22 @@
     }
     if (typeof thisDescription !== 'undefined') {
       if (this.currentDescription !== thisDescription) {
-        // temporarily remove aria-live from $status in order to prevent description from being interrupted
+        // Temporarily remove aria-live from $status in order to prevent description from being interrupted
         this.$status.removeAttr('aria-live');
-        // load the new description into the container div
+        // Load the new description into the container div
         this.$descDiv.html(flattenComponentForDescription(cues[thisDescription].components));
         if (this.prefDescPause) {
           this.pauseMedia();
         }
         this.currentDescription = thisDescription;
       }
-    }
-    else {
+    } else {
       this.$descDiv.html('');
       this.currentDescription = -1;
-      // restore aria-live to $status
-      this.$status.attr('aria-live','polite');
+      // Restore aria-live to $status
+      this.$status.attr('aria-live', 'polite');
     }
   };
 
+// eslint-disable-next-line no-undef
 })(jQuery);

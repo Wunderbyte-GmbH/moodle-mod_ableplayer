@@ -1,4 +1,4 @@
-(function ($) {
+(function($) {
 
 
   // Events:
@@ -6,9 +6,10 @@
   //   tracking(event, position)
   //   stopTracking(event, position)
 
-  window. AccessibleSlider = function(mediaType, div, orientation, length, min, max, bigInterval, label, className, trackingMedia, initialState) {
+  window.AccessibleSlider = function(mediaType, div, orientation, length,
+    min, max, bigInterval, label, className, trackingMedia, initialState) {
 
-    // mediaType is either 'audio' or 'video'
+    // MediaType is either 'audio' or 'video'
     // div is the host element around which the slider will be built
     // orientation is either 'horizontal' or 'vertical'
     // length is the width or height of the slider, depending on orientation
@@ -43,15 +44,14 @@
     }
 
     // Add a seekhead
-    this.seekHead = $('<div>',{
+    this.seekHead = $('<div>', {
       'orientation': orientation,
       'class': 'able-' + className + '-head'
     });
 
     if (initialState === 'visible') {
       this.seekHead.attr('tabindex', '0');
-    }
-    else {
+    } else {
       this.seekHead.attr('tabindex', '-1');
     }
     // Since head is focusable, it gets the aria roles/titles.
@@ -79,8 +79,7 @@
     if (orientation === 'horizontal') {
       this.wrapperDiv.width(length);
       this.loadedDiv.width(0);
-    }
-    else {
+    } else {
       this.wrapperDiv.height(length);
       this.loadedDiv.height(0);
     }
@@ -96,10 +95,11 @@
       this.setDuration(max);
     }
 
-    this.seekHead.hover(function (event) {
+    // eslint-disable-next-line no-unused-vars
+    this.seekHead.hover(function(event) {
       thisObj.overHead = true;
       thisObj.refreshTooltip();
-    }, function (event) {
+    }, function(event) {
       thisObj.overHead = false;
 
       if (!thisObj.overBody && thisObj.tracking && thisObj.trackDevice === 'mouse') {
@@ -108,26 +108,28 @@
       thisObj.refreshTooltip();
     });
 
-    this.seekHead.mousemove(function (event) {
+    this.seekHead.mousemove(function(event) {
       if (thisObj.tracking && thisObj.trackDevice === 'mouse') {
         thisObj.trackHeadAtPageX(event.pageX);
       }
     });
 
-    this.seekHead.focus(function (event) {
+    // eslint-disable-next-line no-unused-vars
+    this.seekHead.focus(function(event) {
       thisObj.overHead = true;
       thisObj.refreshTooltip();
     });
 
-    this.seekHead.blur(function (event) {
+    // eslint-disable-next-line no-unused-vars
+    this.seekHead.blur(function(event) {
       thisObj.overHead = false;
       thisObj.refreshTooltip();
     });
 
-    this.bodyDiv.hover(function () {
+    this.bodyDiv.hover(function() {
       thisObj.overBody = true;
       thisObj.refreshTooltip();
-    }, function (event) {
+    }, function(event) {
       thisObj.overBody = false;
       thisObj.overBodyMousePos = null;
       thisObj.refreshTooltip();
@@ -137,7 +139,7 @@
       }
     });
 
-    this.bodyDiv.mousemove(function (event) {
+    this.bodyDiv.mousemove(function(event) {
       thisObj.overBodyMousePos = {
         x: event.pageX,
         y: event.pageY
@@ -148,7 +150,7 @@
       thisObj.refreshTooltip();
     });
 
-    this.bodyDiv.mousedown(function (event) {
+    this.bodyDiv.mousedown(function(event) {
       thisObj.startTracking('mouse', thisObj.pageXToPosition(event.pageX));
       thisObj.trackHeadAtPageX(event.pageX);
       if (!thisObj.seekHead.is(':focus')) {
@@ -157,7 +159,7 @@
       event.preventDefault();
     });
 
-    this.seekHead.mousedown(function (event) {
+    this.seekHead.mousedown(function(event) {
       thisObj.startTracking('mouse', thisObj.pageXToPosition(thisObj.seekHead.offset() + (thisObj.seekHead.width() / 2)));
       if (!thisObj.bodyDiv.is(':focus')) {
         thisObj.bodyDiv.focus();
@@ -165,51 +167,39 @@
       event.preventDefault();
     });
 
-    this.bodyDiv.mouseup(function (event) {
-      if (thisObj.tracking && thisObj.trackDevice === 'mouse') {
-        thisObj.stopTracking(thisObj.pageXToPosition(event.pageX));
-      }
-    })
-
-    this.seekHead.mouseup(function (event) {
+    this.bodyDiv.mouseup(function(event) {
       if (thisObj.tracking && thisObj.trackDevice === 'mouse') {
         thisObj.stopTracking(thisObj.pageXToPosition(event.pageX));
       }
     });
 
-    this.bodyDiv.keydown(function (event) {
+    this.seekHead.mouseup(function(event) {
+      if (thisObj.tracking && thisObj.trackDevice === 'mouse') {
+        thisObj.stopTracking(thisObj.pageXToPosition(event.pageX));
+      }
+    });
+
+    this.bodyDiv.keydown(function(event) {
       // Home
       if (event.which === 36) {
         thisObj.trackImmediatelyTo(0);
-      }
-      // End
-      else if (event.which === 35) {
+      } else if (event.which === 35) {
         thisObj.trackImmediatelyTo(thisObj.duration);
-      }
-      // Left arrow or down arrow
-      else if (event.which === 37 || event.which === 40) {
+      } else if (event.which === 37 || event.which === 40) {
         thisObj.arrowKeyDown(-1);
-      }
-      // Right arrow or up arrow
-      else if (event.which === 39 || event.which === 38) {
+      } else if (event.which === 39 || event.which === 38) {
         thisObj.arrowKeyDown(1);
-      }
-      // Page up
-      else if (event.which === 33 && bigInterval > 0) {
+      } else if (event.which === 33 && bigInterval > 0) {
         thisObj.arrowKeyDown(bigInterval);
-      }
-      // Page down
-      else if (event.which === 34 && bigInterval > 0) {
+      } else if (event.which === 34 && bigInterval > 0) {
         thisObj.arrowKeyDown(-bigInterval);
-      }
-
-      else {
+      } else {
         return;
       }
       event.preventDefault();
     });
 
-    this.bodyDiv.keyup(function (event) {
+    this.bodyDiv.keyup(function(event) {
       if (event.which >= 33 && event.which <= 40) {
         if (thisObj.tracking && thisObj.trackDevice === 'keyboard') {
           thisObj.stopTracking(thisObj.keyTrackPosition);
@@ -217,9 +207,10 @@
         event.preventDefault();
       }
     });
-  }
+  };
 
-  AccessibleSlider.prototype.arrowKeyDown = function (multiplier) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.arrowKeyDown = function(multiplier) {
     if (this.tracking && this.trackDevice === 'keyboard') {
       this.keyTrackPosition = this.boundPos(this.keyTrackPosition + (this.nextStep * multiplier));
       this.inertiaCount += 1;
@@ -228,8 +219,7 @@
         this.nextStep *= 2;
       }
       this.trackHeadAtPosition(this.keyTrackPosition);
-    }
-    else {
+    } else {
       this.nextStep = 1;
       this.inertiaCount = 0;
       this.keyTrackPosition = this.boundPos(this.position + (this.nextStep * multiplier));
@@ -257,17 +247,20 @@
     }
   };
 */
-  AccessibleSlider.prototype.pageXToPosition = function (pageX) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.pageXToPosition = function(pageX) {
     var offset = pageX - this.bodyDiv.offset().left;
     var position = this.duration * (offset / this.bodyDiv.width());
     return this.boundPos(position);
   };
 
-  AccessibleSlider.prototype.boundPos = function (position) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.boundPos = function(position) {
     return Math.max(0, Math.min(position, this.duration));
-  }
+  };
 
-  AccessibleSlider.prototype.setDuration = function (duration) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.setDuration = function(duration) {
     if (duration !== this.duration) {
       this.duration = duration;
       this.resetHeadLocation();
@@ -275,23 +268,27 @@
     }
   };
 
-  AccessibleSlider.prototype.setWidth = function (width) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.setWidth = function(width) {
     this.wrapperDiv.width(width);
     this.resizeDivs();
     this.resetHeadLocation();
   };
 
-  AccessibleSlider.prototype.getWidth = function () {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.getWidth = function() {
     return this.wrapperDiv.width();
   };
 
-  AccessibleSlider.prototype.resizeDivs = function () {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.resizeDivs = function() {
     this.playedDiv.width(this.bodyDiv.width() * (this.position / this.duration));
     this.loadedDiv.width(this.bodyDiv.width() * this.buffered);
   };
 
   // Stops tracking, sets the head location to the current position.
-  AccessibleSlider.prototype.resetHeadLocation = function () {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.resetHeadLocation = function() {
     var ratio = this.position / this.duration;
     var center = this.bodyDiv.width() * ratio;
     this.seekHead.css('left', center - (this.seekHead.width() / 2));
@@ -301,21 +298,25 @@
     }
   };
 
-  AccessibleSlider.prototype.setPosition = function (position, updateLive) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.setPosition = function(position, updateLive) {
     this.position = position;
     this.resetHeadLocation();
     this.refreshTooltip();
     this.resizeDivs();
     this.updateAriaValues(position, updateLive);
-  }
+  };
 
   // TODO: Native HTML5 can have several buffered segments, and this actually happens quite often.  Change this to display them all.
-  AccessibleSlider.prototype.setBuffered = function (ratio) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.setBuffered = function(ratio) {
     this.buffered = ratio;
+    // eslint-disable-next-line @babel/no-unused-expressions
     this.redrawDivs;
-  }
+  };
 
-  AccessibleSlider.prototype.startTracking = function (device, position) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.startTracking = function(device, position) {
     if (!this.tracking) {
       this.trackDevice = device;
       this.tracking = true;
@@ -323,14 +324,16 @@
     }
   };
 
-  AccessibleSlider.prototype.stopTracking = function (position) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.stopTracking = function(position) {
     this.trackDevice = null;
     this.tracking = false;
     this.bodyDiv.trigger('stopTracking', [position]);
     this.setPosition(position, true);
   };
 
-  AccessibleSlider.prototype.trackHeadAtPageX = function (pageX) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.trackHeadAtPageX = function(pageX) {
     var position = this.pageXToPosition(pageX);
     var newLeft = pageX - this.bodyDiv.offset().left - (this.seekHead.width() / 2);
     newLeft = Math.max(0, Math.min(newLeft, this.bodyDiv.width() - this.seekHead.width()));
@@ -339,7 +342,8 @@
     this.reportTrackAtPosition(position);
   };
 
-  AccessibleSlider.prototype.trackHeadAtPosition = function (position) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.trackHeadAtPosition = function(position) {
     var ratio = position / this.duration;
     var center = this.bodyDiv.width() * ratio;
     this.lastTrackPosition = position;
@@ -347,12 +351,14 @@
     this.reportTrackAtPosition(position);
   };
 
-  AccessibleSlider.prototype.reportTrackAtPosition = function (position) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.reportTrackAtPosition = function(position) {
     this.bodyDiv.trigger('tracking', [position]);
     this.updateAriaValues(position, true);
   };
 
-  AccessibleSlider.prototype.updateAriaValues = function (position, updateLive) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.updateAriaValues = function(position, updateLive) {
     // TODO: Localize, move to another function.
     var pHours = Math.floor(position / 3600);
     var pMinutes = Math.floor((position % 3600) / 60);
@@ -370,14 +376,12 @@
         ' ' + pMinuteWord +
         ', ' + pSeconds +
         ' ' + pSecondWord;
-    }
-    else if (pMinutes > 0) {
-      descriptionText  = pMinutes +
+    } else if (pMinutes > 0) {
+      descriptionText = pMinutes +
         ' ' + pMinuteWord +
         ', ' + pSeconds +
         ' ' + pSecondWord;
-    }
-    else {
+    } else {
       descriptionText = pSeconds + ' ' + pSecondWord;
     }
 
@@ -398,43 +402,44 @@
     this.seekHead.attr('aria-valuenow', Math.floor(position).toString());
   };
 
-  AccessibleSlider.prototype.trackImmediatelyTo = function (position) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.trackImmediatelyTo = function(position) {
     this.startTracking('keyboard', position);
     this.trackHeadAtPosition(position);
     this.keyTrackPosition = position;
   };
 
-  AccessibleSlider.prototype.refreshTooltip = function () {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.refreshTooltip = function() {
     if (this.overHead) {
       this.timeTooltip.show();
       if (this.tracking) {
         this.timeTooltip.text(this.positionToStr(this.lastTrackPosition));
-      }
-      else {
+      } else {
         this.timeTooltip.text(this.positionToStr(this.position));
       }
       this.setTooltipPosition(this.seekHead.position().left + (this.seekHead.width() / 2));
-    }
-    else if (this.overBody && this.overBodyMousePos) {
+    } else if (this.overBody && this.overBodyMousePos) {
       this.timeTooltip.show();
       this.timeTooltip.text(this.positionToStr(this.pageXToPosition(this.overBodyMousePos.x)));
       this.setTooltipPosition(this.overBodyMousePos.x - this.bodyDiv.offset().left);
-    }
-    else {
+    } else {
       this.timeTooltip.hide();
     }
   };
 
-  AccessibleSlider.prototype.setTooltipPosition = function (x) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.setTooltipPosition = function(x) {
     this.timeTooltip.css({
       left: x - (this.timeTooltip.width() / 2) - 10,
       bottom: this.seekHead.height() + 10
     });
   };
 
-  AccessibleSlider.prototype.positionToStr = function (seconds) {
+  // eslint-disable-next-line no-undef
+  AccessibleSlider.prototype.positionToStr = function(seconds) {
 
-    // same logic as misc.js > formatSecondsAsColonTime()
+    // Same logic as misc.js > formatSecondsAsColonTime()
     var dHours = Math.floor(seconds / 3600);
     var dMinutes = Math.floor(seconds / 60) % 60;
     var dSeconds = Math.floor(seconds % 60);
@@ -446,10 +451,10 @@
         dMinutes = '0' + dMinutes;
       }
       return dHours + ':' + dMinutes + ':' + dSeconds;
-    }
-    else {
+    } else {
       return dMinutes + ':' + dSeconds;
     }
   };
 
+// eslint-disable-next-line no-undef
 })(jQuery);

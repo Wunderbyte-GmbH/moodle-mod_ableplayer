@@ -1,5 +1,5 @@
-/*! Copyright (c) 2014 - Paul Tavares - purtuga - @paul_tavares - MIT License */
-;(function($){
+/* ! Copyright (c) 2014 - Paul Tavares - purtuga - @paul_tavares - MIT License */
+(function($) {
 
     /**
      * Delays the execution of a function until an expression returns true.
@@ -45,20 +45,20 @@
      */
     $.doWhen = function(options) {
 
-        return $.Deferred(function(dfd){
+        return $.Deferred(function(dfd) {
 
             var opt = $.extend({}, {
-                    when:       null,
-                    exec:       function(){},
-                    interval:   100,
-                    attempts:   100,
-                    delayed:    0
-                },
+                when: null,
+                exec: function() { /* Empty */ },
+                interval: 100,
+                attempts: 100,
+                delayed: 0
+            },
                 options,
                 {
                     checkId: null
                 }),
-                startChecking = function(){
+                startChecking = function() {
 
                     // Check condition now and if true, then resolve object
                     if (opt.when() === true) {
@@ -69,30 +69,30 @@
 
                     }
 
-                    // apply minimal UI and hide the overlay
-                    opt.checkId = setInterval(function(){
+                    // Apply minimal UI and hide the overlay
+                    opt.checkId = setInterval(function() {
 
-                            if (opt.attempts === 0) {
+                        if (opt.attempts === 0) {
 
+                            clearInterval(opt.checkId);
+                            dfd.reject();
+
+                        } else {
+
+                            --opt.attempts;
+
+                            if (opt.when() === true) {
+
+                                opt.attempts = 0;
                                 clearInterval(opt.checkId);
-                                dfd.reject();
-
-                            } else {
-
-                                --opt.attempts;
-
-                                if (opt.when() === true) {
-
-                                    opt.attempts = 0;
-                                    clearInterval(opt.checkId);
-                                    opt.exec.call(dfd.promise());
-                                    dfd.resolve();
-
-                                }
+                                opt.exec.call(dfd.promise());
+                                dfd.resolve();
 
                             }
 
-                        }, opt.interval);
+                        }
+
+                    }, opt.interval);
 
                 };
 
@@ -110,4 +110,5 @@
 
     };
 
+// eslint-disable-next-line no-undef
 })(jQuery);

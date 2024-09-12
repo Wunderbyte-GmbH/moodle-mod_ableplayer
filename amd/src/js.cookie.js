@@ -1,38 +1,53 @@
-/*!
+/* !
  * JavaScript Cookie v2.0.4
  * https://github.com/js-cookie/js-cookie
  *
  * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
  * Released under the MIT license
  */
-(function (factory) {
+/* eslint-disable complexity */
+(function(factory) {
     if (typeof define === 'function' && define.amd) {
         define(factory);
     } else if (typeof exports === 'object') {
+        // eslint-disable-next-line no-undef
         module.exports = factory();
     } else {
         var _OldCookies = window.Cookies;
         var api = window.Cookies = factory();
-        api.noConflict = function () {
+        api.noConflict = function() {
             window.Cookies = _OldCookies;
             return api;
         };
     }
-}(function () {
-    function extend () {
+}(function() {
+    /**
+     *
+     */
+    function extend() {
         var i = 0;
         var result = {};
         for (; i < arguments.length; i++) {
-            var attributes = arguments[ i ];
+            var attributes = arguments[i];
             for (var key in attributes) {
                 result[key] = attributes[key];
             }
         }
         return result;
     }
-
-    function init (converter) {
-        function api (key, value, attributes) {
+    // Test
+    /**
+     *
+     * @param {any} converter
+     */
+    function init(converter) {
+        /**
+         *
+         * @param {any} key
+         * @param {any} value
+         * @param {any} attributes
+         */
+        function api(key, value, attributes) {
             var result;
 
             // Write
@@ -50,10 +65,11 @@
 
                 try {
                     result = JSON.stringify(value);
+                    // eslint-disable-next-line no-useless-escape
                     if (/^[\{\[]/.test(result)) {
                         value = result;
                     }
-                } catch (e) {}
+                } catch (e) { /* Empty */ }
 
                 if (!converter.write) {
                     value = encodeURIComponent(String(value))
@@ -64,13 +80,15 @@
 
                 key = encodeURIComponent(String(key));
                 key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+                // eslint-disable-next-line no-useless-escape
                 key = key.replace(/[\(\)]/g, escape);
 
                 return (document.cookie = [
                     key, '=', value,
-                    attributes.expires && '; expires=' + attributes.expires.toUTCString(), // use expires attribute, max-age is not supported by IE
-                    attributes.path    && '; path=' + attributes.path,
-                    attributes.domain  && '; domain=' + attributes.domain,
+                    attributes.expires && '; expires=' +
+                    attributes.expires.toUTCString(), // Use expires attribute, max-age is not supported by IE
+                    attributes.path && '; path=' + attributes.path,
+                    attributes.domain && '; domain=' + attributes.domain,
                     attributes.secure ? '; secure' : ''
                 ].join(''));
             }
@@ -105,7 +123,7 @@
                     if (this.json) {
                         try {
                             cookie = JSON.parse(cookie);
-                        } catch (e) {}
+                        } catch (e) { /* Empty */ }
                     }
 
                     if (key === name) {
@@ -116,21 +134,21 @@
                     if (!key) {
                         result[name] = cookie;
                     }
-                } catch (e) {}
+                } catch (e) { /* Empty */ }
             }
 
             return result;
         }
 
         api.get = api.set = api;
-        api.getJSON = function () {
+        api.getJSON = function() {
             return api.apply({
                 json: true
             }, [].slice.call(arguments));
         };
         api.defaults = {};
 
-        api.remove = function (key, attributes) {
+        api.remove = function(key, attributes) {
             api(key, '', extend(attributes, {
                 expires: -1
             }));
@@ -141,5 +159,6 @@
         return api;
     }
 
-    return init(function () {});
+    // eslint-disable-next-line no-empty-function
+    return init(function() {});
 }));

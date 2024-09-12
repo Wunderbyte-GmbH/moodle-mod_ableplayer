@@ -1,5 +1,6 @@
-(function ($) {
+(function($) {
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.getNextHeadingLevel = function($element) {
 
     // Finds the nearest heading in the ancestor tree
@@ -10,19 +11,19 @@
     var $parents, $foundHeadings, numHeadings, headingType, headingNumber;
 
     $parents = $element.parents();
-    $parents.each(function(){
+    // eslint-disable-next-line consistent-return
+    $parents.each(function() {
       $foundHeadings = $(this).children(':header');
       numHeadings = $foundHeadings.length;
       if (numHeadings) {
-        headingType = $foundHeadings.eq(numHeadings-1).prop('tagName');
+        headingType = $foundHeadings.eq(numHeadings - 1).prop('tagName');
         return false;
       }
     });
     if (typeof headingType === 'undefined') {
-      // page has no headings
+      // Page has no headings
       headingNumber = 1;
-    }
-    else {
+    } else {
       // Increment closest heading by one if less than 6.
       headingNumber = parseInt(headingType[1]);
       headingNumber += 1;
@@ -33,8 +34,9 @@
     return headingNumber;
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.countProperties = function(obj) {
-    // returns the number of properties in an object
+    // Returns the number of properties in an object
     var count, prop;
     count = 0;
     for (prop in obj) {
@@ -46,7 +48,8 @@
   };
 
   // Takes seconds and converts to string of form hh:mm:ss
-  AblePlayer.prototype.formatSecondsAsColonTime = function (seconds) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.formatSecondsAsColonTime = function(seconds) {
 
     var dHours = Math.floor(seconds / 3600);
     var dMinutes = Math.floor(seconds / 60) % 60;
@@ -59,14 +62,15 @@
         dMinutes = '0' + dMinutes;
       }
       return dHours + ':' + dMinutes + ':' + dSeconds;
-    }
-    else {
+    } else {
       return dMinutes + ':' + dSeconds;
     }
   };
 
-  AblePlayer.prototype.capitalizeFirstLetter = function (string) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.capitalizeFirstLetter = function(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  };
 
+// eslint-disable-next-line no-undef
 })(jQuery);

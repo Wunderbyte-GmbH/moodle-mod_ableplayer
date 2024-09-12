@@ -1,7 +1,9 @@
-(function ($) {
-  var focusableElementsSelector = "a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
+(function($) {
+  // eslint-disable-next-line max-len
+  var focusableElementsSelector = "a[href], area[href], input:not([disabled]), select:not([disabled]),textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]";
 
   // Based on the incredible accessible modal dialog.
+  // eslint-disable-next-line max-len
   window.AccessibleDialog = function(modalDiv, $returnElement, dialogRole, title, $descDiv, closeButtonLabel, width, fullscreen, escapeHook) {
 
     this.title = title;
@@ -19,17 +21,17 @@
     modal.addClass('able-modal-dialog');
 
     if (!fullscreen) {
-      var closeButton = $('<button>',{
+      var closeButton = $('<button>', {
          'class': 'modalCloseButton',
          'title': thisObj.closeButtonLabel,
          'aria-label': thisObj.closeButtonLabel
       }).text('X');
-      closeButton.keydown(function (event) {
+      closeButton.keydown(function(event) {
         // Space key down
         if (event.which === 32) {
           thisObj.hide();
         }
-      }).click(function () {
+      }).click(function() {
         thisObj.hide();
       });
 
@@ -53,19 +55,16 @@
       'role': dialogRole
     });
 
-    modal.keydown(function (event) {
+    modal.keydown(function(event) {
       // Escape
       if (event.which === 27) {
         if (thisObj.escapeHook) {
           thisObj.escapeHook(event, this);
-        }
-        else {
+        } else {
           thisObj.hide();
           event.preventDefault();
         }
-      }
-      // Tab
-      else if (event.which === 9) {
+      } else if (event.which === 9) {
         // Manually loop tab navigation inside the modal.
         var parts = modal.find('*');
         var focusable = parts.filter(focusableElementsSelector).filter(':visible');
@@ -82,8 +81,7 @@
             focusable.get(focusable.length - 1).focus();
             event.preventDefault();
           }
-        }
-        else {
+        } else {
           if (currentIndex === focusable.length - 1) {
             focusable.get(0).focus();
             event.preventDefault();
@@ -96,7 +94,8 @@
     $('body > *').not('.able-modal-overlay').not('.able-modal-dialog').attr('aria-hidden', 'false');
   };
 
-  AccessibleDialog.prototype.show = function () {
+  // eslint-disable-next-line no-undef
+  AccessibleDialog.prototype.show = function() {
     if (!this.overlay) {
       // Generate overlay.
       var overlay = $('<div></div>').attr({
@@ -107,7 +106,7 @@
       $('body').append(overlay);
 
       // Keep from moving focus out of dialog when clicking outside of it.
-      overlay.on('mousedown.accessibleModal', function (event) {
+      overlay.on('mousedown.accessibleModal', function(event) {
         event.preventDefault();
       });
     }
@@ -126,15 +125,16 @@
       this.focusedElementBeforeModal.blur();
     }
     var thisObj = this;
-    setTimeout(function () {
-      // originally set focus on the first focusable element
+    setTimeout(function() {
+      // Originally set focus on the first focusable element
       // thisObj.modal.find('button.modalCloseButton').first().focus();
       // but setting focus on dialog seems to provide more reliable access to ALL content within
       thisObj.modal.focus();
     }, 300);
   };
 
-  AccessibleDialog.prototype.hide = function () {
+  // eslint-disable-next-line no-undef
+  AccessibleDialog.prototype.hide = function() {
     if (this.overlay) {
       this.overlay.css('display', 'none');
     }
@@ -144,4 +144,5 @@
 
     this.focusedElementBeforeModal.focus();
   };
+// eslint-disable-next-line no-undef
 })(jQuery);

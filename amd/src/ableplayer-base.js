@@ -30,21 +30,24 @@
   https://developers.google.com/apis-explorer/#s/youtube/v3/
 */
 
-/*jslint node: true, browser: true, white: true, indent: 2, unparam: true, plusplus: true */
-/*global $, jQuery */
+/* jslint node: true, browser: true, white: true, indent: 2, unparam: true, plusplus: true */
+// eslint-disable-next-line no-unused-vars
+/* global $, jQuery */
+/* eslint-disable complexity */
 "use strict";
-
-(function ($) {
-  $(document).ready(function () {
-    $('video, audio').each(function (index, element) {
+(function($) {
+  $(document).ready(function() {
+    $('video, audio').each(function(index, element) {
       if ($(element).data('able-player') !== undefined) {
-        new AblePlayer($(this),$(element));
+        // eslint-disable-next-line no-undef
+        new AblePlayer($(this), $(element));
       }
     });
   });
 
   // YouTube player support; pass ready event to jQuery so we can catch in player.
   window.onYouTubeIframeAPIReady = function() {
+    // eslint-disable-next-line no-undef
     AblePlayer.youtubeIframeAPIReady = true;
     $('body').trigger('youtubeIframeAPIReady', []);
   };
@@ -52,7 +55,9 @@
   // If there is only one player on the page, dispatch global keydown events to it
   // Otherwise, keydowwn events are handled locally (see event.js > handleEventListeners())
   $(window).keydown(function(e) {
+    // eslint-disable-next-line no-undef
     if (AblePlayer.nextIndex === 1) {
+      // eslint-disable-next-line no-undef
       AblePlayer.lastCreated.onPlayerKeyPress(e);
     }
   });
@@ -63,6 +68,7 @@
   window.AblePlayer = function(media) {
 
     // Keep track of the last player created for use with global events.
+    // eslint-disable-next-line no-undef
     AblePlayer.lastCreated = this;
 
     this.media = media;
@@ -71,60 +77,54 @@
       return;
     }
 
-    ///////////////////////////////
+    // /////////////////////////////
     //
     // Default variables assignment
     //
-    ///////////////////////////////
+    // /////////////////////////////
 
     // The following variables CAN be overridden with HTML attributes
 
     // autoplay (Boolean; if present always resolves to true, regardless of value)
     if ($(media).attr('autoplay') !== undefined) {
       this.autoplay = true;
-    }
-    else {
+    } else {
       this.autoplay = false;
     }
 
-    // loop (Boolean; if present always resolves to true, regardless of value)
+    // Loop (Boolean; if present always resolves to true, regardless of value)
     if ($(media).attr('loop') !== undefined) {
       this.loop = true;
-    }
-    else {
+    } else {
       this.loop = false;
     }
 
-    // playsinline (Boolean; if present always resolves to true, regardless of value)
+    // Playsinline (Boolean; if present always resolves to true, regardless of value)
     if ($(media).attr('playsinline') !== undefined) {
-      this.playsInline = '1'; // this value gets passed to YT.Player contructor in youtube.js
-    }
-    else {
+      this.playsInline = '1'; // This value gets passed to YT.Player contructor in youtube.js
+    } else {
       this.playsInline = '0';
     }
 
-    // start-time
+    // Start-time
     if ($(media).data('start-time') !== undefined && $.isNumeric($(media).data('start-time'))) {
       this.startTime = $(media).data('start-time');
-    }
-    else {
+    } else {
       this.startTime = 0;
     }
 
-    // debug
+    // Debug
     if ($(media).data('debug') !== undefined && $(media).data('debug') !== false) {
       this.debug = true;
-    }
-    else {
+    } else {
       this.debug = false;
     }
 
     // Path to root directory of Able Player code
     if ($(media).data('root-path') !== undefined) {
-      // add a trailing slash if there is none
+      // Add a trailing slash if there is none
       this.rootPath = $(media).data('root-path').replace(/\/?$/, '/');
-    }
-    else {
+    } else {
       this.rootPath = this.getRootPath();
     }
 
@@ -146,15 +146,13 @@
 
     if ($(media).data('use-chapters-button') !== undefined && $(media).data('use-chapters-button') === false) {
       this.useChaptersButton = false;
-    }
-    else {
+    } else {
       this.useChaptersButton = true;
     }
 
     if ($(media).data('use-descriptions-button') !== undefined && $(media).data('use-descriptions-button') === false) {
       this.useDescriptionsButton = false;
-    }
-    else {
+    } else {
       this.useDescriptionsButton = true;
     }
 
@@ -166,7 +164,7 @@
     // (i.e., author has already hard-coded a heading before the media player; Able Player doesn't need to do this)
     if ($(media).data('heading-level') !== undefined && $(media).data('heading-level') !== "") {
       var headingLevel = $(media).data('heading-level');
-      if (/^[0-6]*$/.test(headingLevel)) { // must be a valid HTML heading level 1-6; or 0
+      if (/^[0-6]*$/.test(headingLevel)) { // Must be a valid HTML heading level 1-6; or 0
         this.playerHeadingLevel = headingLevel;
       }
     }
@@ -184,23 +182,19 @@
       this.transcriptSrc = $(media).data('transcript-src');
       if (this.transcriptSrcHasRequiredParts()) {
         this.transcriptType = 'manual';
-      }
-      else {
+      } else {
         this.transcriptType = null;
       }
-    }
-    else if (media.find('track[kind="captions"], track[kind="subtitles"]').length > 0) {
-      // required tracks are present. COULD automatically generate a transcript
+    } else if (media.find('track[kind="captions"], track[kind="subtitles"]').length > 0) {
+      // Required tracks are present. COULD automatically generate a transcript
       if ($(media).data('transcript-div') !== undefined && $(media).data('transcript-div') !== "") {
         this.transcriptDivLocation = $(media).data('transcript-div');
         this.transcriptType = 'external';
-      }
-      else if ($(media).data('include-transcript') !== undefined) {
+      } else if ($(media).data('include-transcript') !== undefined) {
         if ($(media).data('include-transcript') !== false) {
           this.transcriptType = 'popup';
         }
-      }
-      else {
+      } else {
         this.transcriptType = 'popup';
       }
     }
@@ -210,17 +204,15 @@
     // If true, line breaks are preserved, so content can be presented karaoke-style, or as lines in a poem
     if ($(media).data('lyrics-mode') !== undefined && $(media).data('lyrics-mode') !== false) {
       this.lyricsMode = true;
-    }
-    else {
+    } else {
       this.lyricsMode = false;
     }
 
     // Transcript Title
     if ($(media).data('transcript-title') !== undefined && $(media).data('transcript-title') !== "") {
       this.transcriptTitle = $(media).data('transcript-title');
-    }
-    else {
-      // do nothing. The default title will be defined later (see transcript.js)
+    } else {
+      // Do nothing. The default title will be defined later (see transcript.js)
     }
 
     // Captions
@@ -229,8 +221,7 @@
     // valid values of data-captions-position are 'below' and 'overlay'
     if ($(media).data('captions-position') === 'overlay') {
       this.defaultCaptionsPosition = 'overlay';
-    }
-    else { // the default, even if not specified
+    } else { // The default, even if not specified
       this.defaultCaptionsPosition = 'below';
     }
 
@@ -246,8 +237,7 @@
 
     if ($(media).data('chapters-default') !== undefined && $(media).data('chapters-default') !== "") {
       this.defaultChapter = $(media).data('chapters-default');
-    }
-    else {
+    } else {
       this.defaultChapter = null;
     }
 
@@ -255,11 +245,9 @@
     // valid values of data-prevnext-unit are 'playlist' and 'chapter'; will also accept 'chapters'
     if ($(media).data('prevnext-unit') === 'chapter' || $(media).data('prevnext-unit') === 'chapters') {
       this.prevNextUnit = 'chapter';
-    }
-    else if ($(media).data('prevnext-unit') === 'playlist') {
+    } else if ($(media).data('prevnext-unit') === 'playlist') {
       this.prevNextUnit = 'playlist';
-    }
-    else {
+    } else {
       this.prevNextUnit = false;
     }
 
@@ -268,8 +256,7 @@
     // 'animals' uses turtle and rabbit; 'arrows' uses up/down arrows
     if ($(media).data('speed-icons') === 'arrows') {
       this.speedIcons = 'arrows';
-    }
-    else {
+    } else {
       this.speedIcons = 'animals';
     }
 
@@ -277,8 +264,7 @@
     // valid values of data-seekbar-scope are 'chapter' and 'video'; will also accept 'chapters'
     if ($(media).data('seekbar-scope') === 'chapter' || $(media).data('seekbar-scope') === 'chapters') {
       this.seekbarScope = 'chapter';
-    }
-    else {
+    } else {
       this.seekbarScope = 'video';
     }
 
@@ -308,8 +294,7 @@
 
     if ($(media).data('allow-fullscreen') !== undefined && $(media).data('allow-fullscreen') === false) {
       this.allowFullScreen = false;
-    }
-    else {
+    } else {
       this.allowFullScreen = true;
     }
 
@@ -321,9 +306,9 @@
     this.useFixedSeekInterval = false;
     if ($(media).data('seek-interval') !== undefined && $(media).data('seek-interval') !== "") {
       var seekInterval = $(media).data('seek-interval');
-      if (/^[1-9][0-9]*$/.test(seekInterval)) { // must be a whole number greater than 0
+      if (/^[1-9][0-9]*$/.test(seekInterval)) { // Must be a whole number greater than 0
         this.seekInterval = seekInterval;
-        this.useFixedSeekInterval = true; // do not override with calculuation
+        this.useFixedSeekInterval = true; // Do not override with calculuation
       }
     }
 
@@ -332,8 +317,7 @@
     // Only used if there is a playlist
     if ($(media).data('show-now-playing') !== undefined && $(media).data('show-now-playing') === false) {
       this.showNowPlaying = false;
-    }
-    else {
+    } else {
       this.showNowPlaying = true;
     }
 
@@ -348,7 +332,7 @@
     this.testFallback = false;
 
     if ($(media).data('fallback') !== undefined && $(media).data('fallback') !== "") {
-      var fallback =  $(media).data('fallback');
+      var fallback = $(media).data('fallback');
       if (fallback === 'jw') {
         this.fallback = fallback;
       }
@@ -358,8 +342,7 @@
 
       if ($(media).data('fallback-path') !== undefined && $(media).data('fallback-path') !== false) {
         this.fallbackPath = $(media).data('fallback-path');
-      }
-      else {
+      } else {
         this.fallbackPath = this.rootPath + 'thirdparty/';
       }
 
@@ -383,8 +366,7 @@
     // To override this formula and force #2 to take precedence over #1, set data-force-lang="true"
     if ($(media).data('force-lang') !== undefined && $(media).data('force-lang') !== false) {
       this.forceLang = true;
-    }
-    else {
+    } else {
       this.forceLang = false;
     }
 
@@ -399,7 +381,7 @@
 
     // Search
     if ($(media).data('search') !== undefined && $(media).data('search') !== "") {
-      // conducting a search currently requires an external div in which to write the results
+      // Conducting a search currently requires an external div in which to write the results
       if ($(media).data('search-div') !== undefined && $(media).data('search-div') !== "") {
         this.searchString = $(media).data('search');
         this.searchDiv = $(media).data('search-div');
@@ -410,37 +392,39 @@
     // They will reappear again when user presses a key or moves the mouse
     if ($(media).data('hide-controls') !== undefined && $(media).data('hide-controls') !== false) {
       this.hideControls = true;
-    }
-    else {
+    } else {
       this.hideControls = false;
     }
 
     // Define built-in variables that CANNOT be overridden with HTML attributes
     this.setDefaults();
 
-    ////////////////////////////////////////
+    // //////////////////////////////////////
     //
     // End assignment of default variables
     //
-    ////////////////////////////////////////
+    // //////////////////////////////////////
 
+    // eslint-disable-next-line no-undef
     this.ableIndex = AblePlayer.nextIndex;
+    // eslint-disable-next-line no-undef
     AblePlayer.nextIndex += 1;
 
     this.title = $(media).attr('title');
 
-    // populate translation object with localized versions of all labels and prompts
+    // Populate translation object with localized versions of all labels and prompts
     // use defer method to defer additional processing until text is retrieved
     this.tt = {};
     var thisObj = this;
+    // eslint-disable-next-line promise/catch-or-return
     $.when(this.getTranslationText()).then(
-      function () {
+      function() {
+        // eslint-disable-next-line promise/always-return
         if (thisObj.countProperties(thisObj.tt) > 50) {
-          // close enough to ensure that most text variables are populated
+          // Close enough to ensure that most text variables are populated
           thisObj.setup();
-        }
-        else {
-          // can't continue loading player with no text
+        } else {
+          // Can't continue loading player with no text
           thisObj.provideFallback();
         }
       }
@@ -448,24 +432,29 @@
   };
 
   // Index to increment every time new player is created.
+  // eslint-disable-next-line no-undef
   AblePlayer.nextIndex = 0;
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.setup = function() {
     var thisObj = this;
-    this.reinitialize().then(function () {
+    // eslint-disable-next-line promise/catch-or-return
+    this.reinitialize().then(function() {
+      // eslint-disable-next-line promise/always-return
       if (!thisObj.player) {
         // No player for this media, show last-line fallback.
         thisObj.provideFallback();
-      }
-      else {
-        thisObj.setupInstance().then(function () {
+      } else {
+        // eslint-disable-next-line promise/catch-or-return, promise/always-return, promise/no-nesting
+        thisObj.setupInstance().then(function() {
           thisObj.recreatePlayer();
         });
       }
     });
   };
 
-  AblePlayer.getActiveDOMElement = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.getActiveDOMElement = function() {
     var activeElement = document.activeElement;
 
     // For shadow DOMs we need to keep digging down through the DOMs
@@ -476,21 +465,20 @@
     return activeElement;
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.localGetElementById = function(element, id) {
-    if (element.getRootNode)
-    {
+    if (element.getRootNode) {
       // Use getRootNode() and querySelector() where supported (for shadow DOM support)
       return $(element.getRootNode().querySelector('#' + id));
-    }
-    else
-    {
+    } else {
       // If getRootNode is not supported it should be safe to use document.getElementById (since there is no shadow DOM support)
       return $(document.getElementById(id));
     }
   };
 
 
-
+  // eslint-disable-next-line no-undef
   AblePlayer.youtubeIframeAPIReady = false;
+  // eslint-disable-next-line no-undef
   AblePlayer.loadingYoutubeIframeAPI = false;
 })(jQuery);

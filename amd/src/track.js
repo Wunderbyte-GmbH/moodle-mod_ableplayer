@@ -1,8 +1,10 @@
-(function ($) {
+/* eslint-disable complexity, block-scoped-var, no-console */
+(function($) {
   // Loads files referenced in track elements, and performs appropriate setup.
   // For example, captions and text descriptions.
   // This will be called whenever the player is recreated.
   // Added in v2.2.23: Also handles YouTube caption tracks
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.setupTracks = function() {
 
     var thisObj = this;
@@ -23,6 +25,7 @@
       var kind = track.getAttribute('kind');
       var trackSrc = track.getAttribute('src');
 
+      // eslint-disable-next-line no-unused-vars
       var isDefaultTrack = track.getAttribute('default');
 
       if (!trackSrc) {
@@ -32,35 +35,35 @@
 
       var loadingPromise = this.loadTextObject(trackSrc);
       loadingPromises.push(loadingPromise);
-      loadingPromise.then((function (track, kind) {
-        return function (trackSrc, trackText) {
+      // eslint-disable-next-line promise/catch-or-return
+      loadingPromise.then((function(track, kind) {
+        return function(trackSrc, trackText) {
           var cues = thisObj.parseWebVTT(trackSrc, trackText).cues;
           if (kind === 'captions' || kind === 'subtitles') {
             thisObj.setupCaptions(track, cues);
-          }
-          else if (kind === 'descriptions') {
+          } else if (kind === 'descriptions') {
             thisObj.setupDescriptions(track, cues);
-          }
-          else if (kind === 'chapters') {
+          } else if (kind === 'chapters') {
             thisObj.setupChapters(track, cues);
-          }
-          else if (kind === 'metadata') {
+          } else if (kind === 'metadata') {
             thisObj.setupMetadata(track, cues);
           }
-        }
+        };
       })(track, kind));
     }
 
-    $.when.apply($, loadingPromises).then(function () {
+    // eslint-disable-next-line promise/catch-or-return, promise/always-return
+    $.when.apply($, loadingPromises).then(function() {
       deferred.resolve();
     });
     return promise;
   };
 
-  AblePlayer.prototype.setupCaptions = function (track, cues) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.setupCaptions = function(track, cues) {
 
     this.hasCaptions = true;
-    // srcLang should always be included with <track>, but HTML5 spec doesn't require it
+    // SrcLang should always be included with <track>, but HTML5 spec doesn't require it
     // if not provided, assume track is the same language as the default player language
     var trackLang = track.getAttribute('srclang') || this.lang;
     var trackLabel = track.getAttribute('label') || this.getLanguageName(trackLang);
@@ -69,30 +72,29 @@
       // Now remove 'default' attribute from <track>
       // Otherwise, some browsers will display the track
       track.removeAttribute('default');
-    }
-    else {
+    } else {
+      // eslint-disable-next-line no-redeclare
       var isDefaultTrack = false;
     }
-    // caption cues from WebVTT are used to build a transcript for both audio and video
+    // Caption cues from WebVTT are used to build a transcript for both audio and video
     // but captions are currently only supported for video
     if (this.mediaType === 'video') {
 
-      // create a pair of nested divs for displaying captions
+      // Create a pair of nested divs for displaying captions
       // includes aria-hidden="true" because otherwise
       // captions being added and removed causes sporadic changes to focus in JAWS
       // (not a problem in NVDA or VoiceOver)
       if (!this.$captionsDiv) {
-        this.$captionsDiv = $('<div>',{
+        this.$captionsDiv = $('<div>', {
           'class': 'able-captions',
         });
-        this.$captionsWrapper = $('<div>',{
+        this.$captionsWrapper = $('<div>', {
           'class': 'able-captions-wrapper',
           'aria-hidden': 'true'
         }).hide();
         if (this.prefCaptionsPosition === 'below') {
           this.$captionsWrapper.addClass('able-captions-below');
-        }
-        else {
+        } else {
           this.$captionsWrapper.addClass('able-captions-overlay');
         }
         this.$captionsWrapper.append(this.$captionsDiv);
@@ -104,8 +106,7 @@
     if (this.prefCaptions === 1) {
       // Captions default to on.
       this.captionsOn = true;
-    }
-    else {
+    } else {
       this.captionsOn = false;
     }
 
@@ -115,16 +116,16 @@
         this.$unknownTranscriptOption.remove();
         this.$unknownTranscriptOption = null;
       }
-      var option = $('<option></option>',{
+      var option = $('<option></option>', {
         value: trackLang,
         lang: trackLang
       }).text(trackLabel);
     }
-    // alphabetize tracks by label
+    // Alphabetize tracks by label
     if (this.transcriptType === 'external' || this.transcriptType === 'popup') {
       var options = this.$transcriptLanguageSelect.find('option');
     }
-    if (this.captions.length === 0) { // this is the first
+    if (this.captions.length === 0) { // This is the first
       this.captions.push({
         'cues': cues,
         'language': trackLang,
@@ -138,32 +139,32 @@
         this.$transcriptLanguageSelect.append(option);
       }
       this.captionLabels.push(trackLabel);
-    }
-    else { // there are already tracks in the array
+    } else { // There are already tracks in the array
       var inserted = false;
       for (var i = 0; i < this.captions.length; i++) {
-        var capLabel = this.captionLabels[i];
         if (trackLabel.toLowerCase() < this.captionLabels[i].toLowerCase()) {
-          // insert before track i
-          this.captions.splice(i,0,{
+          // Insert before track i
+          this.captions.splice(i, 0, {
             'cues': cues,
             'language': trackLang,
             'label': trackLabel,
             'def': isDefaultTrack
           });
           if (this.transcriptType === 'external' || this.transcriptType === 'popup') {
+            // eslint-disable-next-line max-depth
             if (isDefaultTrack) {
               option.prop('selected', true);
             }
             option.insertBefore(options.eq(i));
           }
-          this.captionLabels.splice(i,0,trackLabel);
+          this.captionLabels.splice(i, 0, trackLabel);
           inserted = true;
           break;
         }
       }
       if (!inserted) {
-        // just add track to the end
+
+        // Just add track to the end
         this.captions.push({
           'cues': cues,
           'language': trackLang,
@@ -188,9 +189,10 @@
   };
 
 
-  AblePlayer.prototype.setupDescriptions = function (track, cues) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.setupDescriptions = function(track, cues) {
 
-    // called via setupTracks() only if there is track with kind="descriptions"
+    // Called via setupTracks() only if there is track with kind="descriptions"
     // prepares for delivery of text description , in case it's needed
     // whether and how it's delivered is controlled within description.js > initDescription()
 
@@ -206,7 +208,8 @@
     });
   };
 
-  AblePlayer.prototype.setupChapters = function (track, cues) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.setupChapters = function(track, cues) {
 
     // NOTE: WebVTT supports nested timestamps (to form an outline)
     // This is not currently supported.
@@ -223,45 +226,45 @@
     });
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.setupMetadata = function(track, cues) {
     if (this.metaType === 'text') {
       // Metadata is only supported if data-meta-div is provided
       // The player does not display metadata internally
       if (this.metaDiv) {
         if ($('#' + this.metaDiv)) {
-          // container exists
+          // Container exists
           this.$metaDiv = $('#' + this.metaDiv);
           this.hasMeta = true;
           this.meta = cues;
         }
       }
-    }
-    else if (this.metaType === 'selector') {
+    } else if (this.metaType === 'selector') {
       this.hasMeta = true;
       this.visibleSelectors = [];
       this.meta = cues;
     }
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.loadTextObject = function(src) {
 
     var deferred = new $.Deferred();
     var promise = deferred.promise();
     var thisObj = this;
 
-    // create a temp div for holding data
-    var $tempDiv = $('<div>',{
+    // Create a temp div for holding data
+    var $tempDiv = $('<div>', {
       style: 'display:none'
     });
 
-    $tempDiv.load(src, function (trackText, status, req) {
+    $tempDiv.load(src, function(trackText, status) {
       if (status === 'error') {
         if (thisObj.debug) {
-          console.log ('error reading file ' + src + ': ' + status);
+          console.log('error reading file ' + src + ': ' + status);
         }
         deferred.fail();
-      }
-      else {
+      } else {
         deferred.resolve(src, trackText);
       }
       $tempDiv.remove();
@@ -269,8 +272,9 @@
     return promise;
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.setupAltCaptions = function() {
-    // setup captions from an alternative source (not <track> elements)
+    // Setup captions from an alternative source (not <track> elements)
     // only do this if no <track> captions are provided
     // currently supports: YouTube
     var deferred = new $.Deferred();
@@ -281,16 +285,15 @@
         this.setupYouTubeCaptions().done(function() {
           deferred.resolve();
         });
-      }
-      else {
-        // repeat for other alt sources once supported (e.g., Vimeo, DailyMotion)
+      } else {
+        // Repeat for other alt sources once supported (e.g., Vimeo, DailyMotion)
         deferred.resolve();
       }
-    }
-    else { // there are <track> captions, so no need for alt source captions
+    } else { // There are <track> captions, so no need for alt source captions
       deferred.resolve();
     }
     return promise;
   };
 
+// eslint-disable-next-line no-undef
 })(jQuery);

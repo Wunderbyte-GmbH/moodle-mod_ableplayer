@@ -1,8 +1,10 @@
-(function ($) {
+/* eslint-disable no-console */
+(function($) {
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.initSignLanguage = function() {
     // Sign language is only currently supported in HTML5 player, not fallback or YouTube
     if (this.player === 'html5') {
-      // check to see if there's a sign language video accompanying this video
+      // Check to see if there's a sign language video accompanying this video
       // check only the first source
       // If sign language is provided, it must be provided for all sources
       this.signFile = this.$sources.first().attr('data-sign-src');
@@ -12,16 +14,16 @@
         }
         this.hasSignLanguage = true;
         this.injectSignPlayerCode();
-      }
-      else {
+      } else {
         this.hasSignLanguage = false;
       }
     }
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.injectSignPlayerCode = function() {
 
-    // create and inject surrounding HTML structure
+    // Create and inject surrounding HTML structure
     // If IOS:
     //  If video:
     //   IOS does not support any of the player's functionality
@@ -34,42 +36,37 @@
     //   This is only a problem in IOS 6 and earlier,
     //   & is a known bug, fixed in IOS 7
 
-    var thisObj, signVideoId, signVideoWidth, i, signSrc, srcType, $signSource;
-
-    thisObj = this;
-
-    signVideoWidth = this.getDefaultWidth('sign');
+    var signVideoId, i, signSrc, srcType, $signSource;
 
     signVideoId = this.mediaId + '-sign';
-    this.$signVideo = $('<video>',{
-      'id' : signVideoId,
-      'tabindex' : '-1'
+    this.$signVideo = $('<video>', {
+      'id': signVideoId,
+      'tabindex': '-1'
     });
     this.signVideo = this.$signVideo[0];
-    // for each original <source>, add a <source> to the sign <video>
-    for (i=0; i < this.$sources.length; i++) {
+    // For each original <source>, add a <source> to the sign <video>
+    for (i = 0; i < this.$sources.length; i++) {
       signSrc = this.$sources[i].getAttribute('data-sign-src');
       srcType = this.$sources[i].getAttribute('type');
       if (signSrc) {
-        $signSource = $('<source>',{
-          'src' : signSrc,
-          'type' : srcType
+        $signSource = $('<source>', {
+          'src': signSrc,
+          'type': srcType
         });
         this.$signVideo.append($signSource);
-      }
-      else {
-        // source is missing a sign language version
+      } else {
+        // Source is missing a sign language version
         // can't include sign language
         this.hasSignLanguage = false;
         break;
       }
     }
 
-    this.$signWindow = $('<div>',{
-      'class' : 'able-sign-window',
+    this.$signWindow = $('<div>', {
+      'class': 'able-sign-window',
       'tabindex': '-1'
     });
-    this.$signToolbar = $('<div>',{
+    this.$signToolbar = $('<div>', {
       'class': 'able-window-toolbar able-' + this.toolbarIconColor + '-controls'
     });
 
@@ -77,16 +74,16 @@
 
     this.$ableWrapper.append(this.$signWindow);
 
-    // make it draggable
+    // Make it draggable
     this.initDragDrop('sign');
 
     if (this.prefSign === 1) {
-      // sign window is on. Go ahead and position it and show it
-      this.positionDraggableWindow('sign',this.getDefaultWidth('sign'));
-    }
-    else {
+      // Sign window is on. Go ahead and position it and show it
+      this.positionDraggableWindow('sign', this.getDefaultWidth('sign'));
+    } else {
       this.$signWindow.hide();
     }
   };
 
+// eslint-disable-next-line no-undef
 })(jQuery);

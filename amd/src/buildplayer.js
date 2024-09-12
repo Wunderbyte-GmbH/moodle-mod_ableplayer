@@ -1,8 +1,10 @@
-(function ($) {
+/* eslint-disable complexity, max-depth, brace-style, no-console */
+(function($) {
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.injectPlayerCode = function() {
 
-    // create and inject surrounding HTML structure
+    // Create and inject surrounding HTML structure
     // If IOS:
     //  If video:
     //   IOS does not support any of the player's functionality
@@ -15,10 +17,9 @@
     //   This is only a problem in IOS 6 and earlier,
     //   & is a known bug, fixed in IOS 7
 
-    var thisObj, vidcapContainer, prefsGroups, i;
-    thisObj = this;
+    var vidcapContainer;
 
-    // create three wrappers and wrap them around the media element. From inner to outer:
+    // Create three wrappers and wrap them around the media element. From inner to outer:
     // $mediaContainer - contains the original media element
     // $ableDiv - contains the media player and all its objects (e.g., captions, controls, descriptions)
     // $ableWrapper - contains additional widgets (e.g., transcript window, sign window)
@@ -33,17 +34,17 @@
 
     this.injectOffscreenHeading();
 
-    // youtube adds its own big play button
+    // Youtube adds its own big play button
     // if (this.mediaType === 'video' && this.player !== 'youtube') {
     if (this.mediaType === 'video') {
       if (this.iconType != 'image' && this.player !== 'youtube') {
         this.injectBigPlayButton();
       }
 
-      // add container that captions or description will be appended to
+      // Add container that captions or description will be appended to
       // Note: new Jquery object must be assigned _after_ wrap, hence the temp vidcapContainer variable
-      vidcapContainer = $('<div>',{
-        'class' : 'able-vidcap-container'
+      vidcapContainer = $('<div>', {
+        'class': 'able-vidcap-container'
       });
       this.$vidcapContainer = this.$mediaContainer.wrap(vidcapContainer).parent();
     }
@@ -54,8 +55,7 @@
     if (this.transcriptType) {
       if (this.transcriptType === 'popup' || this.transcriptType === 'external') {
         this.injectTranscriptArea();
-      }
-      else if (this.transcriptType === 'manual') {
+      } else if (this.transcriptType === 'manual') {
         this.setupManualTranscript();
       }
       this.addTranscriptAreaEvents();
@@ -65,18 +65,18 @@
     this.injectPlaylist();
   };
 
-  AblePlayer.prototype.injectOffscreenHeading = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectOffscreenHeading = function() {
     // Inject an offscreen heading to the media container.
     // If heading hasn't already been manually defined via data-heading-level,
     // automatically assign a level that is one level deeper than the closest parent heading
     // as determined by getNextHeadingLevel()
     var headingType;
     if (this.playerHeadingLevel == '0') {
-      // do NOT inject a heading (at author's request)
-    }
-    else {
+      // Do NOT inject a heading (at author's request)
+    } else {
       if (typeof this.playerHeadingLevel === 'undefined') {
-        this.playerHeadingLevel = this.getNextHeadingLevel(this.$ableDiv); // returns in integer 1-6
+        this.playerHeadingLevel = this.getNextHeadingLevel(this.$ableDiv); // Returns in integer 1-6
       }
       headingType = 'h' + this.playerHeadingLevel.toString();
       this.$headingDiv = $('<' + headingType + '>');
@@ -86,7 +86,8 @@
     }
   };
 
-  AblePlayer.prototype.injectBigPlayButton = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectBigPlayButton = function() {
     this.$bigPlayButton = $('<button>', {
       'class': 'able-big-play-button icon-play',
       'aria-hidden': true,
@@ -94,58 +95,59 @@
     });
 
     var thisObj = this;
-    this.$bigPlayButton.click(function () {
+    this.$bigPlayButton.click(function() {
       thisObj.handlePlay();
     });
 
     this.$mediaContainer.append(this.$bigPlayButton);
   };
 
-  AblePlayer.prototype.injectPlayerControlArea = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectPlayerControlArea = function() {
     this.$playerDiv = $('<div>', {
-      'class' : 'able-player',
-      'role' : 'region',
-      'aria-label' : this.mediaType + ' player'
+      'class': 'able-player',
+      'role': 'region',
+      'aria-label': this.mediaType + ' player'
     });
-    this.$playerDiv.addClass('able-'+this.mediaType);
+    this.$playerDiv.addClass('able-' + this.mediaType);
 
     // The default skin depends a bit on a Now Playing div
     // so go ahead and add one
     // However, it's only populated if this.showNowPlaying = true
-    this.$nowPlayingDiv = $('<div>',{
-      'class' : 'able-now-playing',
-      'aria-live' : 'assertive',
+    this.$nowPlayingDiv = $('<div>', {
+      'class': 'able-now-playing',
+      'aria-live': 'assertive',
       'aria-atomic': 'true'
     });
 
-    this.$controllerDiv = $('<div>',{
-      'class' : 'able-controller'
+    this.$controllerDiv = $('<div>', {
+      'class': 'able-controller'
     });
     this.$controllerDiv.addClass('able-' + this.iconColor + '-controls');
 
-    this.$statusBarDiv = $('<div>',{
-      'class' : 'able-status-bar'
+    this.$statusBarDiv = $('<div>', {
+      'class': 'able-status-bar'
     });
-    this.$timer = $('<span>',{
-      'class' : 'able-timer'
+    this.$timer = $('<span>', {
+      'class': 'able-timer'
     });
-    this.$elapsedTimeContainer = $('<span>',{
+    this.$elapsedTimeContainer = $('<span>', {
       'class': 'able-elapsedTime',
       text: '0:00'
     });
-    this.$durationContainer = $('<span>',{
+    this.$durationContainer = $('<span>', {
       'class': 'able-duration'
     });
     this.$timer.append(this.$elapsedTimeContainer).append(this.$durationContainer);
 
-    this.$speed = $('<span>',{
-      'class' : 'able-speed',
-      'aria-live' : 'assertive'
+    this.$speed = $('<span>', {
+      'class': 'able-speed',
+      'aria-live': 'assertive'
     }).text(this.tt.speed + ': 1x');
 
-    this.$status = $('<span>',{
-      'class' : 'able-status',
-      'aria-live' : 'polite'
+    this.$status = $('<span>', {
+      'class': 'able-status',
+      'aria-live': 'polite'
     });
 
     // Put everything together.
@@ -154,11 +156,12 @@
     this.$ableDiv.append(this.$playerDiv);
   };
 
-  AblePlayer.prototype.injectTextDescriptionArea = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectTextDescriptionArea = function() {
 
-    // create a div for exposing description
+    // Create a div for exposing description
     // description will be exposed via role="alert" & announced by screen readers
-    this.$descDiv = $('<div>',{
+    this.$descDiv = $('<div>', {
       'class': 'able-descriptions',
       'aria-live': 'assertive',
       'aria-atomic': 'true'
@@ -169,24 +172,25 @@
     this.$ableDiv.append(this.$descDiv);
   };
 
+  // eslint-disable-next-line no-undef, consistent-return
   AblePlayer.prototype.getDefaultWidth = function(which) {
 
-    // return default width of resizable elements
+    // Return default width of resizable elements
     // these values are somewhat arbitrary, but seem to result in good usability
     // if users disagree, they can resize (and resposition) them
     if (which === 'transcript') {
       return 450;
-    }
-    else if (which === 'sign') {
+    } else if (which === 'sign') {
       return 400;
     }
   };
 
-  AblePlayer.prototype.positionDraggableWindow = function (which, width) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.positionDraggableWindow = function(which, width) {
 
-    // which is either 'transcript' or 'sign'
+    // Which is either 'transcript' or 'sign'
 
-    var cookie, cookiePos, $window, dragged, windowPos, currentWindowPos, firstTime, zIndex;
+    var cookie, cookiePos, $window, windowPos;
 
     cookie = this.getCookie();
     if (which === 'transcript') {
@@ -194,31 +198,29 @@
       if (typeof cookie.transcript !== 'undefined') {
         cookiePos = cookie.transcript;
       }
-    }
-    else if (which === 'sign') {
+    } else if (which === 'sign') {
       $window = this.$signWindow;
       if (typeof cookie.transcript !== 'undefined') {
         cookiePos = cookie.sign;
       }
     }
     if (typeof cookiePos !== 'undefined' && !($.isEmptyObject(cookiePos))) {
-      // position window using stored values from cookie
+      // Position window using stored values from cookie
       $window.css({
-        'position': cookiePos['position'],
-        'width': cookiePos['width'],
-        'z-index': cookiePos['zindex']
+        'position': cookiePos.position,
+        'width': cookiePos.width,
+        'z-index': cookiePos.zindex
       });
-      if (cookiePos['position'] === 'absolute') {
+      if (cookiePos.position === 'absolute') {
         $window.css({
-          'top': cookiePos['top'],
-          'left': cookiePos['left']
+          'top': cookiePos.top,
+          'left': cookiePos.left
         });
       }
-      // since cookie is not page-specific, z-index needs may vary across different pages
+      // Since cookie is not page-specific, z-index needs may vary across different pages
       this.updateZIndex(which);
-    }
-    else {
-      // position window using default values
+    } else {
+      // Position window using default values
       windowPos = this.getOptimumPosition(which, width);
       if (typeof width === 'undefined') {
         width = this.getDefaultWidth(which);
@@ -237,9 +239,10 @@
     }
   };
 
-  AblePlayer.prototype.getOptimumPosition = function (targetWindow, targetWidth) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.getOptimumPosition = function(targetWindow, targetWidth) {
 
-    // returns optimum position for targetWindow, as an array with the following structure:
+    // Returns optimum position for targetWindow, as an array with the following structure:
     // 0 - CSS position ('absolute' or 'relative')
     // 1 - top
     // 2 - left
@@ -249,24 +252,22 @@
     // else if there is room the left of the player, position element there
     // else position element beneath player
 
-    var gap, position, ableWidth, ableHeight, ableOffset, ableTop, ableLeft,
-       windowWidth, otherWindowWidth, zIndex;
+    var gap, position, ableWidth, ableOffset, ableLeft,
+       windowWidth, otherWindowWidth;
 
     if (typeof targetWidth === 'undefined') {
       targetWidth = this.getDefaultWidth(targetWindow);
     }
 
-    gap = 5; // number of pixels to preserve between Able Player objects
+    gap = 5; // Number of pixels to preserve between Able Player objects
 
-    position = []; // position, top, left
+    position = []; // Position, top, left
 
     ableWidth = this.$ableDiv.width();
-    ableHeight = this.$ableDiv.height();
     ableOffset = this.$ableDiv.offset();
-    ableTop = ableOffset.top;
     ableLeft = ableOffset.left;
     windowWidth = $(window).width();
-    otherWindowWidth = 0; // width of other visiable draggable windows will be added to this
+    otherWindowWidth = 0; // Width of other visiable draggable windows will be added to this
 
     if (targetWindow === 'transcript') {
       if (typeof this.$signWindow !== 'undefined') {
@@ -274,8 +275,7 @@
           otherWindowWidth = this.$signWindow.width() + gap;
         }
       }
-    }
-    else if (targetWindow === 'sign') {
+    } else if (targetWindow === 'sign') {
       if (typeof this.$transcriptArea !== 'undefined') {
         if (this.$transcriptArea.is(':visible')) {
           otherWindowWidth = this.$transcriptArea.width() + gap;
@@ -283,28 +283,27 @@
       }
     }
     if (targetWidth < (windowWidth - (ableLeft + ableWidth + gap + otherWindowWidth))) {
-      // there's room to the left of $ableDiv
+      // There's room to the left of $ableDiv
       position[0] = 'absolute';
       position[1] = 0;
       position[2] = ableWidth + otherWindowWidth + gap;
-    }
-    else if (targetWidth + gap < ableLeft) {
-      // there's room to the right of $ableDiv
+    } else if (targetWidth + gap < ableLeft) {
+      // There's room to the right of $ableDiv
       position[0] = 'absolute';
       position[1] = 0;
       position[2] = ableLeft - targetWidth - gap;
-    }
-    else {
-      // position element below $ableDiv
+    } else {
+      // Position element below $ableDiv
       position[0] = 'relative';
-      // no need to define top, left, or z-index
+      // No need to define top, left, or z-index
     }
     return position;
   };
 
-  AblePlayer.prototype.injectPoster = function ($element, context) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectPoster = function($element, context) {
 
-    // get poster attribute from media element and append that as an img to $element
+    // Get poster attribute from media element and append that as an img to $element
     // context is either 'youtube' or 'fallback'
     var poster, width, height;
 
@@ -312,27 +311,24 @@
       if (typeof this.ytWidth !== 'undefined') {
         width = this.ytWidth;
         height = this.ytHeight;
-      }
-      else if (typeof this.playerMaxWidth !== 'undefined') {
+      } else if (typeof this.playerMaxWidth !== 'undefined') {
         width = this.playerMaxWidth;
         height = this.playerMaxHeight;
-      }
-      else if (typeof this.playerWidth !== 'undefined') {
+      } else if (typeof this.playerWidth !== 'undefined') {
         width = this.playerWidth;
         height = this.playerHeight;
       }
-    }
-    else if (context === 'fallback') {
+    } else if (context === 'fallback') {
       width = '100%';
       height = 'auto';
     }
 
     if (this.$media.attr('poster')) {
       poster = this.$media.attr('poster');
-      this.$posterImg = $('<img>',{
+      this.$posterImg = $('<img>', {
         'class': 'able-poster',
-        'src' : poster,
-        'alt' : "",
+        'src': poster,
+        'alt': "",
         'role': "presentation",
         'width': width,
         'height': height
@@ -341,9 +337,10 @@
     }
   };
 
-  AblePlayer.prototype.injectAlert = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectAlert = function() {
 
-    // inject two alerts, one visible for all users and one for screen reader users only
+    // Inject two alerts, one visible for all users and one for screen reader users only
 
     var top;
 
@@ -353,8 +350,7 @@
     this.$alertBox.appendTo(this.$ableDiv);
     if (this.mediaType == 'audio') {
       top = -10;
-    }
-    else {
+    } else {
       top = Math.round(this.$mediaContainer.offset().top * 10) / 10;
     }
     this.$alertBox.css({
@@ -366,9 +362,10 @@
     this.$srAlertBox.appendTo(this.$ableDiv);
   };
 
-  AblePlayer.prototype.injectPlaylist = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.injectPlaylist = function() {
     if (this.playlistEmbed === true) {
-      // move playlist into player, immediately before statusBarDiv
+      // Move playlist into player, immediately before statusBarDiv
       var playlistClone = this.$playlistDom.clone();
       playlistClone.insertBefore(this.$statusBarDiv);
       // Update to the new playlist copy.
@@ -376,47 +373,46 @@
     }
 
     if (this.hasPlaylist && this.$sources.length === 0) {
-      // no source elements were provided. Construct them from the first playlist item
+      // No source elements were provided. Construct them from the first playlist item
       this.initializing = true;
       this.swapSource(0);
-      // redefine this.$sources now that media contains one or more <source> elements
+      // Redefine this.$sources now that media contains one or more <source> elements
       this.$sources = this.$media.find('source');
     }
   };
 
   // Create popup div and append to player
   // 'which' parameter is either 'captions', 'chapters', 'prefs', or 'X-window' (e.g., "sign-window")
-  AblePlayer.prototype.createPopup = function (which) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.createPopup = function(which) {
 
     var thisObj, $popup, whichMenu, $thisButton, $thisListItem, $prevButton, $nextButton,
-      $thisItem, $prevItem, $nextItem, selectedTrackIndex, selectedTrack;
+      $thisItem, $prevItem, $nextItem;
 
     thisObj = this;
-    $popup = $('<div>',{
+    $popup = $('<div>', {
       'id': this.mediaId + '-' + which + '-menu',
       'class': 'able-popup'
     }).hide();
     if (which == 'prefs') {
-      $popup.attr('role','menu');
+      $popup.attr('role', 'menu');
     }
     if (which === 'chapters' || which === 'prefs' || which === 'sign-window' || which === 'transcript-window') {
       $popup.addClass('able-popup-no-radio');
     }
-    $popup.on('keydown',function (e) {
+    $popup.on('keydown', function(e) {
       whichMenu = $(this).attr('id').split('-')[1]; // 'prefs','captions' or 'chapters'
-      if (whichMenu === 'prefs') { // pop-up menu is a list of menu items
+      if (whichMenu === 'prefs') { // Pop-up menu is a list of menu items
         $thisItem = $(this).find('li:focus');
         if ($thisItem.is(':first-child')) {
-          // this is the first item in the menu
-          $prevItem = $(this).find('li').last(); // wrap to bottom
+          // This is the first item in the menu
+          $prevItem = $(this).find('li').last(); // Wrap to bottom
           $nextItem = $thisItem.next();
-        }
-        else if ($thisItem.is(':last-child')) {
-          // this is the last Item
+        } else if ($thisItem.is(':last-child')) {
+          // This is the last Item
           $prevItem = $thisItem.prev();
-          $nextItem = $(this).find('li').first(); // wrap to top
-        }
-        else {
+          $nextItem = $(this).find('li').first(); // Wrap to top
+        } else {
           $prevItem = $thisItem.prev();
           $nextItem = $thisItem.next();
         }
@@ -424,43 +420,35 @@
           if (e.shiftKey) {
             $thisItem.removeClass('able-focus');
             $prevItem.focus().addClass('able-focus');
-          }
-          else {
+          } else {
             $thisItem.removeClass('able-focus');
             $nextItem.focus().addClass('able-focus');
           }
-        }
-        else if (e.which === 40 || e.which === 39) { // down or right arrow
+        } else if (e.which === 40 || e.which === 39) { // Down or right arrow
           $thisItem.removeClass('able-focus');
           $nextItem.focus().addClass('able-focus');
-        }
-        else if (e.which == 38 || e.which === 37) { // up or left arrow
+        } else if (e.which == 38 || e.which === 37) { // Up or left arrow
           $thisItem.removeClass('able-focus');
           $prevItem.focus().addClass('able-focus');
-        }
-        else if (e.which === 32 || e.which === 13) { // space or enter
+        } else if (e.which === 32 || e.which === 13) { // Space or enter
           $thisItem.click();
-        }
-        else if (e.which === 27) {  // Escape
+        } else if (e.which === 27) { // Escape
           $thisItem.removeClass('able-focus');
           thisObj.closePopups();
         }
         e.preventDefault();
-      }
-      else { // other than prefs, each other pop-up menu is a list of radio buttons
+      } else { // Other than prefs, each other pop-up menu is a list of radio buttons
         $thisButton = $(this).find('input:focus');
         $thisListItem = $thisButton.parent();
         if ($thisListItem.is(':first-child')) {
-          // this is the first button
-          $prevButton = $(this).find('input').last(); // wrap to bottom
+          // This is the first button
+          $prevButton = $(this).find('input').last(); // Wrap to bottom
           $nextButton = $thisListItem.next().find('input');
-        }
-        else if ($thisListItem.is(':last-child')) {
-          // this is the last button
+        } else if ($thisListItem.is(':last-child')) {
+          // This is the last button
           $prevButton = $thisListItem.prev().find('input');
-          $nextButton = $(this).find('input').first(); // wrap to top
-        }
-        else {
+          $nextButton = $(this).find('input').first(); // Wrap to top
+        } else {
           $prevButton = $thisListItem.prev().find('input');
           $nextButton = $thisListItem.next().find('input');
         }
@@ -469,27 +457,22 @@
             $thisListItem.removeClass('able-focus');
             $prevButton.focus();
             $prevButton.parent().addClass('able-focus');
-          }
-          else {
+          } else {
             $thisListItem.removeClass('able-focus');
             $nextButton.focus();
             $nextButton.parent().addClass('able-focus');
           }
-        }
-        else if (e.which === 40 || e.which === 39) { // down or right arrow
+        } else if (e.which === 40 || e.which === 39) { // Down or right arrow
           $thisListItem.removeClass('able-focus');
           $nextButton.focus();
           $nextButton.parent().addClass('able-focus');
-        }
-        else if (e.which == 38 || e.which === 37) { // up or left arrow
+        } else if (e.which == 38 || e.which === 37) { // Up or left arrow
           $thisListItem.removeClass('able-focus');
           $prevButton.focus();
           $prevButton.parent().addClass('able-focus');
-        }
-        else if (e.which === 32 || e.which === 13) { // space or enter
+        } else if (e.which === 32 || e.which === 13) { // Space or enter
           $thisListItem.find('input:focus').click();
-        }
-        else if (e.which === 27) {  // Escape
+        } else if (e.which === 27) { // Escape
           $thisListItem.removeClass('able-focus');
           thisObj.closePopups();
         }
@@ -500,7 +483,8 @@
     return $popup;
   };
 
-  AblePlayer.prototype.closePopups = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.closePopups = function() {
 
     if (this.chaptersPopup && this.chaptersPopup.is(':visible')) {
       this.chaptersPopup.hide();
@@ -512,8 +496,8 @@
     }
     if (this.prefsPopup && this.prefsPopup.is(':visible')) {
       this.prefsPopup.hide();
-      // restore menu items to their original state
-      this.prefsPopup.find('li').removeClass('able-focus').attr('tabindex','-1');
+      // Restore menu items to their original state
+      this.prefsPopup.find('li').removeClass('able-focus').attr('tabindex', '-1');
       this.$prefsButton.focus();
     }
     if (this.$windowPopup && this.$windowPopup.is(':visible')) {
@@ -521,13 +505,14 @@
       this.$windowButton.show().focus();
     }
     if (this.$volumeSlider && this.$volumeSlider.is(':visible')) {
-      this.$volumeSlider.hide().attr('aria-hidden','true');
+      this.$volumeSlider.hide().attr('aria-hidden', 'true');
       this.$volumeAlert.text(this.tt.volumeSliderClosed);
       this.$volumeButton.focus();
     }
   };
 
-  AblePlayer.prototype.setupPopups = function (which) {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.setupPopups = function(which) {
 
     // Create and fill in the popup menu forms for various controls.
     // parameter 'which' is passed if refreshing content of an existing popup ('captions' or 'chapters')
@@ -535,7 +520,7 @@
     var popups, thisObj, hasDefault, i, j,
         tracks, track, $trackButton, $trackLabel,
         radioName, radioId, $menu, $menuItem,
-        prefCats, prefCat, prefLabel;
+        prefCats, prefCat;
 
     popups = [];
     if (typeof which === 'undefined') {
@@ -543,12 +528,11 @@
     }
 
     if (which === 'captions' || (typeof which === 'undefined')) {
-      if (typeof this.ytCaptions !== 'undefined') { // setup popup for YouTube captions
+      if (typeof this.ytCaptions !== 'undefined') { // Setup popup for YouTube captions
         if (this.ytCaptions.length) {
           popups.push('ytCaptions');
         }
-      }
-      else { // setup popup for local captions
+      } else { // Setup popup for local captions
         if (this.captions.length > 0) {
           popups.push('captions');
         }
@@ -561,33 +545,29 @@
     }
     if (popups.length > 0) {
       thisObj = this;
-      for (var i=0; i<popups.length; i++) {
+      // eslint-disable-next-line no-redeclare
+      for (var i = 0; i < popups.length; i++) {
         var popup = popups[i];
         hasDefault = false;
         if (popup == 'prefs') {
           this.prefsPopup = this.createPopup('prefs');
-        }
-        else if (popup == 'captions') {
+        } else if (popup == 'captions') {
           if (typeof this.captionsPopup === 'undefined') {
             this.captionsPopup = this.createPopup('captions');
           }
           tracks = this.captions;
-        }
-        else if (popup == 'chapters') {
+        } else if (popup == 'chapters') {
           if (typeof this.chaptersPopup === 'undefined') {
             this.chaptersPopup = this.createPopup('chapters');
           }
           if (this.selectedChapters) {
             tracks = this.selectedChapters.cues;
-          }
-          else if (this.chapters.length >= 1) {
+          } else if (this.chapters.length >= 1) {
             tracks = this.chapters[0].cues;
-          }
-          else {
+          } else {
             tracks = [];
           }
-        }
-        else if (popup == 'ytCaptions') {
+        } else if (popup == 'ytCaptions') {
           if (typeof this.captionsPopup === 'undefined') {
             this.captionsPopup = this.createPopup('captions');
           }
@@ -596,39 +576,34 @@
         $menu = $('<ul></ul>');
         radioName = this.mediaId + '-' + popup + '-choice';
         if (popup === 'prefs') {
-          $menu.attr('role','presentation');
+          $menu.attr('role', 'presentation');
           prefCats = this.getPreferencesGroups();
           for (j = 0; j < prefCats.length; j++) {
-            $menuItem = $('<li></li>',{
+            $menuItem = $('<li></li>', {
               'role': 'menuitem',
               'tabindex': '-1'
             });
             prefCat = prefCats[j];
             if (prefCat === 'captions') {
               $menuItem.text(this.tt.prefMenuCaptions);
-            }
-            else if (prefCat === 'descriptions') {
+            } else if (prefCat === 'descriptions') {
               $menuItem.text(this.tt.prefMenuDescriptions);
-            }
-            else if (prefCat === 'keyboard') {
+            } else if (prefCat === 'keyboard') {
               $menuItem.text(this.tt.prefMenuKeyboard);
-            }
-            else if (prefCat === 'transcript') {
+            } else if (prefCat === 'transcript') {
               $menuItem.text(this.tt.prefMenuTranscript);
             }
+            // eslint-disable-next-line no-unused-vars
             $menuItem.click(function(event) {
               var whichPref = $(this).text();
               thisObj.setFullscreen(false);
               if (whichPref === 'Captions') {
                 thisObj.captionPrefsDialog.show();
-              }
-              else if (whichPref === 'Descriptions') {
+              } else if (whichPref === 'Descriptions') {
                 thisObj.descPrefsDialog.show();
-              }
-              else if (whichPref === 'Keyboard') {
+              } else if (whichPref === 'Keyboard') {
                 thisObj.keyboardPrefsDialog.show();
-              }
-              else if (whichPref === 'Transcript') {
+              } else if (whichPref === 'Transcript') {
                 thisObj.transcriptPrefsDialog.show();
               }
               thisObj.closePopups();
@@ -636,39 +611,37 @@
             $menu.append($menuItem);
           }
           this.prefsPopup.append($menu);
-        }
-        else {
+        } else {
           for (j = 0; j < tracks.length; j++) {
             $menuItem = $('<li></li>');
             track = tracks[j];
             radioId = this.mediaId + '-' + popup + '-' + j;
-            $trackButton = $('<input>',{
+            $trackButton = $('<input>', {
               'type': 'radio',
               'val': j,
               'name': radioName,
               'id': radioId
             });
             if (track.def) {
-              $trackButton.prop('checked',true);
+              $trackButton.prop('checked', true);
               hasDefault = true;
             }
-            $trackLabel = $('<label>',{
+            $trackLabel = $('<label>', {
               'for': radioId
             });
             if (track.language !== 'undefined') {
-              $trackButton.attr('lang',track.language);
+              $trackButton.attr('lang', track.language);
             }
             if (popup == 'captions' || popup == 'ytCaptions') {
               $trackLabel.text(track.label || track.language);
               $trackButton.click(this.getCaptionClickFunction(track));
-            }
-            else if (popup == 'chapters') {
+            } else if (popup == 'chapters') {
               $trackLabel.text(this.flattenCueForCaption(track) + ' - ' + this.formatSecondsAsColonTime(track.start));
-              var getClickFunction = function (time) {
-                return function () {
+              var getClickFunction = function(time) {
+                return function() {
                   thisObj.seekTrigger = 'chapter';
                   thisObj.seekTo(time);
-                  // stopgap to prevent spacebar in Firefox from reopening popup
+                  // Stopgap to prevent spacebar in Firefox from reopening popup
                   // immediately after closing it (used in handleChapters())
                   thisObj.hidingPopup = true;
                   thisObj.chaptersPopup.hide();
@@ -678,48 +651,46 @@
                     thisObj.hidingPopup = false;
                   }, 100);
                   thisObj.$chaptersButton.focus();
-                }
-              }
-              $trackButton.on('click keypress',getClickFunction(track.start));
+                };
+              };
+              $trackButton.on('click keypress', getClickFunction(track.start));
             }
-            $menuItem.append($trackButton,$trackLabel);
+            $menuItem.append($trackButton, $trackLabel);
             $menu.append($menuItem);
           }
           if (popup == 'captions' || popup == 'ytCaptions') {
-            // add a captions off button
+            // Add a captions off button
             radioId = this.mediaId + '-captions-off';
             $menuItem = $('<li></li>');
-            $trackButton = $('<input>',{
+            $trackButton = $('<input>', {
               'type': 'radio',
               'name': radioName,
               'id': radioId
             });
-            $trackLabel = $('<label>',{
+            $trackLabel = $('<label>', {
               'for': radioId
             });
             $trackLabel.text(this.tt.captionsOff);
             if (this.prefCaptions === 0) {
-              $trackButton.prop('checked',true);
+              $trackButton.prop('checked', true);
             }
             $trackButton.click(this.getCaptionOffFunction());
-            $menuItem.append($trackButton,$trackLabel);
+            $menuItem.append($trackButton, $trackLabel);
             $menu.append($menuItem);
           }
-          if (!hasDefault) { // no 'default' attribute was specified on any <track>
+          if (!hasDefault) { // No 'default' attribute was specified on any <track>
             if ((popup == 'captions' || popup == 'ytCaptions') && ($menu.find('input:radio[lang=' + this.captionLang + ']'))) {
-              // check the button associated with the default caption language
+              // Check the button associated with the default caption language
               // (as determined in control.js > syncTrackLanguages())
-              $menu.find('input:radio[lang=' + this.captionLang + ']').prop('checked',true);
-            }
-            else {
-              // check the first button
-              $menu.find('input').first().prop('checked',true);
+              $menu.find('input:radio[lang=' + this.captionLang + ']').prop('checked', true);
+            } else {
+              // Check the first button
+              $menu.find('input').first().prop('checked', true);
             }
           }
           if (popup === 'captions' || popup === 'ytCaptions') {
             this.captionsPopup.html($menu);
-          }
-          else if (popup === 'chapters') {
+          } else if (popup === 'chapters') {
             this.chaptersPopup.html($menu);
           }
         }
@@ -727,9 +698,10 @@
     }
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.provideFallback = function() {
 
-    // provide ultimate fallback for users who are unable to play the media
+    // Provide ultimate fallback for users who are unable to play the media
     // If there is HTML content nested within the media element, display that
     // Otherwise, display standard localized error text
 
@@ -740,32 +712,29 @@
     // Too many sites say "You need to update your browser" when in fact I'm using a current version
     showBrowserList = false;
 
-    $fallbackDiv = $('<div>',{
-      'class' : 'able-fallback',
-      'role' : 'alert',
+    $fallbackDiv = $('<div>', {
+      'class': 'able-fallback',
+      'role': 'alert',
     });
-    // override default width of .able-fallback with player width, if known
+    // Override default width of .able-fallback with player width, if known
     if (typeof this.playerMaxWidth !== 'undefined') {
       width = this.playerMaxWidth + 'px';
-    }
-    else if (this.$media.attr('width')) {
+    } else if (this.$media.attr('width')) {
       width = parseInt(this.$media.attr('width'), 10) + 'px';
-    }
-    else {
+    } else {
       width = '100%';
     }
-    $fallbackDiv.css('max-width',width);
+    $fallbackDiv.css('max-width', width);
 
-    // use fallback content that's nested inside the HTML5 media element, if there is any
+    // Use fallback content that's nested inside the HTML5 media element, if there is any
     mediaClone = this.$media.clone();
     $('source, track', mediaClone).remove();
     fallback = mediaClone.html().trim();
     if (fallback.length) {
       $fallbackDiv.html(fallback);
-    }
-    else {
-      // use standard localized error message
-      fallbackText =  this.tt.fallbackError1 + ' ' + this.tt[this.mediaType] + '. ';
+    } else {
+      // Use standard localized error message
+      fallbackText = this.tt.fallbackError1 + ' ' + this.tt[this.mediaType] + '. ';
       fallbackText += this.tt.fallbackError2 + ':';
       fallback = $('<p>').text(fallbackText);
       $fallbackDiv.html(fallback);
@@ -775,7 +744,7 @@
     if (showBrowserList) {
       browserList = $('<ul>');
       browsers = this.getSupportingBrowsers();
-      for (i=0; i<browsers.length; i++) {
+      for (i = 0; i < browsers.length; i++) {
         b = $('<li>');
         b.text(browsers[i].name + ' ' + browsers[i].minVersion + ' ' + this.tt.orHigher);
         browserList.append(b);
@@ -783,82 +752,81 @@
       $fallbackDiv.append(browserList);
     }
 
-    // if there's a poster, show that as well
+    // If there's a poster, show that as well
     this.injectPoster($fallbackDiv, 'fallback');
 
-    // inject $fallbackDiv into the DOM and remove broken content
+    // Inject $fallbackDiv into the DOM and remove broken content
     if (typeof this.$ableWrapper !== 'undefined') {
       this.$ableWrapper.before($fallbackDiv);
       this.$ableWrapper.remove();
-    }
-    else if (typeof this.$media !== 'undefined') {
+    } else if (typeof this.$media !== 'undefined') {
       this.$media.before($fallbackDiv);
       this.$media.remove();
-    }
-    else {
+    } else {
       $('body').prepend($fallbackDiv);
     }
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.getSupportingBrowsers = function() {
 
     var browsers = [];
     browsers[0] = {
-      name:'Chrome',
+      name: 'Chrome',
       minVersion: '31'
     };
     browsers[1] = {
-      name:'Firefox',
+      name: 'Firefox',
       minVersion: '34'
     };
     browsers[2] = {
-      name:'Internet Explorer',
+      name: 'Internet Explorer',
       minVersion: '10'
     };
     browsers[3] = {
-      name:'Opera',
+      name: 'Opera',
       minVersion: '26'
     };
     browsers[4] = {
-      name:'Safari for Mac OS X',
+      name: 'Safari for Mac OS X',
       minVersion: '7.1'
     };
     browsers[5] = {
-      name:'Safari for iOS',
+      name: 'Safari for iOS',
       minVersion: '7.1'
     };
     browsers[6] = {
-      name:'Android Browser',
+      name: 'Android Browser',
       minVersion: '4.1'
     };
     browsers[7] = {
-      name:'Chrome for Android',
+      name: 'Chrome for Android',
       minVersion: '40'
     };
     return browsers;
-  }
+  };
 
   // Calculates the layout for controls based on media and options.
   // Returns an object with keys 'ul', 'ur', 'bl', 'br' for upper-left, etc.
   // Each associated value is array of control names to put at that location.
-  AblePlayer.prototype.calculateControlLayout = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.calculateControlLayout = function() {
     // Removed rewind/forward in favor of seek bar.
 
     var controlLayout = {
-      'ul': ['play','restart','rewind','forward'],
+      'ul': ['play', 'restart', 'rewind', 'forward'],
       'ur': ['seek'],
       'bl': [],
       'br': []
-    }
+    };
 
-    // test for browser support for volume before displaying volume button
+    // Test for browser support for volume before displaying volume button
     if (this.browserSupportsVolume()) {
-      // volume buttons are: 'mute','volume-soft','volume-medium','volume-loud'
+      // Volume buttons are: 'mute','volume-soft','volume-medium','volume-loud'
       // previously supported button were: 'volume-up','volume-down'
       this.volumeButton = 'volume-' + this.getVolumeName(this.volume);
-      controlLayout['ur'].push('volume');
-    }
-    else {
+      controlLayout.ur.push('volume');
+    } else {
       this.volume = false;
     }
 
@@ -873,13 +841,13 @@
 
     if (this.mediaType === 'video') {
       if (this.hasCaptions) {
-        bll.push('captions'); //closed captions
+        bll.push('captions'); // Closed captions
       }
       if (this.hasSignLanguage) {
-        bll.push('sign'); // sign language
+        bll.push('sign'); // Sign language
       }
       if ((this.hasOpenDesc || this.hasClosedDesc) && (this.useDescriptionsButton)) {
-        bll.push('descriptions'); //audio description
+        bll.push('descriptions'); // Audio description
       }
     }
     if (this.transcriptType === 'popup') {
@@ -890,38 +858,37 @@
       bll.push('chapters');
     }
 
-    controlLayout['br'].push('preferences');
+    controlLayout.br.push('preferences');
 
     // TODO: JW currently has a bug with fullscreen, anything that can be done about this?
     if (this.mediaType === 'video' && this.allowFullScreen && this.player !== 'jw') {
-      controlLayout['br'].push('fullscreen');
+      controlLayout.br.push('fullscreen');
     }
 
     // Include the pipe only if we need to.
     if (bll.length > 0 && blr.length > 0) {
-      controlLayout['bl'] = bll;
-      controlLayout['bl'].push('pipe');
-      controlLayout['bl'] = controlLayout['bl'].concat(blr);
-    }
-    else {
-      controlLayout['bl'] = bll.concat(blr);
+      controlLayout.bl = bll;
+      controlLayout.bl.push('pipe');
+      controlLayout.bl = controlLayout.bl.concat(blr);
+    } else {
+      controlLayout.bl = bll.concat(blr);
     }
 
     return controlLayout;
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.addControls = function() {
-    // determine which controls to show based on several factors:
+    // Determine which controls to show based on several factors:
     // mediaType (audio vs video)
     // availability of tracks (e.g., for closed captions & audio description)
     // browser support (e.g., for sliders and speedButtons)
     // user preferences (???)
     // some controls are aligned on the left, and others on the right
-    var thisObj, baseSliderWidth, controlLayout, sectionByOrder, useSpeedButtons, useFullScreen,
-    i, j, k, controls, $controllerSpan, $sliderDiv, sliderLabel, duration, $pipe, $pipeImg, tooltipId, tooltipX, tooltipY, control,
-    buttonImg, buttonImgSrc, buttonTitle, $newButton, iconClass, buttonIcon, buttonUse, svgPath,
-    leftWidth, rightWidth, totalWidth, leftWidthStyle, rightWidthStyle,
-    controllerStyles, vidcapStyles, captionLabel, popupMenuId;
+    // eslint-disable-next-line no-unused-vars
+    var thisObj, baseSliderWidth, controlLayout, sectionByOrder, control, buttonUse,
+    buttonImg, buttonImgSrc, buttonTitle, $newButton, iconClass, buttonIcon, svgPath,
+    captionLabel, popupMenuId, tooltipId, controls;
 
     thisObj = this;
 
@@ -930,31 +897,31 @@
     // Initialize the layout into the this.controlLayout variable.
     controlLayout = this.calculateControlLayout();
 
-    sectionByOrder = {0: 'ul', 1:'ur', 2:'bl', 3:'br'};
+    sectionByOrder = {"0": 'ul', "1": 'ur', "2": 'bl', "3": 'br'};
 
-    // add an empty div to serve as a tooltip
+    // Add an empty div to serve as a tooltip
     tooltipId = this.mediaId + '-tooltip';
-    this.$tooltipDiv = $('<div>',{
+    this.$tooltipDiv = $('<div>', {
       'id': tooltipId,
       'class': 'able-tooltip'
     }).hide();
     this.$controllerDiv.append(this.$tooltipDiv);
 
-    // step separately through left and right controls
-    for (i = 0; i <= 3; i++) {
+    // Step separately through left and right controls
+    for (var i = 0; i <= 3; i++) {
       controls = controlLayout[sectionByOrder[i]];
       if ((i % 2) === 0) {
-        $controllerSpan = $('<div>',{
+        /* eslint-disable no-undef */
+        $controllerSpan = $('<div>', {
           'class': 'able-left-controls'
         });
-      }
-      else {
-        $controllerSpan = $('<div>',{
+      } else {
+        $controllerSpan = $('<div>', {
           'class': 'able-right-controls'
         });
       }
       this.$controllerDiv.append($controllerSpan);
-      for (j=0; j<controls.length; j++) {
+      for (var j = 0; j < controls.length; j++) {
         control = controls[j];
         if (control === 'seek') {
           $sliderDiv = $('<div class="able-seekbar"></div>');
@@ -962,12 +929,12 @@
           $controllerSpan.append($sliderDiv);
           duration = this.getDuration();
           if (duration == 0) {
-            // set arbitrary starting duration, and change it when duration is known
+            // Set arbitrary starting duration, and change it when duration is known
             duration = 100;
           }
-          this.seekBar = new AccessibleSlider(this.mediaType, $sliderDiv, 'horizontal', baseSliderWidth, 0, duration, this.seekInterval, sliderLabel, 'seekbar', true, 'visible');
-        }
-        else if (control === 'pipe') {
+          this.seekBar = new AccessibleSlider(this.mediaType, $sliderDiv, 'horizontal', baseSliderWidth, 0, duration,
+             this.seekInterval, sliderLabel, 'seekbar', true, 'visible');
+        } else if (control === 'pipe') {
           // TODO: Unify this with buttons somehow to avoid code duplication
           $pipe = $('<span>', {
             'tabindex': '-1',
@@ -975,8 +942,7 @@
           });
           if (this.iconType === 'font') {
             $pipe.addClass('icon-pipe');
-          }
-          else {
+          } else {
             $pipeImg = $('<img>', {
               src: this.rootPath + 'button-icons/' + this.iconColor + '/pipe.png',
               alt: '',
@@ -985,36 +951,30 @@
             $pipe.append($pipeImg);
           }
           $controllerSpan.append($pipe);
-        }
-        else {
-          // this control is a button
+        } else {
+          // This control is a button
           if (control === 'volume') {
             buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/' + this.volumeButton + '.png';
-          }
-          else if (control === 'fullscreen') {
+          } else if (control === 'fullscreen') {
             buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/fullscreen-expand.png';
-          }
-          else if (control === 'slower') {
+          } else if (control === 'slower') {
             if (this.speedIcons === 'animals') {
               buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/turtle.png';
-            }
-            else {
+            } else {
               buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/slower.png';
             }
-          }
-          else if (control === 'faster') {
+          } else if (control === 'faster') {
             if (this.speedIcons === 'animals') {
               buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/rabbit.png';
-            }
-            else {
+            } else {
               buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/faster.png';
             }
-          }
-          else {
+          } else {
             buttonImgSrc = this.rootPath + 'button-icons/' + this.iconColor + '/' + control + '.png';
           }
           buttonTitle = this.getButtonTitle(control);
 
+          /* eslint-enable no-undef */
           // icomoon documentation recommends the following markup for screen readers:
           // 1. link element (or in our case, button). Nested inside this element:
           // 2. span that contains the icon font (in our case, buttonIcon)
@@ -1023,7 +983,7 @@
           // And if iconType === 'image', we are replacing #2 with an image (with alt="" and role="presentation")
           // This has been thoroughly tested and works well in all screen reader/browser combinations
           // See https://github.com/ableplayer/ableplayer/issues/81
-          $newButton = $('<button>',{
+          $newButton = $('<button>', {
             'type': 'button',
             'tabindex': '0',
             'aria-label': buttonTitle,
@@ -1033,8 +993,7 @@
             // This same ARIA for captions and chapters are added elsewhere
             if (control == 'preferences') {
               popupMenuId = this.mediaId + '-prefs-menu';
-            }
-            else if (control === 'volume') {
+            } else if (control === 'volume') {
               popupMenuId = this.mediaId + '-volume-slider';
             }
             $newButton.attr({
@@ -1044,33 +1003,27 @@
           if (this.iconType === 'font') {
             if (control === 'volume') {
               iconClass = 'icon-' + this.volumeButton;
-            }
-            else if (control === 'slower') {
+            } else if (control === 'slower') {
               if (this.speedIcons === 'animals') {
                 iconClass = 'icon-turtle';
-              }
-              else {
+              } else {
                 iconClass = 'icon-slower';
               }
-            }
-            else if (control === 'faster') {
+            } else if (control === 'faster') {
               if (this.speedIcons === 'animals') {
                 iconClass = 'icon-rabbit';
-              }
-              else {
+              } else {
                 iconClass = 'icon-faster';
               }
-            }
-            else {
+            } else {
               iconClass = 'icon-' + control;
             }
-            buttonIcon = $('<span>',{
+            buttonIcon = $('<span>', {
               'class': iconClass,
               'aria-hidden': 'true'
             });
             $newButton.append(buttonIcon);
-          }
-          else if (this.iconType === 'svg') {
+          } else if (this.iconType === 'svg') {
 
           /*
             // Unused option for adding SVG:
@@ -1114,35 +1067,29 @@
             var svgData;
             if (control === 'volume') {
               svgData = this.getSvgData(this.volumeButton);
-            }
-            else if (control === 'fullscreen') {
+            } else if (control === 'fullscreen') {
               svgData = this.getSvgData('fullscreen-expand');
-            }
-            else if (control === 'slower') {
+            } else if (control === 'slower') {
               if (this.speedIcons === 'animals') {
                 svgData = this.getSvgData('turtle');
-              }
-              else {
+              } else {
                 svgData = this.getSvgData('slower');
               }
-            }
-            else if (control === 'faster') {
+            } else if (control === 'faster') {
               if (this.speedIcons === 'animals') {
                 svgData = this.getSvgData('rabbit');
-              }
-              else {
+              } else {
                 svgData = this.getSvgData('faster');
               }
-            }
-            else {
+            } else {
               svgData = this.getSvgData(control);
             }
-            buttonIcon = $('<svg>',{
+            buttonIcon = $('<svg>', {
               'focusable': 'false',
               'aria-hidden': 'true',
               'viewBox': svgData[0]
             });
-            svgPath = $('<path>',{
+            svgPath = $('<path>', {
               'd': svgData[1]
             });
             buttonIcon.append(svgPath);
@@ -1150,36 +1097,38 @@
 
             // Final step: Need to refresh the DOM in order for browser to process & display the SVG
             $newButton.html($newButton.html());
-          }
-          else {
-            // use images
-            buttonImg = $('<img>',{
+          } else {
+            // Use images
+            buttonImg = $('<img>', {
               'src': buttonImgSrc,
               'alt': '',
               'role': 'presentation'
             });
             $newButton.append(buttonImg);
           }
-          // add the visibly-hidden label for screen readers that don't support aria-label on the button
-          var buttonLabel = $('<span>',{
+          // Add the visibly-hidden label for screen readers that don't support aria-label on the button
+          var buttonLabel = $('<span>', {
             'class': 'able-clipped'
           }).text(buttonTitle);
           $newButton.append(buttonLabel);
-          // add an event listener that displays a tooltip on mouseenter or focus
-          $newButton.on('mouseenter focus',function(event) {
+          // Add an event listener that displays a tooltip on mouseenter or focus
+          // eslint-disable-next-line no-loop-func, no-unused-vars
+          $newButton.on('mouseenter focus', function(event) {
             var label = $(this).attr('aria-label');
-            // get position of this button
+            // Get position of this button
             var position = $(this).position();
             var buttonHeight = $(this).height();
+            // eslint-disable-next-line no-unused-vars
             var buttonWidth = $(this).width();
             var tooltipY = position.top - buttonHeight - 15;
             var centerTooltip = true;
             if ($(this).closest('div').hasClass('able-right-controls')) {
-              // this control is on the right side
+              // This control is on the right side
               if ($(this).closest('div').find('button:last').get(0) == $(this).get(0)) {
-                // this is the last control on the right
+                // This is the last control on the right
                 // position tooltip using the "right" property
                 centerTooltip = false;
+                /* eslint-disable block-scoped-var */
                 var tooltipX = 0;
                 var tooltipStyle = {
                   left: '',
@@ -1187,11 +1136,11 @@
                   top: tooltipY + 'px'
                 };
               }
-            }
-            else {
-              // this control is on the left side
+            } else {
+              // This control is on the left side
               if ($(this).is(':first-child')) {
-                // this is the first control on the left
+                // This is the first control on the left
+                /* eslint-disable no-redeclare */
                 centerTooltip = false;
                 var tooltipX = position.left;
                 var tooltipStyle = {
@@ -1202,89 +1151,84 @@
               }
             }
             if (centerTooltip) {
-              // populate tooltip, then calculate its width before showing it
+              // Populate tooltip, then calculate its width before showing it
+              // eslint-disable-next-line no-undef
               var tooltipWidth = AblePlayer.localGetElementById($newButton[0], tooltipId).text(label).width();
-              // center the tooltip horizontally over the button
-              var tooltipX = position.left - tooltipWidth/2;
+              // Center the tooltip horizontally over the button
+              var tooltipX = position.left - tooltipWidth / 2;
               var tooltipStyle = {
                 left: tooltipX + 'px',
                 right: '',
                 top: tooltipY + 'px'
               };
             }
+            // eslint-disable-next-line no-undef
             var tooltip = AblePlayer.localGetElementById($newButton[0], tooltipId).text(label).css(tooltipStyle);
             thisObj.showTooltip(tooltip);
-            $(this).on('mouseleave blur',function() {
+            $(this).on('mouseleave blur', function() {
+              // eslint-disable-next-line no-undef
               AblePlayer.localGetElementById($newButton[0], tooltipId).text('').hide();
-            })
+            });
           });
 
+          /* eslint-enable no-redeclare */
           if (control === 'captions') {
             if (!this.prefCaptions || this.prefCaptions !== 1) {
-              // captions are available, but user has them turned off
+              // Captions are available, but user has them turned off
               if (this.captions.length > 1) {
                 captionLabel = this.tt.captions;
-              }
-              else {
+              } else {
                 captionLabel = this.tt.showCaptions;
               }
-              $newButton.addClass('buttonOff').attr('title',captionLabel);
+              $newButton.addClass('buttonOff').attr('title', captionLabel);
             }
-          }
-          else if (control === 'descriptions') {
+          } else if (control === 'descriptions') {
             if (!this.prefDesc || this.prefDesc !== 1) {
-              // user prefer non-audio described version
+              // User prefer non-audio described version
               // Therefore, load media without description
               // Description can be toggled on later with this button
-              $newButton.addClass('buttonOff').attr('title',this.tt.turnOnDescriptions);
+              $newButton.addClass('buttonOff').attr('title', this.tt.turnOnDescriptions);
             }
           }
 
+          // eslint-disable-next-line no-undef
           $controllerSpan.append($newButton);
 
-          // create variables of buttons that are referenced throughout the AblePlayer object
+          // Create variables of buttons that are referenced throughout the AblePlayer object
           if (control === 'play') {
             this.$playpauseButton = $newButton;
-          }
-          else if (control === 'captions') {
+          } else if (control === 'captions') {
             this.$ccButton = $newButton;
-          }
-          else if (control === 'sign') {
+          } else if (control === 'sign') {
             this.$signButton = $newButton;
-            // gray out sign button if sign language window is not active
+            // Gray out sign button if sign language window is not active
             if (!(this.$signWindow.is(':visible'))) {
               this.$signButton.addClass('buttonOff');
             }
-          }
-          else if (control === 'descriptions') {
+          } else if (control === 'descriptions') {
             this.$descButton = $newButton;
-            // button will be enabled or disabled in description.js > initDescription()
-          }
-          else if (control === 'mute') {
+            // Button will be enabled or disabled in description.js > initDescription()
+          } else if (control === 'mute') {
             this.$muteButton = $newButton;
-          }
-          else if (control === 'transcript') {
+          } else if (control === 'transcript') {
             this.$transcriptButton = $newButton;
-            // gray out transcript button if transcript is not active
+            // Gray out transcript button if transcript is not active
             if (!(this.$transcriptDiv.is(':visible'))) {
-              this.$transcriptButton.addClass('buttonOff').attr('title',this.tt.showTranscript);
+              this.$transcriptButton.addClass('buttonOff').attr('title', this.tt.showTranscript);
             }
-          }
-          else if (control === 'fullscreen') {
+          } else if (control === 'fullscreen') {
             this.$fullscreenButton = $newButton;
-          }
-          else if (control === 'chapters') {
+          } else if (control === 'chapters') {
             this.$chaptersButton = $newButton;
-          }
-          else if (control === 'preferences') {
+          } else if (control === 'preferences') {
             this.$prefsButton = $newButton;
-          }
-          else if (control === 'volume') {
+          } else if (control === 'volume') {
             this.$volumeButton = $newButton;
           }
         }
         if (control === 'volume') {
-          // in addition to the volume button, add a hidden slider
+          // In addition to the volume button, add a hidden slider
+          // eslint-disable-next-line no-undef
           this.addVolumeSlider($controllerSpan);
         }
       }
@@ -1296,26 +1240,27 @@
     if (this.mediaType === 'video') {
 
       if (typeof this.$captionsDiv !== 'undefined') {
-        // stylize captions based on user prefs
+        // Stylize captions based on user prefs
         this.stylizeCaptions(this.$captionsDiv);
       }
       if (typeof this.$descDiv !== 'undefined') {
-        // stylize descriptions based on user's caption prefs
+        // Stylize descriptions based on user's caption prefs
         this.stylizeCaptions(this.$descDiv);
       }
     }
 
-    // combine left and right controls arrays for future reference
+    // Combine left and right controls arrays for future reference
     this.controls = [];
-    for (var sec in controlLayout) if (controlLayout.hasOwnProperty(sec)) {
+    for (var sec in controlLayout) { if (controlLayout.hasOwnProperty(sec)) {
       this.controls = this.controls.concat(controlLayout[sec]);
-    }
+    } }
 
     // Update state-based display of controls.
     this.refreshControls();
   };
 
-  AblePlayer.prototype.useSvg = function () {
+  // eslint-disable-next-line no-undef
+  AblePlayer.prototype.useSvg = function() {
 
     // Modified from IcoMoon.io svgxuse
     // @copyright Copyright (c) 2016 IcoMoon.io
@@ -1323,17 +1268,17 @@
     // See https://github.com/Keyamoon/svgxuse
     // @version   1.1.16
 
-    var cache = Object.create(null); // holds xhr objects to prevent multiple requests
+    var cache = Object.create(null); // Holds xhr objects to prevent multiple requests
     var checkUseElems,
-        tid; // timeout id
-    var debouncedCheck = function () {
+        tid; // Timeout id
+    var debouncedCheck = function() {
       clearTimeout(tid);
       tid = setTimeout(checkUseElems, 100);
     };
-    var unobserveChanges = function () {
+    var unobserveChanges = function() {
       return;
     };
-    var observeChanges = function () {
+    var observeChanges = function() {
       var observer;
       window.addEventListener('resize', debouncedCheck, false);
       window.addEventListener('orientationchange', debouncedCheck, false);
@@ -1344,17 +1289,17 @@
           subtree: true,
           attributes: true
         });
-        unobserveChanges = function () {
+        unobserveChanges = function() {
           try {
             observer.disconnect();
             window.removeEventListener('resize', debouncedCheck, false);
             window.removeEventListener('orientationchange', debouncedCheck, false);
-          } catch (ignore) {}
+          } catch (ignore) { /* Empty */ }
         };
       }
       else {
         document.documentElement.addEventListener('DOMSubtreeModified', debouncedCheck, false);
-        unobserveChanges = function () {
+        unobserveChanges = function() {
           document.documentElement.removeEventListener('DOMSubtreeModified', debouncedCheck, false);
           window.removeEventListener('resize', debouncedCheck, false);
           window.removeEventListener('orientationchange', debouncedCheck, false);
@@ -1362,10 +1307,10 @@
       }
     };
     var xlinkNS = 'http://www.w3.org/1999/xlink';
-    checkUseElems = function () {
+    checkUseElems = function() {
       var base,
           bcr,
-          fallback = '', // optional fallback URL in case no base path to SVG file was given and no symbol definition was found.
+          fallback = '', // Optional fallback URL in case no base path to SVG file was given and no symbol definition was found.
           hash,
           i,
           Request,
@@ -1380,28 +1325,38 @@
           Request = XMLHttpRequest;
         }
         else {
+          // eslint-disable-next-line no-undef
           Request = XDomainRequest || undefined;
         }
       }
       if (Request === undefined) {
         return;
       }
+      /**
+       *
+       */
       function observeIfDone() {
         // If done with making changes, start watching for chagnes in DOM again
         inProgressCount -= 1;
-        if (inProgressCount === 0) { // if all xhrs were resolved
-          observeChanges(); // watch for changes to DOM
+        if (inProgressCount === 0) { // If all xhrs were resolved
+          observeChanges(); // Watch for changes to DOM
         }
       }
+      /**
+       * @param {any} spec
+       */
       function attrUpdateFunc(spec) {
-        return function () {
+        return function() {
           if (cache[spec.base] !== true) {
             spec.useEl.setAttributeNS(xlinkNS, 'xlink:href', '#' + spec.hash);
           }
         };
       }
+      /**
+       * @param {any} xhr
+       */
       function onloadFunc(xhr) {
-        return function () {
+        return function() {
           var body = document.body;
           var x = document.createElement('x');
           var svg;
@@ -1419,21 +1374,24 @@
           observeIfDone();
         };
       }
+      /**
+       * @param {any} xhr
+       */
       function onErrorTimeout(xhr) {
-        return function () {
+        return function() {
           xhr.onerror = null;
           xhr.ontimeout = null;
           observeIfDone();
         };
       }
-      unobserveChanges(); // stop watching for changes to DOM
+      unobserveChanges(); // Stop watching for changes to DOM
       // find all use elements
       uses = document.getElementsByTagName('use');
       for (i = 0; i < uses.length; i += 1) {
         try {
           bcr = uses[i].getBoundingClientRect();
         } catch (ignore) {
-          // failed to get bounding rectangle of the use element
+          // Failed to get bounding rectangle of the use element
           bcr = false;
         }
         url = uses[i].getAttributeNS(xlinkNS, 'href').split('#');
@@ -1441,17 +1399,17 @@
         hash = url[1];
         isHidden = bcr && bcr.left === 0 && bcr.right === 0 && bcr.top === 0 && bcr.bottom === 0;
         if (bcr && bcr.width === 0 && bcr.height === 0 && !isHidden) {
-          // the use element is empty
+          // The use element is empty
           // if there is a reference to an external SVG, try to fetch it
           // use the optional fallback URL if there is no reference to an external SVG
           if (fallback && !base.length && hash && !document.getElementById(hash)) {
             base = fallback;
           }
           if (base.length) {
-            // schedule updating xlink:href
+            // Schedule updating xlink:href
             xhr = cache[base];
             if (xhr !== true) {
-              // true signifies that prepending the SVG was not required
+              // True signifies that prepending the SVG was not required
               setTimeout(attrUpdateFunc({
                 useEl: uses[i],
                 base: base,
@@ -1473,11 +1431,11 @@
         else {
           if (!isHidden) {
             if (cache[base] === undefined) {
-              // remember this URL if the use element was not empty and no request was sent
+              // Remember this URL if the use element was not empty and no request was sent
               cache[base] = true;
             }
             else if (cache[base].onload) {
-              // if it turns out that prepending the SVG is not necessary,
+              // If it turns out that prepending the SVG is not necessary,
               // abort the in-progress xhr.
               cache[base].abort();
               cache[base].onload = undefined;
@@ -1499,6 +1457,7 @@
 */
   };
 
+  // eslint-disable-next-line no-undef
   AblePlayer.prototype.swapSource = function(sourceIndex) {
 
     // Change media player source file, for instance when moving to the next element in a playlist.
@@ -1514,83 +1473,83 @@
       itemLang = $newItem.attr('lang');
     }
     sources = [];
-    s = 0; // index
+    s = 0; // Index
     if (this.mediaType === 'audio') {
       if ($newItem.attr('data-mp3')) {
         jwSource = $newItem.attr('data-mp3'); // JW Player can play this
-        sources[s] =  new Array('audio/mpeg',jwSource);
+        sources[s] = new Array('audio/mpeg', jwSource);
         s++;
       }
       if ($newItem.attr('data-webm')) {
-        sources[s] = new Array('audio/webm',$newItem.attr('data-webm'));
+        sources[s] = new Array('audio/webm', $newItem.attr('data-webm'));
         s++;
       }
       if ($newItem.attr('data-webma')) {
-        sources[s] = new Array('audio/webm',$newItem.attr('data-webma'));
+        sources[s] = new Array('audio/webm', $newItem.attr('data-webma'));
         s++;
       }
       if ($newItem.attr('data-ogg')) {
-        sources[s] = new Array('audio/ogg',$newItem.attr('data-ogg'));
+        sources[s] = new Array('audio/ogg', $newItem.attr('data-ogg'));
         s++;
       }
       if ($newItem.attr('data-oga')) {
-        sources[s] = new Array('audio/ogg',$newItem.attr('data-oga'));
+        sources[s] = new Array('audio/ogg', $newItem.attr('data-oga'));
         s++;
       }
       if ($newItem.attr('data-wav')) {
-        sources[s] = new Array('audio/wav',$newItem.attr('data-wav'));
+        sources[s] = new Array('audio/wav', $newItem.attr('data-wav'));
         s++;
       }
     }
     else if (this.mediaType === 'video') {
       if ($newItem.attr('data-mp4')) {
         jwSource = $newItem.attr('data-mp4'); // JW Player can play this
-        sources[s] =  new Array('video/mp4',jwSource);
+        sources[s] = new Array('video/mp4', jwSource);
         s++;
       }
       if ($newItem.attr('data-webm')) {
-        sources[s] = new Array('video/webm',$newItem.attr('data-webm'));
+        sources[s] = new Array('video/webm', $newItem.attr('data-webm'));
         s++;
       }
       if ($newItem.attr('data-webmv')) {
-        sources[s] = new Array('video/webm',$newItem.attr('data-webmv'));
+        sources[s] = new Array('video/webm', $newItem.attr('data-webmv'));
         s++;
       }
       if ($newItem.attr('data-ogg')) {
-        sources[s] = new Array('video/ogg',$newItem.attr('data-ogg'));
+        sources[s] = new Array('video/ogg', $newItem.attr('data-ogg'));
         s++;
       }
       if ($newItem.attr('data-ogv')) {
-        sources[s] = new Array('video/ogg',$newItem.attr('data-ogv'));
+        sources[s] = new Array('video/ogg', $newItem.attr('data-ogv'));
         s++;
       }
     }
-    for (i=0; i<sources.length; i++) {
-      $newSource = $('<source>',{
+    for (i = 0; i < sources.length; i++) {
+      $newSource = $('<source>', {
         type: sources[i][0],
         src: sources[i][1]
       });
       this.$media.append($newSource);
     }
 
-    // update playlist to indicate which item is playing
-    //$('.able-playlist li').removeClass('able-current');
+    // Update playlist to indicate which item is playing
+    // $('.able-playlist li').removeClass('able-current');
     this.$playlist.removeClass('able-current');
     $newItem.addClass('able-current');
 
-    // update Now Playing div
+    // Update Now Playing div
     if (this.showNowPlaying === true) {
       nowPlayingSpan = $('<span>');
       if (typeof itemLang !== 'undefined') {
-        nowPlayingSpan.attr('lang',itemLang);
+        nowPlayingSpan.attr('lang', itemLang);
       }
       nowPlayingSpan.html('<span>Selected track:</span>' + itemTitle);
       this.$nowPlayingDiv.html(nowPlayingSpan);
     }
 
-    // reload audio after sources have been updated
+    // Reload audio after sources have been updated
     // if this.swappingSrc is true, media will autoplay when ready
-    if (this.initializing) { // this is the first track - user hasn't pressed play yet
+    if (this.initializing) { // This is the first track - user hasn't pressed play yet
       this.swappingSrc = false;
     }
     else {
@@ -1608,6 +1567,7 @@
     }
   };
 
+  // eslint-disable-next-line no-undef, consistent-return
   AblePlayer.prototype.getButtonTitle = function(control) {
 
     var captionsCount;
@@ -1684,10 +1644,10 @@
       return this.tt.preferences;
     }
     else if (control === 'help') {
-      // return this.tt.help;
+      // Return this.tt.help;
     }
     else {
-      // there should be no other controls, but just in case:
+      // There should be no other controls, but just in case:
       // return the name of the control with first letter in upper case
       // ultimately will need to get a translated label from this.tt
       if (this.debug) {
@@ -1698,4 +1658,5 @@
   };
 
 
+// eslint-disable-next-line no-undef
 })(jQuery);
