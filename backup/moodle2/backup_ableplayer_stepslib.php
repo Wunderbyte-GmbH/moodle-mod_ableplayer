@@ -57,7 +57,7 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
 
         $medias = new backup_nested_element('medias');
         $media = new backup_nested_element('media', ['id'], [
-            'ableplayerid']);
+            'ableplayerid', 'url']);
 
         $descs = new backup_nested_element('descs');
         $desc = new backup_nested_element('desc', ['id'], [
@@ -87,9 +87,9 @@ class backup_ableplayer_activity_structure_step extends backup_activity_structur
         // Define file annotations.
         $ableplayer->annotate_files('mod_ableplayer', 'intro', null);
         $ableplayer->annotate_files('mod_ableplayer', 'poster', null);
-        $ableplayer->annotate_files('mod_ableplayer', 'media', 'id');
-        $ableplayer->annotate_files('mod_ableplayer', 'desc', 'id');
-        $ableplayer->annotate_files('mod_ableplayer', 'caption', 'id');
+        $ableplayer->annotate_files('mod_ableplayer', 'media', null);
+        $ableplayer->annotate_files('mod_ableplayer', 'desc', null);
+        $ableplayer->annotate_files('mod_ableplayer', 'caption', null);
 
         // Return the root element (ableplayer), wrapped into standard activity structure.
         return $this->prepare_activity_structure($ableplayer);
