@@ -324,7 +324,7 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             if (!empty($_REQUEST['caption']) && is_array($_REQUEST['caption'])) {
                 $draftitemids = optional_param_array('caption', 0, PARAM_INT);
             } else {
-                $draftitemids = optional_param('captio', 0, PARAM_INT);
+                $draftitemids = optional_param('caption', 0, PARAM_INT);
             }
             foreach (array_values($captions) as $key => $value) {
                 if (is_array($draftitemids)) {
