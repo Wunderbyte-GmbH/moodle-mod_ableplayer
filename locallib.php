@@ -131,8 +131,8 @@ class ableplayer {
                 }
             }
             // Desc save.
-            if (!empty($formdata->media)) {
-                foreach ($formdata->media as $key => $value) {
+            if (!empty($formdata->desc)) {
+                foreach ($formdata->desc as $key => $value) {
                     $desc = new stdClass();
                     $desc->ableplayerid = $returnid;
                     $descid = $DB->insert_record("ableplayer_desc", $desc, true);
