@@ -296,10 +296,9 @@ class mod_ableplayer_mod_form extends moodleform_mod {
                     $options
                 );
                 if ($draftitemid) {
-                    $defaultvalues['desc[' . $key . ']'] = $draftitemid;
+                    $defaultvalues['desc'][$key] = $draftitemid;
                 }
-                $defaultvalues['descid['.$key.']'] = $value->id;
-
+                $defaultvalues['descid'][$key] = $value->id;
             }
             // Poster.
             $options = ['subdirs' => false,
