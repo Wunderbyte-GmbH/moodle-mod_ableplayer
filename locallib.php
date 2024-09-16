@@ -144,7 +144,7 @@ class ableplayer {
                             $this->context->id,
                             'mod_ableplayer',
                             'desc',
-                            $mediaid
+                            $descid
                         );
                     }
                 }
