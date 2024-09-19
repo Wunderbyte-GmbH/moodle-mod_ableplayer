@@ -33,12 +33,18 @@
 	.able = 5000
 */
 .able-wrapper {
-  position: relative;
-  margin: 0;
-  padding: 0;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  max-width: 1200px;     /* Limit the container width */
+  max-height: 675px;    /* Corresponding max height */
   height: auto;
-  box-sizing: content-box !important;
+  overflow: hidden;    /* Hide overflow */
+  position: relative;  /* Relative positioning for the toolbar */
+  /* background-color: #000;  Background color for letterboxing */
+  /* aspect-ratio: 16 / 9; Set the aspect ratio of the container */
 }
 .able {
   position: relative;
@@ -63,8 +69,14 @@
   top: 0;
 }
 .able-player {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  object-fit: contain;
 	font-family: Arial, Helvetica, sans-serif;
 	background-color: #262626; /* background color of player (appears on top & bottom) */
+  position: relative;
 }
 .able-offscreen {
 	position:absolute;
@@ -78,12 +90,21 @@
   display: none !important;
 }
 .able-video {
+  width: 100%; /* Keeps the video responsive */
+  max-width: 1200px; /* Ensures the video doesn't exceed the browser width */
+  max-height: 675px; /* Limits the video height to 80% of the viewport height */
+  height: auto; /* Maintains aspect ratio */
+  object-fit: contain;  /* Prevents distortion of the video */
 }
 .able-video .able-now-playing {
 	display: none; /* not currently used for video */
 }
 .able-controller {
-	position: relative;
+	position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;         /* Full width of the player */
+  z-index: 10000;      /* Ensure it's above other elements */
 	border-top: 2px solid #4c4c4c;
 	border-bottom: 2px solid #4c4c4c;
 	background-color: #464646; /* background color of controller bar */
