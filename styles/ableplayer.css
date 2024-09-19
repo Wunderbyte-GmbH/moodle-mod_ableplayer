@@ -40,11 +40,13 @@
   width: 100%;
   max-width: 1200px;     /* Limit the container width */
   max-height: 675px;    /* Corresponding max height */
+  margin: 0 auto;
   height: auto;
   overflow: hidden;    /* Hide overflow */
   position: relative;  /* Relative positioning for the toolbar */
   /* background-color: #000;  Background color for letterboxing */
   /* aspect-ratio: 16 / 9; Set the aspect ratio of the container */
+  z-index: 1;
 }
 .able {
   position: relative;
