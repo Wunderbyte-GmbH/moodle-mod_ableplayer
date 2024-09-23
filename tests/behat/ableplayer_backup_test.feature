@@ -4,7 +4,7 @@ Feature: Duplicate ableplayer activity
   As a teacher with editing permissions
   I need to duplicate activities inside the same course
 
-  Scenario: Duplicate an ableplayer
+  Background:
     Given the following "users" exist:
       | username | firstname | lastname | email                | idnumber |
       | teacher1 | Teacher   | 1        | teacher1@example.com | T1       |
@@ -20,28 +20,18 @@ Feature: Duplicate ableplayer activity
     And the following "activity" exists:
       | activity                            | ableplayer                |
       | course                              | C1                        |
-      | name                                | my first player           |
+      | name                                | My First Ableplayer       |
       | playlist                            | 0                         |
       | mode                                |                           |
       | lang                                |                           |
       | poster                              |                           |
     And the following config values are set as admin:
       | backup_import_activities | 0 | backup |
-    And I log in as "teacher1"
-    And I am on "Course 1" course homepage with editing mode on
-    And I duplicate "my first ableplayer" activity
-    And I should see "my first ableplayer (copy)"
-    #And I wait until section "1" is available
-    #And I click on "Edit settings" "link" in the "Test database name" activity
-    #And I set the following fields to these values:
-      #| Name | Original database name |
-    #And I press "Save and return to course"
-    #And I click on "Edit settings" "link" in the "Test database name (copy)" activity
-    #And I set the following fields to these values:
-      #| Name | Duplicated database name |
-      #| Description | Duplicated database description |
-    #And I press "Save and return to course"
-    #Then I should see "Original database name" in the "Topic 1" "section"
-    #And I should see "Duplicated database name" in the "Topic 1" "section"
-    #And "Original database name" "link" should appear before "Duplicated database name" "link"
 
+  @javascript
+  Scenario: Duplicate an ableplayer
+    Given I log in as "teacher1"
+    And I am on "Course 1" course homepage with editing mode on
+    And I duplicate "My First Ableplayer" activity
+    And I should see "My First Ableplayer (copy)"
+    And I wait "5" seconds
