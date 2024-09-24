@@ -25,8 +25,8 @@ Feature: Duplicate ableplayer activity
       | mode                                |                                                      |
       | lang                                |                                                      |
       | poster                              |                                                      |
-      | media file[0]                       | /mod/ableplayer/tests/fixtures/deadline.mp4           |
-      #| file[Captions]                      | mod/ableplayer/tests/fixtures/sample_description.txt |
+      | media file[0]                       | /mod/ableplayer/tests/fixtures/deadline.mp4          |
+      #| captions[0]                          | /mod/ableplayer/tests/fixtures/sample_description.vtt|
     And the following config values are set as admin:
       | backup_import_activities | 0 | backup |
 
@@ -37,17 +37,15 @@ Feature: Duplicate ableplayer activity
     And I click on "My First Ableplayer" "link" in the "General" "section"
     And I click on "Settings" "link"
     And I click on "Expand all" "button"
-    #And I scroll page to DOM element with ID "media-file"
     And I should see "Media file"
-    #And I click on "Add..." "button"
-    #And I wait "3" seconds
-    #And I click on "Upload a file" "link"
-    And I wait "3" seconds
-    #And I select "repo_upload_file" "file"
+    And I wait "2" seconds
     And I upload "/mod/ableplayer/tests/fixtures/deadline.mp4" file to "Media file" filemanager
-    #When I click on "Upload this file" "button"
+    #And I click on "Captions" "filemanager"
+    #And I wait until the page is ready
+    #And I wait "4" seconds
+    #And I upload "/mod/ableplayer/tests/fixtures/sample_description.vtt" file to "Captions" filemanager
     And I press "Save and display"
-    And I click on "General" "link" in the "breadcrumb" "section"
+    And I click on "Course 1" "link"
     And I duplicate "My First Ableplayer" activity
     And I should see "My First Ableplayer (copy) "
     And I wait "2" seconds
@@ -55,8 +53,8 @@ Feature: Duplicate ableplayer activity
     And I click on "Settings" "link"
     And I click on "Expand all" "button"
     Then I should see "deadline.mp4"
-    #And I should see "sample_description.txt"
-    Then I wait "3" seconds
+    #And I should see "sample_description.vtt"
+    Then I wait "5" seconds
 
 
 
