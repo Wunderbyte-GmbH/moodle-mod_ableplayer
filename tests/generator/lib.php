@@ -56,6 +56,7 @@ class mod_ableplayer_generator extends testing_module_generator {
      * @return stdClass
      */
     public function create_instance($record = null, array $options = null) {
+        global $CFG;
         $record = (object)(array)$record;
 
         // Ensure required fields are set.
@@ -65,7 +66,40 @@ class mod_ableplayer_generator extends testing_module_generator {
         $record->mode = isset($record->mode) ? $record->mode : 'EMPTY';      // Set default mode.
         $record->lang = isset($record->lang) ? $record->lang : 'EMPTY';      // Set default language.
 
-        // Call parent method to create the instance.
-        return parent::create_instance($record, (array)$options);
+       // Create the basic instance (without the file).
+        $instance = parent::create_instance($record, (array)$options);
+
+       // Check if a file path is provided in the options.
+        if (isset($options['media file'])) {
+            $filepath = '/mod/ableplayer/tests/fixtures/deadline.mp4';
+            $this->add_file_to_instance($instance->id, $filepath);
+        }
+
+        return $instance;
+    }
+    /**
+     * Add file to the ableplayer instance.
+     * @param int $instanceid
+     * @param string $filepath
+     */
+    protected function add_file_to_instance($instanceid, $filepath) {
+        global $DB;
+
+        // Prepare the file record object.
+        $fs = get_file_storage();
+        $context = context_module::instance($instanceid);
+
+        $filerecord = array(
+            'contextid' => $context->id,
+            'component' => 'ableplayer',  // Your activity module name.
+            'filearea'  => 'media file',          // File area defined in your plugin.
+            'itemid'    => 0,
+            'filepath'  => '/',
+            'filename'  => basename($filepath)
+        );
+
+        // Get the file from fixtures and add it to the activity.
+        $fullpath = $CFG->dirroot . '/mod/ableplayer/tests/fixtures/deadline.mp4' . $filepath;
+        $fs->create_file_from_pathname($filerecord, $fullpath);
     }
 }
