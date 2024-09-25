@@ -26,7 +26,8 @@ Feature: Duplicate ableplayer activity
       | lang                                |                                                      |
       | poster                              |                                                      |
       | media file[0]                       | /mod/ableplayer/tests/fixtures/deadline.mp4          |
-      #| captions[0]                          | /mod/ableplayer/tests/fixtures/sample_description.vtt|
+      | media file[1]                       | /mod/ableplayer/tests/fixtures/footballfielddrone.mp4          |
+      | captions[0]                          | /mod/ableplayer/tests/fixtures/sample_description.vtt|
     And the following config values are set as admin:
       | backup_import_activities | 0 | backup |
 
@@ -37,12 +38,22 @@ Feature: Duplicate ableplayer activity
     And I click on "My First Ableplayer" "link" in the "General" "section"
     And I click on "Settings" "link"
     And I click on "Expand all" "button"
-    And I should see "Media file"
-    And I wait "2" seconds
+    #And I should see "Media file"
+    #And I wait "2" seconds
     And I upload "/mod/ableplayer/tests/fixtures/deadline.mp4" file to "Media file" filemanager
-    #And I click on "Captions" "filemanager"
+    And I click on "Add 1 field(s) to form" "button" in the "Media file" "fieldset"
+    And I wait until the page is ready
+    And I click on "Expand all" "button"
+    And I wait "30" seconds
+    And I click on "Add..." "button" in the "Media file" "fieldset"
+    And I upload "/mod/ableplayer/tests/fixtures/footballfielddrone.mp4" file to "Media file" filemanager
+    #And I click on "Captions" "fieldset"
     #And I wait until the page is ready
-    #And I wait "4" seconds
+    #And I wait "120" seconds
+    #Then I scroll page to DOM element with ID "Captions-filemanager"
+    #And I should see "Captions"
+    #And I click on "Add..." "button" in the "Captions" "section"
+    #And I click on "Upload a file" "link"
     #And I upload "/mod/ableplayer/tests/fixtures/sample_description.vtt" file to "Captions" filemanager
     And I press "Save and display"
     And I click on "Course 1" "link"
