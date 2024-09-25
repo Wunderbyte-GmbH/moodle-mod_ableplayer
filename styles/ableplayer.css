@@ -34,6 +34,7 @@
 */
 .able {
   height: 100%;
+  background-color: var(--able-bg-color1);
 }
 
 .able-wrapper {
@@ -153,9 +154,9 @@
   left: 0;
   width: 100%;         /* Full width of the player */
   z-index: 10000;      /* Ensure it's above other elements */
-	border-top: 2px solid #4c4c4c;
-	border-bottom: 2px solid #4c4c4c;
-	background-color: #464646; /* background color of controller bar */
+	border-top: 2px solid var(--able-bg-color1);
+	border-bottom: 2px solid var(--able-bg-color1);
+	background-color: var(--able-bg-color1); /* background color of controller bar */
 	min-height: 38px; /* height of button (20px) + 4px border + 4px padding */
 	padding: 0;
 }
@@ -226,7 +227,7 @@
   padding: 0;
   font-size: 20px;
   min-width: 24px;
-  outline: 2px solid #464646; /* same color as .able-controller background-color */
+  /* same color as .able-controller background-color */
   border: none;
   overflow: visible !important;
   z-index: 6600;
@@ -445,12 +446,10 @@ input[type=range]:focus::-ms-fill-upper {
 */
 
 .able-status-bar {
-	height: 1.5em;
-	min-height: 1.5em;
 	color: #CCC;
 	font-size: 0.9em;
 	background-color: transparent;
-	padding: 0.5em 0.5em 0.25em;
+	padding: 0 10px;
 }
 .able-status-bar span.able-timer {
 	/* contains both span.elapsedTime and span.duration */
@@ -834,6 +833,8 @@ div.able-chapters-div button::-moz-focus-inner {
   outline: none;
   color: #FFF !important;
 }
+
+
 
 /*
   Fullscreen settings

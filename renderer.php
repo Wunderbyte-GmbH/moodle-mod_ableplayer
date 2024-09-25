@@ -142,7 +142,13 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
         $captions = $this->get_captions($contextid);
         $desc = $this->get_descs($contextid);
         $videoscnt = count($videos);
-
+        $output = '<style>
+                    :root {
+                        --able-bg-color1: #3498db;
+                        --able-bg-color2: #3498db;
+                        --able-bg-color1: #3498db;
+                    }
+                    </style>';
         if ($videoscnt > 1) {
             $sortedarr = [];
             $i = 0;
