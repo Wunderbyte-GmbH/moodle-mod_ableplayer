@@ -69,10 +69,15 @@ class mod_ableplayer_generator extends testing_module_generator {
        // Create the basic instance (without the file).
         $instance = parent::create_instance($record, (array)$options);
 
-       // Check if a file path is provided in the options.
+       // Check if a media file path is provided in the options.
         if (isset($options['media file'])) {
-            $filepath = '/mod/ableplayer/tests/fixtures/deadline.mp4';
-            $this->add_file_to_instance($instance->id, $filepath);
+            $mediafilepath = '/mod/ableplayer/tests/fixtures/deadline.mp4';
+            $this->add_file_to_instance($instance->id, $mediafilepath);
+        }
+        // Check if a description file path is provided in the options.
+        if (isset($options['captions'])) {
+            $captionsfilepath = '/mod/ableplayer/tests/fixtures/sample_description.vtt';
+            $this->add_file_to_instance($instance->id, $captionsfilepath);
         }
 
         return $instance;
@@ -82,8 +87,8 @@ class mod_ableplayer_generator extends testing_module_generator {
      * @param int $instanceid
      * @param string $filepath
      */
-    protected function add_file_to_instance($instanceid, $filepath) {
-        global $DB;
+    protected function add_file_to_instance($instanceid, $filepath, $filearea) {
+        global $DB, $CFG;
 
         // Prepare the file record object.
         $fs = get_file_storage();
@@ -92,14 +97,14 @@ class mod_ableplayer_generator extends testing_module_generator {
         $filerecord = array(
             'contextid' => $context->id,
             'component' => 'ableplayer',  // Your activity module name.
-            'filearea'  => 'media file',          // File area defined in your plugin.
+            'filearea'  => $fielarea,          // File area defined in your plugin.
             'itemid'    => 0,
             'filepath'  => '/',
             'filename'  => basename($filepath)
         );
 
         // Get the file from fixtures and add it to the activity.
-        $fullpath = $CFG->dirroot . '/mod/ableplayer/tests/fixtures/deadline.mp4' . $filepath;
+        $fullpath = $CFG->dirroot . $filepath;
         $fs->create_file_from_pathname($filerecord, $fullpath);
     }
 }
