@@ -59,3 +59,11 @@ $string['ableplayerdescriptionfile'] = 'Description file';
 $string['poster'] = 'Poster Image';
 $string['poster_help'] = 'Poster Image (.jpg, .jpeg, .png only)';
 $string['ableplayer:addinstance'] = 'Add a new Able Player instance';
+
+$string['settings'] = 'Able Player';
+$string['bgcolor1'] = 'Dark';
+$string['bgcolor1_desc'] = 'Hintergrund Farbe der Able Player Steuerung';
+$string['bgcolor2'] = 'Standard';
+$string['bgcolor2_desc'] = 'Hintergrund Farbe der Able Player Steuerung';
+$string['bgcolor3'] = 'Kick';
+$string['bgcolor3_desc'] = 'Hintergrund Farbe der Able Player Steuerung';

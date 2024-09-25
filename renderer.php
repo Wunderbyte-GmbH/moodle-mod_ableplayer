@@ -135,20 +135,24 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * @return string HTML markup for the AblePlayer video elements.
      */
     private function get_ableplayer_html($contextid, $captionssettings, $ableplayer) {
-        $output = '';
+        global $CFG;
+
+        $bgcolor1 = get_config('mod_ableplayer', 'bgcolor1') ?? '#3498db';
+        $bgcolor2 = get_config('mod_ableplayer', 'bgcolor2') ?? '#3498db';
+        $bgcolor3 = get_config('mod_ableplayer', 'bgcolor3') ?? '#3498db';
 
         $videos = $this->util_get_area_files($contextid, 'media');
         $posterurl = $this->get_poster_image($contextid);
         $captions = $this->get_captions($contextid);
         $desc = $this->get_descs($contextid);
         $videoscnt = count($videos);
-        $output = '<style>
+        $output = "<style>
                     :root {
-                        --able-bg-color1: #3498db;
-                        --able-bg-color2: #3498db;
-                        --able-bg-color1: #3498db;
+                        --able-bg-color1: $bgcolor1;
+                        --able-bg-color2: $bgcolor2;
+                        --able-bg-color3: $bgcolor3;
                     }
-                    </style>';
+                    </style>";
         if ($videoscnt > 1) {
             $sortedarr = [];
             $i = 0;
