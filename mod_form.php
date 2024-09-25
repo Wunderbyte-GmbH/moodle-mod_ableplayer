@@ -131,12 +131,12 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         );
         $repeatarray[] = $mform->createElement('hidden', 'descid', 0);
 
-        if ($this->_instance){
+        if ($this->_instance) {
             $repeatno = $DB->count_records('ableplayer_media', array('ableplayerid'=>$this->_instance));
         }
         $repeatno = !empty($repeatno) ? $repeatno : 1;
 
-        $repeateloptions = array();
+        $repeateloptions = [];
         $mform->setType('mediaurlid', PARAM_INT);
         $mform->setType('mediaid', PARAM_INT);
         $mform->setType('descid', PARAM_INT);
@@ -165,10 +165,11 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         $repeatarray[] = $mform->createElement(
             'filemanager',
             'caption',
-            get_string('captions', 'ableplayer'),
+            get_string('ableplayercaptions', 'ableplayer'),
             null,
             $options
         );
+        $repeatarray[] = $mform->createElement('hidden', 'captionid', 0);
 
         $kindarray = [
             '' => '',
@@ -195,9 +196,8 @@ class mod_ableplayer_mod_form extends moodleform_mod {
         $repeatarray[] = $mform->createElement('select', 'srclang', get_string('srclang', 'ableplayer'), $langarray);
 
         $repeatarray[] = $mform->createElement('text', 'label', get_string('label', 'ableplayer'));
-        $repeatarray[] = $mform->createElement('hidden', 'captionid', 0);
 
-        if ($this->_instance){
+        if ($this->_instance) {
             $repeatno = $DB->count_records('ableplayer_caption', array('ableplayerid'=>$this->_instance));
         }
         $repeatno = !empty($repeatno) ? $repeatno : 1;
