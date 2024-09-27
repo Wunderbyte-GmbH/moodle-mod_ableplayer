@@ -35,6 +35,8 @@
 .able {
   height: 100%;
   background-color: var(--able-bg-color1);
+  background-color: var(--able-bg-color2);
+  background-color: var(--able-bg-color3);
 }
 
 .able-wrapper {
@@ -154,9 +156,9 @@
   left: 0;
   width: 100%;         /* Full width of the player */
   z-index: 10000;      /* Ensure it's above other elements */
-	border-top: 2px solid var(--able-bg-color1);
+	border-top: 2px solid var(--able-bg-color3);
 	border-bottom: 2px solid var(--able-bg-color1);
-	background-color: var(--able-bg-color1); /* background color of controller bar */
+	background-color: var(--able-bg-color2); /* background color of controller bar */
 	min-height: 38px; /* height of button (20px) + 4px border + 4px padding */
 	padding: 0;
 }
@@ -271,7 +273,7 @@
   position: relative;
   height: 0.5em;
   border: 1px solid;
-  background-color: #000000;
+  background-color: var(--able-bg-color1);
   margin: 0 3px;
   border-style: solid;
   border-width: 2px;
@@ -283,7 +285,7 @@
   left: 0;
   top: 0;
   height: 0.5em;
-  background-color: #464646;
+  background-color: var(--able-bg-color3);
   z-index: 5100;
 }
 .able-seekbar-played {
