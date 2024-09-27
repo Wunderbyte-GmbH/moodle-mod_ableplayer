@@ -17,8 +17,8 @@
 /**
  * Settings file for plugin 'media_videojs'
  *
- * @package   media_videojs
- * @copyright 2016 Marina Glancy
+ * @package   mod_ableplayer
+ * @copyright 2024 Wunderbyte GmbH
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,17 +32,20 @@ $settings = new admin_settingpage($section, get_string('settings', 'mod_ableplay
 
 
 if ($ADMIN->fulltree) {
-        $settings->add(new admin_setting_configtext('mod_ableplayer/bgcolor1',
+        $settings->add(new admin_setting_configtext(
+            'mod_ableplayer/bgcolor1',
             new lang_string('bgcolor1', 'mod_ableplayer'),
             new lang_string('bgcolor1_desc', 'mod_ableplayer'),
             '#3498db'
         ));
-        $settings->add(new admin_setting_configtext('mod_ableplayer/bgcolor2',
+        $settings->add(new admin_setting_configtext(
+            'mod_ableplayer/bgcolor2',
             new lang_string('bgcolor2', 'mod_ableplayer'),
             new lang_string('bgcolor2_desc', 'mod_ableplayer'),
             '#3498db'
         ));
-        $settings->add(new admin_setting_configtext('mod_ableplayer/bgcolor3',
+        $settings->add(new admin_setting_configtext(
+            'mod_ableplayer/bgcolor3',
             new lang_string('bgcolor3', 'mod_ableplayer'),
             new lang_string('bgcolor3_desc', 'mod_ableplayer'),
             '#3498db'
