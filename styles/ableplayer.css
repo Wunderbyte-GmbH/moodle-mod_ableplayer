@@ -33,12 +33,12 @@
 	.able = 5000
 */
 .able {
-  height: 100%;
-  background-color: var(--able-bg-color2);
+    height: 100%;
+    background-color: var(--able-bg-color1) !important;
 }
 
 .able-wrapper {
-  overflow: visible;
+    overflow: visible;
 }
 /* Container to maintain the 16:9 aspect ratio */
 .able-media-container {
@@ -49,28 +49,28 @@
     background-color: black;
 }
 .able-wrapper {
-  max-width: 1200px;
+    max-width: 1200px;
 }
 /* Make the video fit inside the container */
 .able-media-container {
-  position: relative;
-  margin: auto;
+    position: relative;
+    margin: auto;
 }
 .able-media-container video {
     position: absolute !important;
-    top: 0  !important;
-    left: 0  !important;
-    width: 100%  !important;
-    height: 100%  !important;
-    object-fit: contain  !important; /* Ensures content fits inside and maintains aspect ratio */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important; /* Ensures content fits inside and maintains aspect ratio */
 }
 .able-vidcap-container {
-  height: 100%;
+    height: 100%;
 }
 
 .able-big-play-button.icon-play {
-  width: 100%;
-  height: 100% !important;
+    width: 100%;
+    height: 100% !important;
 }
 
 .able-video {
@@ -80,32 +80,31 @@
 }
 
 .able-status-bar {
-  background-color: black;
-  height: 100%;
-  background-color: var(--able-bg-color1) !important;
+    height: 100%;
+    background-color: var(--able-bg-color1) !important;
 }
 
 .able-wrapper {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin: 0 auto;
-  height: auto;
-  overflow: visible;    /* Hide overflow */
-  position: relative;  /* Relative positioning for the toolbar */
-  /* background-color: #000;  Background color for letterboxing */
-  /* aspect-ratio: 16 / 9; Set the aspect ratio of the container */
-  z-index: 1;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    overflow: visible;    /* Hide overflow */
+    position: relative;  /* Relative positioning for the toolbar */
+    /* background-color: #000;  Background color for letterboxing */
+    /* aspect-ratio: 16 / 9; Set the aspect ratio of the container */
+    z-index: 1;
 }
 .able {
-  position: relative;
-  margin: 1em 0;
-  width: 100%; /* will be changed dynamically as player is contructed */
-  /*box-shadow: 0px 0px 16px #262626;*/
-  border: 1px solid #eee;
-  z-index: 5000;
+    position: relative;
+    margin: 1em 0;
+    width: 100%; /* will be changed dynamically as player is contructed */
+    /*box-shadow: 0px 0px 16px #262626;*/
+    border: 1px solid #eee;
+    z-index: 5000;
 }
 .able-column-left {
     float: left;
@@ -114,58 +113,58 @@
     float: left;
 }
 .able .able-vidcap-container {
-  background-color: black;
-  /* height: 360px; */
-  left: 0;
-  margin: 0;
-  position: relative;
-  top: 0;
+    background-color: black;
+    /* height: 360px; */
+    left: 0;
+    margin: 0;
+    position: relative;
+    top: 0;
 }
 .able-player {
-  width: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  object-fit: contain;
-	font-family: Arial, Helvetica, sans-serif;
-	background-color: #262626; /* background color of player (appears on top & bottom) */
-  position: relative;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    object-fit: contain;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #262626; /* background color of player (appears on top & bottom) */
+    position: relative;
 }
 .able-offscreen {
-	position:absolute;
-	left:-10000px;
-	top:auto;
-	width:1px;
-	height:1px;
-	overflow:hidden;
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
 .able-media-container audio {
-  display: none !important;
+    display: none !important;
 }
 .able-video {
-  width: 100%; /* Keeps the video responsive */
-  height: auto; /* Maintains aspect ratio */
-  object-fit: contain;  /* Prevents distortion of the video */
+    width: 100%; /* Keeps the video responsive */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: contain;  /* Prevents distortion of the video */
 }
 .able-video .able-now-playing {
-	display: none; /* not currently used for video */
+    display: none; /* not currently used for video */
 }
 .able-controller {
-	position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;         /* Full width of the player */
-  z-index: 10000;      /* Ensure it's above other elements */
-	border-top: 2px solid var(--able-bg-color2) !important;
-	border-bottom: 2px solid var(--able-bg-color1) !important;
-	background-color: var(--able-bg-color2) !important; /* background color of controller bar */
-	min-height: 38px; /* height of button (20px) + 4px border + 4px padding */
-	padding: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;         /* Full width of the player */
+    z-index: 10000;      /* Ensure it's above other elements */
+    border-top: 2px solid var(--able-bg-color2);
+    border-bottom: 2px solid var(--able-bg-color2);
+    background-color: var(--able-bg-color2); /* background color of controller bar */
+    min-height: 38px; /* height of button (20px) + 4px border + 4px padding */
+    padding: 0;
 }
 .able-poster {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /*
@@ -175,7 +174,7 @@
     position: absolute;
     font-size: 8em;
     opacity: 0.5;
-    filter:alpha(opacity=50); /* for IE */
+    filter: alpha(opacity=50); /* for IE */
     color: #fdfdfd;
     background-color: transparent;
     border: none;
@@ -187,173 +186,176 @@
 }
 .able-big-play-button:hover {
     opacity: 100;
-    filter:alpha(opacity=100); /* for IE */
+    filter: alpha(opacity=100); /* for IE */
     background-image: none;
     background-color: transparent;
     margin: 0;
 }
-.able-left-controls, .able-right-controls {
+.able-left-controls,
+.able-right-controls {
     overflow: visible;
 }
-.able-left-controls button, .able-right-controls button {
+.able-left-controls button,
+.able-right-controls button {
     vertical-align: middle;
 }
 .able-left-controls {
-  float: left;
+    float: left;
 }
 .able-right-controls {
-  float: right;
+    float: right;
 }
 .able-black-controls,
 .able-black-controls button,
-.able-black-controls label  {
-  color: #000 !important;
+.able-black-controls label {
+    color: #000 !important;
 }
 .able-black-controls .able-seekbar {
-  border: 2px solid #000;
+    border: 2px solid #000;
 }
 .able-white-controls,
 .able-white-controls button,
 .able-black-controls label {
-  color: #FFF !important;
+    color: #fff !important;
 }
 .able-white-controls .able-seekbar {
-  border: 2px solid #FFF;
+    border: 2px solid #fff;
 }
 .able-controller button {
-  background: none;
-  position: relative;
-  display: inline-block;
-  border-style: none;
-  margin: 3px;
-  padding: 0;
-  font-size: 20px;
-  min-width: 24px;
-  /* same color as .able-controller background-color */
-  border: none;
-  overflow: visible !important;
-  z-index: 6600;
+    background: none;
+    position: relative;
+    display: inline-block;
+    border-style: none;
+    margin: 3px;
+    padding: 0;
+    font-size: 20px;
+    min-width: 24px;
+    /* same color as .able-controller background-color */
+    border: none;
+    overflow: visible !important;
+    z-index: 6600;
 }
 .able-controller button > span,
 .able-controller button > img {
-  width: 20px;
-  margin: 0 auto;
-  padding: 0;
-  z-index: 6700;
+    width: 20px;
+    margin: 0 auto;
+    padding: 0;
+    z-index: 6700;
 }
 .able-controller .buttonOff {
-	opacity: 0.5;
-	filter:alpha(opacity=50); /* for IE */
-  z-index: 6800;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* for IE */
+    z-index: 6800;
 }
 .able-controller .able-seekbar {
-  margin: 0 5px;
-  z-index: 6900;
+    margin: 0 5px;
+    z-index: 6900;
 }
 .able-controller button:hover,
 .able-controller button:focus {
-  outline-style: solid;
-  outline-width: medium;
+    outline-style: solid;
+    outline-width: medium;
 }
 .able-controller button:hover {
-	outline-color: #8AB839 !important; /* green */
+    outline-color: #8ab839 !important; /* green */
 }
 .able-controller button:focus {
-	outline-color: #ffbb37 !important; /* yellow */
+    outline-color: #ffbb37 !important; /* yellow */
 }
 
 /*
   Seekbar
 */
 .able-seekbar-wrapper {
-  display: inline-block;
-  vertical-align: middle;
+    display: inline-block;
+    vertical-align: middle;
 }
 .able-seekbar {
-  position: relative;
-  height: 0.5em;
-  border: 1px solid;
-  margin: 0 3px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ffffff;
+    position: relative;
+    height: 0.5em;
+    border: 1px solid;
+    margin: 0 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #fff;
+    background-color: var(--able-bg-color1) !important;
 }
 .able-seekbar-loaded {
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 0.5em;
-  background-color: var(--able-bg-color3);
-  z-index: 5100;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0.5em;
+    background-color: var(--able-bg-color3);
+    z-index: 5100;
 }
 .able-seekbar-played {
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 0.5em;
-  background-color: #DADADA;
-  z-index: 5200;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 0.5em;
+    background-color: #fff;
+    z-index: 5200;
 }
 .able-seekbar-head {
-  display: inline-block;
-  position: relative;
-  left: 0;
-  top: -0.45em;
-  background-color: #FDFDFD;
-  width: 0.8em;
-  height: 0.8em;
-  border: 1px solid;
-  border-radius: 0.8em;
-  z-index: 5500;
+    display: inline-block;
+    position: relative;
+    left: 0;
+    top: -0.45em;
+    background-color: #fff;
+    width: 0.8em;
+    height: 0.8em;
+    border: 1px solid;
+    border-radius: 0.8em;
+    z-index: 5500;
 }
 
 /*
   Volume Slider
 */
 .able-volume-slider {
-  width: 34px;
-  height: 50px;
-  background-color: #464646; /* same as .able-controller */
-  padding: 10px 0;
-  position: absolute;
-  right: 0px;
-  top: -74px;
-  display: block;
-  z-index: 9100;
+    width: 34px;
+    height: 50px;
+    background-color: #464646; /* same as .able-controller */
+    padding: 10px 0;
+    position: absolute;
+    right: 0;
+    top: -74px;
+    display: block;
+    z-index: 9100;
 }
 .able-volume-track {
-  display: block;
-  position: relative;
-  height: 100%; /* = 50px after padding */
-  width: 5px;
-  margin: 0 auto;
-  background-color: #999;
+    display: block;
+    position: relative;
+    height: 100%; /* = 50px after padding */
+    width: 5px;
+    margin: 0 auto;
+    background-color: #999;
 }
 .able-volume-track.able-volume-track-on {
-  background-color: #dadada;
-  position: absolute;
-  height: 20px; /* change dynamically; 5px per volume tick */
-  top: 30px;  /* change dynamically; 50px - height */
+    background-color: #dadada;
+    position: absolute;
+    height: 20px; /* change dynamically; 5px per volume tick */
+    top: 30px;  /* change dynamically; 50px - height */
 }
 .able-volume-head {
-  display: inline-block;
-  background-color: #fdfdfd;
-  outline: 1px solid #333;
-  position: absolute;
-  height: 7px;
-  width: 15px;
-  left: -5px;
-  top: 23px; /* change dynamically; .able-volume-track-on top - 7 */
-  z-index: 9175;
+    display: inline-block;
+    background-color: #fdfdfd;
+    outline: 1px solid #333;
+    position: absolute;
+    height: 7px;
+    width: 15px;
+    left: -5px;
+    top: 23px; /* change dynamically; .able-volume-track-on top - 7 */
+    z-index: 9175;
 }
 .able-volume-head:hover,
 .able-volume-head:focus {
-	background-color: #ffbb37 !important; /* yellow */
+    background-color: #ffbb37 !important; /* yellow */
 }
 .able-volume-help { /* not visible; used in aria-describedby */
-  display: none;
+    display: none;
 }
 
 /*
@@ -447,27 +449,27 @@ input[type=range]:focus::-ms-fill-upper {
 */
 
 .able-status-bar {
-	color: #CCC;
-	font-size: 0.9em;
-	background-color: transparent;
-	padding: 0 10px;
+    color: #ccc;
+    font-size: 0.9em;
+    background-color: var(--able-bg-color1) !important;
+    padding: 0 10px;
 }
 .able-status-bar span.able-timer {
-	/* contains both span.elapsedTime and span.duration */
-	text-align: left;
-	float: left;
-	width: 32%;
+    /* contains both span.elapsedTime and span.duration */
+    text-align: left;
+    float: left;
+    width: 32%;
 }
 .able-status-bar span.able-speed {
-  float: left;
-  width: 33%;
-  text-align: center;
+    float: left;
+    width: 33%;
+    text-align: center;
 }
 .able-status {
-	font-style: italic;
-	float: right;
-	width: 32%;
-	text-align :right;
+    font-style: italic;
+    float: right;
+    width: 32%;
+    text-align: right;
 }
 
 /*
@@ -475,42 +477,42 @@ input[type=range]:focus::-ms-fill-upper {
 */
 
 div.able-captions-wrapper {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  line-height: 1.35em;
-  display: block;
-  z-index: 6000;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    line-height: 1.35em;
+    display: block;
+    z-index: 6000;
 }
 div.able-captions {
-  display: none;
-  padding: 0.15em 0.25em;
-  /* settings that are overridden by user prefs */
-  background-color: black;
-  font-size: 1.1em;
-  color: white;
-  opacity: 0.75;
+    display: none;
+    padding: 0.15em 0.25em;
+    /* settings that are overridden by user prefs */
+    background-color: black;
+    font-size: 1.1em;
+    color: white;
+    opacity: 0.75;
 }
 div.able-captions-overlay {
-  position: absolute;
-  margin: 0;
-  bottom: 0;
+    position: absolute;
+    margin: 0;
+    bottom: 0;
 }
 div.able-captions-below {
-  position: relative;
-  min-height: 2.8em;
+    position: relative;
+    min-height: 2.8em;
 }
 div.able-descriptions {
-  position: relative;
-  color: #FF6; /* yellow, to differentiate it from captions */
-  background-color: #262626;
-  min-height: 2.8em;
-  border-top: 1px solid #666;
-  margin: 0;
-  padding: 3%;
-  width: 94%;
-  text-align: center;
+    position: relative;
+    color: #ff6; /* yellow, to differentiate it from captions */
+    background-color: #262626;
+    min-height: 2.8em;
+    border-top: 1px solid #666;
+    margin: 0;
+    padding: 3%;
+    width: 94%;
+    text-align: center;
 }
 
 /*
@@ -518,18 +520,18 @@ div.able-descriptions {
 */
 
 div.able-now-playing {
-	text-align: center;
-	font-weight: bold;
-	font-size: 1.1em;
-	color: #FFFFFF;
-	background-color: transparent;
-	padding: 0.5em 0.5em 1em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #fff;
+    background-color: transparent;
+    padding: 0.5em 0.5em 1em;
 }
 div.able-now-playing span {
-	font-size: 0.9em;
+    font-size: 0.9em;
 }
 div.able-now-playing span span {
-	display: block;
+    display: block;
 }
 
 /*
@@ -537,73 +539,73 @@ div.able-now-playing span span {
 */
 
 div.able-modal-dialog {
-  position: absolute;
-  height: auto;
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0px;
-  right: 0px;
-  outline: 0px none;
-  display: none;
-  color: #000;
-  background-color: #FAFAFA;
-  box-sizing: content-box !important;
-  z-index: 10000;
+    position: absolute;
+    height: auto;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    outline: 0 none;
+    display: none;
+    color: #000;
+    background-color: #fafafa;
+    box-sizing: content-box !important;
+    z-index: 10000;
 }
 div.able-modal-overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  opacity: 0.5;
-  margin: 0;
-  padding: 0;
-  top: 0;
-  left: 0;
-  display: none;
-  z-index: 9500;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.5;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 9500;
 }
 button.modalCloseButton {
-  position: absolute;
-  top: 5px;
-  right: 5px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 button.modal-button {
-  margin-right: 5px;
+    margin-right: 5px;
 }
 div.able-modal-dialog input:hover,
 div.able-modal-dialog input:focus,
 div.able-modal-dialog button:hover,
 div.able-modal-dialog button:focus {
-  outline-style: solid;
-  outline-width: 2px;
+    outline-style: solid;
+    outline-width: 2px;
 }
 div.able-modal-dialog input:hover,
 div.able-modal-dialog button:hover {
-	outline-color: #8AB839; /* green */
+    outline-color: #8ab839; /* green */
 }
 div.able-modal-dialog input:focus,
 div.able-modal-dialog button:focus {
-	outline-color: #ffbb37; /* yellow */
+    outline-color: #ffbb37; /* yellow */
 }
 div.able-modal-dialog h1 {
-  font-weight: bold;
-  font-size: 1.8em;
-  line-height: 1.2em;
-  margin: 0.75em 0;
-  color: #000;
-  text-align: center;
+    font-weight: bold;
+    font-size: 1.8em;
+    line-height: 1.2em;
+    margin: 0.75em 0;
+    color: #000;
+    text-align: center;
 }
 .able-prefs-form,
 .able-help-div,
 .able-resize-form {
-	background-color: #F5F5F5;
-	border: medium solid #ccc;
-	padding: 0.5em 1em;
-	margin: 0 0 0 1em;
-	width: 25em;
-	display: none;
+    background-color: #f5f5f5;
+    border: medium solid #ccc;
+    padding: 0.5em 1em;
+    margin: 0 0 0 1em;
+    width: 25em;
+    display: none;
 }
 
 /*
@@ -611,85 +613,85 @@ div.able-modal-dialog h1 {
 */
 
 .able-prefs-form fieldset {
-  margin-left: 0;
-  padding-left: 0;
-	border: none;
+    margin-left: 0;
+    padding-left: 0;
+    border: none;
 }
 .able-prefs-form legend {
-	color: black;
-	font-weight: bold;
-	font-size: 1.1em;
+    color: black;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 .able-prefs-form fieldset div {
-  display: table;
-  margin-left: 1em;
+    display: table;
+    margin-left: 1em;
 }
 .able-prefs-form fieldset div input {
-  display: table-cell;
-	width: 1em;
-	vertical-align: middle;
+    display: table-cell;
+    width: 1em;
+    vertical-align: middle;
 }
 .able-prefs-form fieldset div label {
-  display: table-cell;
-	padding-left: 0.5em;
+    display: table-cell;
+    padding-left: 0.5em;
 }
 fieldset.able-prefs-keys div {
-  float: left;
-  margin-right: 1em;
+    float: left;
+    margin-right: 1em;
 }
 div.able-desc-pref-prompt {
-  font-weight: bold;
-  font-style: italic;
-  margin-left: 1em !important;
+    font-weight: bold;
+    font-style: italic;
+    margin-left: 1em !important;
 }
 div.able-prefDescFormat > div {
-  margin-left: 1.5em;
+    margin-left: 1.5em;
 }
 .able-prefs-captions label,
 .able-prefs-captions select {
-  display: block;
-  float: left;
-  margin-bottom: 0.25em;
+    display: block;
+    float: left;
+    margin-bottom: 0.25em;
 }
 fieldset.able-prefs-captions label {
-  width: 6em;
-  text-align: right;
-  padding-right: 1em;
+    width: 6em;
+    text-align: right;
+    padding-right: 1em;
 }
 fieldset.able-prefs-captions select {
-  width: 10em;
-  font-size: 0.9em;
-  border-radius: none;
+    width: 10em;
+    font-size: 0.9em;
+    border-radius: none;
 }
 .able-prefs-form div.able-captions-sample {
-  padding: 0.5em;
-  text-align: center;
+    padding: 0.5em;
+    text-align: center;
 }
 .able-prefs-form h2 {
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  font-size: 1.1em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
 }
 .able-prefs-form ul {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 /*
   Keyboard Preferences Dialog
 */
 able-prefs-form-keyboard ul {
-	list-style-type: none;
+    list-style-type: none;
 }
 span.able-modkey-alt,
 span.able-modkey-ctrl,
 span.able-modkey-shift {
-  color: #666;
-  font-style: italic;
+    color: #666;
+    font-style: italic;
 }
 span.able-modkey {
-  font-weight: bold;
-  color: #000;
-  font-size: 1.1em;
+    font-weight: bold;
+    color: #000;
+    font-size: 1.1em;
 }
 
 /*
@@ -697,20 +699,20 @@ span.able-modkey {
 */
 
 .able-resize-form h1 {
-  font-size: 1.15em;
+    font-size: 1.15em;
 }
 .able-resize-form div div {
-  margin: 1em;
+    margin: 1em;
 }
 .able-resize-form label {
-  padding-right: 0.5em;
-  font-weight: bold;
+    padding-right: 0.5em;
+    font-weight: bold;
 }
 .able-resize-form input[type="text"] {
-  font-size: 1em;
+    font-size: 1em;
 }
 .able-resize-form input[readonly] {
-  color: #AAA;
+    color: #aaa;
 }
 
 /*
@@ -718,56 +720,56 @@ span.able-modkey {
 */
 
 .able-window-toolbar {
-  background-color: #464646;
-  min-height: 15px;
-  padding: 10px;
-  border-style: solid;
-  border-width: 0 0 1px 0;
+    background-color: #464646;
+    min-height: 15px;
+    padding: 10px;
+    border-style: solid;
+    border-width: 0 0 1px 0;
 }
 .able-draggable:hover {
-  cursor: move;
+    cursor: move;
 }
 .able-window-toolbar .able-button-handler-preferences {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 1.5em;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  padding: 0;
-  z-index: 9300;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5em;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    z-index: 9300;
 }
 .able-window-toolbar .able-button-handler-preferences:hover,
 .able-window-toolbar .able-button-handler-preferences:focus {
-  outline-style: solid;
-  outline-width: medium;
+    outline-style: solid;
+    outline-width: medium;
 }
 .able-window-toolbar .able-button-handler-preferences:hover {
-	outline-color: #8AB839 !important; /* green */
+    outline-color: #8ab839 !important; /* green */
 }
 .able-window-toolbar .able-button-handler-preferences:focus {
-	outline-color: #ffbb37 !important; /* yellow */
+    outline-color: #ffbb37 !important; /* yellow */
 }
 .able-window-toolbar .able-popup {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
 }
 .able-drag {
-  border: 2px dashed #F90;
-  cursor: move;
+    border: 2px dashed #f90;
+    cursor: move;
 }
 .able-resizable {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  padding: 5px 2px;
-  bottom: 0;
-  right: 0;
-  cursor: nwse-resize;
-  background: transparent url('../images/wingrip.png') no-repeat;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    padding: 5px 2px;
+    bottom: 0;
+    right: 0;
+    cursor: nwse-resize;
+    background: transparent url('../images/wingrip.png') no-repeat;
 }
 
 /*
@@ -775,16 +777,16 @@ span.able-modkey {
 */
 
 .able-sign-window {
-  position: relative;
-  margin: 1em;
-  /* max-width: 100%; */
-  z-index: 8000;
+    position: relative;
+    margin: 1em;
+    /* max-width: 100%; */
+    z-index: 8000;
 }
 .able-sign-window video {
-  width: 100%;
+    width: 100%;
 }
 .able-sign-window:focus {
-  outline: none;
+    outline: none;
 }
 
 
@@ -792,49 +794,48 @@ span.able-modkey {
   External chapters div
 */
 div.able-chapters-div {
-  padding: 0;
+    padding: 0;
 }
 div.able-chapters-div .able-chapters-heading {
-  margin: 1em 0.75em;
-  font-size: 1.1em;
-  font-weight: bold;
+    margin: 1em 0.75em;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 div.able-chapters-div ul {
-  list-style-type: none;
-  padding-left: 0;
+    list-style-type: none;
+    padding-left: 0;
 }
 div.able-chapters-div ul li {
-  max-width: 100%;
-  padding: 0;
-  height: 2em;
+    max-width: 100%;
+    padding: 0;
+    height: 2em;
 }
 div.able-chapters-div button {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background-color: transparent;
-  color: #000;
-  font-size: 1em;
-  text-align: left;
-  padding: 0.15em 1em;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    font-size: 1em;
+    text-align: left;
+    padding: 0.15em 1em;
 }
 div.able-chapters-div li.able-current-chapter {
-  background-color: #000 !important;
+    background-color: #000 !important;
 }
 div.able-chapters-div li.able-current-chapter button {
-  color: #FFF !important;
+    color: #fff !important;
 }
 div.able-chapters-div li.able-focus {
-  background-color: #4C4C4C;
+    background-color: #4c4c4c;
 }
 div.able-chapters-div button:focus,
 div.able-chapters-div button:hover,
 div.able-chapters-div button::-moz-focus-inner {
-  border: 0;
-  outline: none;
-  color: #FFF !important;
+    border: 0;
+    outline: none;
+    color: #fff !important;
 }
-
 
 
 /*
@@ -883,65 +884,66 @@ div.able-chapters-div button::-moz-focus-inner {
   Tooltips & Alerts
 */
 
-.able-tooltip, .able-alert {
-  position: absolute;
-  padding: 5px 10px;
-  border-color: black;
-  border-width: 1px;
-  color: #000 !important;
-  background-color: #CCCCCC;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  display: block;
+.able-tooltip,
+.able-alert {
+    position: absolute;
+    padding: 5px 10px;
+    border-color: black;
+    border-width: 1px;
+    color: #000 !important;
+    background-color: #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    display: block;
 }
 .able-alert {
-  background-color: #FFFFCC;
-  box-shadow: 0px 0px 16px #262626;
-  z-index: 9400;
+    background-color: #ffc;
+    box-shadow: 0 0 16px #262626;
+    z-index: 9400;
 }
 .able-popup {
-  z-index: 9200;
+    z-index: 9200;
 }
 .able-tooltip {
-  z-index: 9000;
+    z-index: 9000;
 }
 
 /*
   Popup Menus
 */
 .able-popup {
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  border-color: black;
-  border-width: 1px;
-  background-color: #000;
-  opacity: 0.85;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  display: block;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border-color: black;
+    border-width: 1px;
+    background-color: #000;
+    opacity: 0.85;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    display: block;
 }
 .able-popup ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 .able-popup li {
-  padding: 0.25em 1em 0.25em 0.25em;
-  margin: 1px;
+    padding: 0.25em 1em 0.25em 0.25em;
+    margin: 1px;
 }
 .able-popup label {
-  padding-left: 0.25em;
-  color: #FFF;
+    padding-left: 0.25em;
+    color: #fff;
 }
 .able-popup li.able-focus {
-  background-color: #CCC;
-  color: #000;
+    background-color: #ccc;
+    color: #000;
 }
 .able-popup li.able-focus label {
-  color: #000;
+    color: #000;
 }
 
 /*
@@ -949,9 +951,8 @@ div.able-chapters-div button::-moz-focus-inner {
   e.g., chapters and preferences
 */
 .able-popup-no-radio > ul > li > input {
-  position: absolute !important;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important; /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
 }
 
 /*
@@ -959,63 +960,62 @@ div.able-chapters-div button::-moz-focus-inner {
 */
 
 .able-transcript-area {
-  border-width: 1px;
-  border-style: solid;
-  /*height: 400px;*/
-  height: auto;
-  z-index: 7000;
-  outline: none;
+    border-width: 1px;
+    border-style: solid;
+    /*height: 400px;*/
+    height: auto;
+    z-index: 7000;
+    outline: none;
 }
 .able-transcript {
-	position: relative; /* must be positioned for scrolling */
-  overflow-y: scroll;
-  padding-left: 5%;
-  padding-right: 5%;
-  /* width: 90%; */
-  background-color: #FFF;
-  height: 350px;
+    position: relative; /* must be positioned for scrolling */
+    overflow-y: scroll;
+    padding-left: 5%;
+    padding-right: 5%;
+    /* width: 90%; */
+    background-color: #fff;
+    height: 350px;
 }
 .able-transcript div {
-	margin: 1em 0;
+    margin: 1em 0;
 }
 .able-transcript-heading {
-  font-size: 1.4em;
-  font-weight: bold;
+    font-size: 1.4em;
+    font-weight: bold;
 }
 .able-transcript-chapter-heading {
-  font-size: 1.2em;
-  font-weight: bold;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 .able-transcript div.able-transcript-desc {
-	background-color: #FEE;
-	border: thin solid #336;
-	font-style: italic;
-	padding: 1em;
+    background-color: #fee;
+    border: thin solid #336;
+    font-style: italic;
+    padding: 1em;
 }
 .able-transcript .able-unspoken {
-	font-weight: bold;
+    font-weight: bold;
 }
 .able-transcript .able-hidden {
-	position: absolute !important;
-	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-	clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important; /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
 }
 .able-highlight {
-	background: #FF6; /* light yellow */
+    background: #ff6; /* light yellow */
 }
 .able-previous {
-	background: black !important;
-	font-style: italic;
+    background: black !important;
+    font-style: italic;
 }
 .able-transcript span:hover,
 .able-transcript span:focus,
 .able-transcript span:active {
-	background: #CF6; /* light green */
-	cursor: pointer;
+    background: #cf6; /* light green */
+    cursor: pointer;
 }
 .able-window-toolbar label {
-  margin-right: 10px;
-  color: #FFF;
+    margin-right: 10px;
+    color: #fff;
 }
 .able-window-toolbar input:focus,
 .able-window-toolbar input:hover,
@@ -1025,24 +1025,24 @@ div.able-chapters-div button::-moz-focus-inner {
 .able-controller button:hover,
 .able-seekbar-head:focus,
 .able-seekbar-head:hover {
-  outline-style: solid;
-  outline-width: 2px;
+    outline-style: solid;
+    outline-width: 2px;
 }
 .able-window-toolbar input:focus,
 .able-controller input:focus,
 .able-controller button:focus,
 .able-seekbar-head:focus {
-	outline-color: #ffbb37; /* yellow */
+    outline-color: #ffbb37; /* yellow */
 }
 .able-window-toolbar input:hover,
 .able-controller input:hover,
 .able-controller button:hover,
 .able-seekbar-head:hover {
-	outline-color: #8AB839; /* green */
+    outline-color: #8ab839; /* green */
 }
 .able-window-toolbar .transcript-language-select-wrapper {
-  /*float: right;*/
-  padding-right: 30px;
+    /*float: right;*/
+    padding-right: 30px;
 }
 
 /*
@@ -1050,35 +1050,35 @@ div.able-chapters-div button::-moz-focus-inner {
 */
 
 .able-player .able-playlist {
-	font-size: 0.9em;
-	list-style-type: none;
-	margin: 0;
-	background-color: #FFFFFF;
-	padding: 5px 0;
+    font-size: 0.9em;
+    list-style-type: none;
+    margin: 0;
+    background-color: #fff;
+    padding: 5px 0;
 }
 .able-player .able-playlist li {
-	background-color: #DDDDDD; /* default background color of each item in playlist */
-	margin: 5px;
-	padding: 5px 10px;
-	border-radius: 15px;
-	-moz-border-radius: 15px;
+    background-color: #ddd; /* default background color of each item in playlist */
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
 }
 .able-player .able-playlist li:hover,
 .able-player .able-playlist li:focus,
 .able-player .able-playlist li:active { /* playlist items when they have mouse or keyboard focus */
-	color: #FFFFFF;
-	background-color: #340449;
-	text-decoration: none;
+    color: #fff;
+    background-color: #340449;
+    text-decoration: none;
 }
 .able-player .able-playlist li.able-current { /* currently selected playlist item */
-	color: #000000;
-	background-color: #FFEEB3;
-	font-weight: bold;
-	outline: none;
-	text-decoration: none;
+    color: #000;
+    background-color: #ffeeb3;
+    font-weight: bold;
+    outline: none;
+    text-decoration: none;
 }
 .able-player .able-playlist li.able-current:after {
-	content: ' *';
+    content: ' *';
 }
 
 /*
@@ -1092,16 +1092,16 @@ div.able-chapters-div button::-moz-focus-inner {
 .able-playlist li:hover,
 .able-playlist li:focus,
 .able-playlist li:active { /* playlist items when they have mouse or keyboard focus */
-	text-decoration: none;
-	color: white;
-	background-color: black;
+    text-decoration: none;
+    color: white;
+    background-color: black;
 }
 .able-playlist li.able-current { /* currently selected playlist item */
-	font-weight: bold;
-  text-decoration: underline;
+    font-weight: bold;
+    text-decoration: underline;
 }
 .able-playlist li.able-current:after {
-	content: ' *';
+    content: ' *';
 }
 
 /*
@@ -1109,89 +1109,89 @@ div.able-chapters-div button::-moz-focus-inner {
 */
 
 .able-search-results ul li {
-  font-size: 1.1em;
-  margin-bottom: 1em;
+    font-size: 1.1em;
+    margin-bottom: 1em;
 }
 .able-search-results-time {
-  font-weight: bold;
-  text-decoration: underline;
-  cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
 }
 .able-search-results-time:hover,
 .able-search-results-time:focus,
 .able-search-results-time:active {
-  color: #FFF;
-  background-color: #000;
-  text-decoration: none;
+    color: #fff;
+    background-color: #000;
+    text-decoration: none;
 }
 .able-search-results-text {
-  padding-left: 1em;
+    padding-left: 1em;
 }
 .able-search-term {
-	background-color: #FFC;
-	font-weight: bold;
+    background-color: #ffc;
+    font-weight: bold;
 }
 
 /*
   Misc
 */
 
-.able-clipped, .able-screenreader-alert {
-	/* hide from sighted users, but not screen reader users */
-	position: absolute !important;
-	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* additional rules are needed to ensure clipped buttons are truly invisible in Safari on Mac OS X */
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
+.able-clipped,
+.able-screenreader-alert {
+    /* hide from sighted users, but not screen reader users */
+    position: absolute !important; /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    /* additional rules are needed to ensure clipped buttons are truly invisible in Safari on Mac OS X */
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
 }
 .able-error {
-	display: block;
-	background: #ffc;
-	border: 2px solid #000;
-	color: #FF0000;
-	margin: 0.75em;
-	padding: 0.5em;
+    display: block;
+    background: #ffc;
+    border: 2px solid #000;
+    color: #f00;
+    margin: 0.75em;
+    padding: 0.5em;
 }
 .able-fallback {
-  display: block;
-  text-align: center;
-  border: 2px solid #333355;
-  background-color: #EEE;
-  color: #000;
-  font-weight: bold;
-  font-size: 1.1em;
-  padding: 1em;
-  margin-bottom: 1em;
-  max-width: 500px;
-  width: 95%;
+    display: block;
+    text-align: center;
+    border: 2px solid #335;
+    background-color: #eee;
+    color: #000;
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 1em;
+    margin-bottom: 1em;
+    max-width: 500px;
+    width: 95%;
 }
 .able-fallback div,
 .able-fallback ul,
 .able-fallback p {
-  text-align: left;
+    text-align: left;
 }
-.able-fallback li  {
-  font-weight: normal;
+.able-fallback li {
+    font-weight: normal;
 }
 .able-fallback img {
-  width: 90%;
-  margin: 1em auto;
-  opacity: 0.3;
+    width: 90%;
+    margin: 1em auto;
+    opacity: 0.3;
 }
 .able-fallback img.able-poster {
-  position: relative;
+    position: relative;
 }
 
 /*
   SVG Icons
 */
 button svg {
-	display: inline-block;
-	width: 1em;
-	height: 1em;
-	fill: currentColor;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
 }
 
 
@@ -1199,29 +1199,31 @@ button svg {
   icomoon.io font styling
 */
 @font-face {
-  font-family: 'able';
-    src:    url('../button-icons/fonts/able.eot?dqripi');
-    src:    url('../button-icons/fonts/able.eot?dqripi#iefix') format('embedded-opentype'),
+    font-family: 'able';
+    src: url('../button-icons/fonts/able.eot?dqripi');
+    src:
+        url('../button-icons/fonts/able.eot?dqripi#iefix') format('embedded-opentype'),
         url('../button-icons/fonts/able.ttf?dqripi') format('truetype'),
         url('../button-icons/fonts/able.woff?dqripi') format('woff'),
         url('../button-icons/fonts/able.svg?dqripi#able') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-weight: normal;
+    font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'able' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  background-image: none;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'able' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    background-image: none;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-play:before {
@@ -1314,5 +1316,4 @@ button svg {
 .icon-help:before {
     content: "\f128";
 }
-
 
