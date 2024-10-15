@@ -150,13 +150,12 @@
     display: none; /* not currently used for video */
 }
 .able-controller {
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;         /* Full width of the player */
     z-index: 10000;      /* Ensure it's above other elements */
     border-top: 2px solid var(--able-bg-color2);
-    border-bottom: 2px solid var(--able-bg-color2);
     background-color: var(--able-bg-color2); /* background color of controller bar */
     min-height: 38px; /* height of button (20px) + 4px border + 4px padding */
     padding: 0;
