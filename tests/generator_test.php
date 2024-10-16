@@ -20,11 +20,11 @@ namespace mod_ableplayer;
  * Generator tests class.
  *
  * @package    mod_ableplayer
- * @copyright  2013 Frédéric Massart
+ * @copyright  2024 Wunderbyte GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \mod_ableplayer_generator::create_instance
  */
 class generator_test extends \advanced_testcase {
-
     public function test_create_instance() {
         global $DB;
         $this->resetAfterTest();
@@ -32,16 +32,16 @@ class generator_test extends \advanced_testcase {
 
         $course = $this->getDataGenerator()->create_course();
 
-        $this->assertFalse($DB->record_exists('ableplayer', array('course' => $course->id)));
-        $ableplayer = $this->getDataGenerator()->create_module('ableplayer', array('course' => $course->id));
-        $this->assertEquals(1, $DB->count_records('ableplayer', array('course' => $course->id)));
-        $this->assertTrue($DB->record_exists('ableplayer', array('course' => $course->id, 'id' => $ableplayer->id)));
+        $this->assertFalse($DB->record_exists('ableplayer', ['course' => $course->id]));
+        $ableplayer = $this->getDataGenerator()->create_module('ableplayer', ['course' => $course->id]);
+        $this->assertEquals(1, $DB->count_records('ableplayer', ['course' => $course->id]));
+        $this->assertTrue($DB->record_exists('ableplayer', ['course' => $course->id, 'id' => $ableplayer->id]));
 
-        $params = array('course' => $course->id, 'name' => 'One more ableplayer');
+        $params = ['course' => $course->id, 'name' => 'One more ableplayer'];
         $ableplayer = $this->getDataGenerator()->create_module('ableplayer', $params);
-        $this->assertEquals(2, $DB->count_records('ableplayer', array('course' => $course->id)));
-        $this->assertEquals('One more ableplayer', $DB->get_field_select('ableplayer', 'name', 'id = :id', array('id' => $ableplayer->id)));
+        $this->assertEquals(2, $DB->count_records('ableplayer', ['course' => $course->id]));
+        $this->assertEquals('One more ableplayer', $DB->get_field_select('ableplayer', 'name', 'id = :id', [
+            'id' => $ableplayer->id,
+        ]));
     }
-
-
 }

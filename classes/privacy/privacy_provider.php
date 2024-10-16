@@ -58,7 +58,7 @@ class provider implements
                 'mode' => 'privacy:metadata:ableplayer:mode',
                 'lang' => 'privacy:metadata:ableplayer:lang',
                 'timecreated' => 'privacy:metadata:ableplayer:timecreated',
-                'timemodified' => 'privacy:metadata:ableplayer:timemodified'
+                'timemodified' => 'privacy:metadata:ableplayer:timemodified',
             ],
             'privacy:metadata:ableplayer'
         );
@@ -68,7 +68,7 @@ class provider implements
             'ableplayer_media',
             [
                 'ableplayerid' => 'privacy:metadata:ableplayer_media:ableplayerid',
-                'url' => 'privacy:metadata:ableplayer_media:url'
+                'url' => 'privacy:metadata:ableplayer_media:url',
             ],
             'privacy:metadata:ableplayer_media'
         );
@@ -77,7 +77,7 @@ class provider implements
         $collection->add_database_table(
             'ableplayer_desc',
             [
-                'ableplayerid' => 'privacy:metadata:ableplayer_desc:ableplayerid'
+                'ableplayerid' => 'privacy:metadata:ableplayer_desc:ableplayerid',
             ],
             'privacy:metadata:ableplayer_desc'
         );
@@ -89,7 +89,7 @@ class provider implements
                 'ableplayerid' => 'privacy:metadata:ableplayer_caption:ableplayerid',
                 'label' => 'privacy:metadata:ableplayer_caption:label',
                 'kind' => 'privacy:metadata:ableplayer_caption:kind',
-                'srclang' => 'privacy:metadata:ableplayer_caption:srclang'
+                'srclang' => 'privacy:metadata:ableplayer_caption:srclang',
             ],
             'privacy:metadata:ableplayer_caption'
         );

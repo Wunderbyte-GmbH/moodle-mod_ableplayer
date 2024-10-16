@@ -226,7 +226,15 @@ function ableplayer_print_recent_activity(stdClass $course, stdClass $viewfullna
  * @param int $groupid check for a particular group's activity only, defaults to 0 (all groups)
  * @return void adds items into $activities and increases $index
  */
-function ableplayer_get_recent_mod_activity(array &$activities, int &$index, int $timestart, int $courseid, int $cmid, int $userid = 0, int $groupid = 0) {
+function ableplayer_get_recent_mod_activity(
+    array &$activities,
+    int &$index,
+    int $timestart,
+    int $courseid,
+    int $cmid,
+    int $userid = 0,
+    int $groupid = 0
+) {
 }
 
 /**
@@ -238,7 +246,13 @@ function ableplayer_get_recent_mod_activity(array &$activities, int &$index, int
  * @param stdClass $viewfullnames
  * @return void
  */
-function ableplayer_print_recent_mod_activity(array $activity, int $courseid, stdClass $detail, stdClass $modnames, stdClass $viewfullnames) {
+function ableplayer_print_recent_mod_activity(
+    array $activity,
+    int $courseid,
+    stdClass $detail,
+    stdClass $modnames,
+    stdClass $viewfullnames
+) {
 }
 
 /**
