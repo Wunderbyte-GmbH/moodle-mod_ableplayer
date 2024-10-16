@@ -1,5 +1,5 @@
-@core @core_backup @_file_upload
-Feature: Duplicate ableplayer activity
+@mod @mod_ableplayer @_file_upload
+Feature: Backup Test Descriptions
   In order to set up my course contents quickly
   As a teacher with editing permissions
   I need to duplicate activities inside the same course

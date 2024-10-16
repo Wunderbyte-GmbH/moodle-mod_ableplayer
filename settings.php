@@ -26,9 +26,17 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/ableplayer/lib.php');
 
-$ADMIN->add('modsettings', new admin_category('modableplayer', new lang_string('pluginname', 'mod_ableplayer'), $module->is_enabled() === false));
+$ADMIN->add(
+    'modsettings',
+    new admin_category('modableplayer', new lang_string('pluginname', 'mod_ableplayer'), $module->is_enabled() === false)
+);
 
-$settings = new admin_settingpage($section, get_string('settings', 'mod_ableplayer'), 'moodle/site:config', $module->is_enabled() === false);
+$settings = new admin_settingpage(
+    $section,
+    get_string('settings', 'mod_ableplayer'),
+    'moodle/site:config',
+    $module->is_enabled() === false,
+);
 
 
 if ($ADMIN->fulltree) {

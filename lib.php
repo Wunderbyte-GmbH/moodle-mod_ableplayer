@@ -226,19 +226,33 @@ function ableplayer_print_recent_activity(stdClass $course, stdClass $viewfullna
  * @param int $groupid check for a particular group's activity only, defaults to 0 (all groups)
  * @return void adds items into $activities and increases $index
  */
-function ableplayer_get_recent_mod_activity(array &$activities, int &$index, int $timestart, int $courseid, int $cmid, int $userid = 0, int $groupid = 0) {
+function ableplayer_get_recent_mod_activity(
+    array &$activities,
+    int &$index,
+    int $timestart,
+    int $courseid,
+    int $cmid,
+    int $userid = 0,
+    int $groupid = 0
+) {
 }
 
 /**
  * Prints single activity item prepared by {@see ableplayer_get_recent_mod_activity()}
- * @param array $activities sequentially indexed array of objects with the 'cmid' property
+ * @param array $activity sequentially indexed array of objects with the 'cmid' property
  * @param int $courseid the id of the course we produce the report for
  * @param stdClass $detail
  * @param stdClass $modnames
  * @param stdClass $viewfullnames
  * @return void
  */
-function ableplayer_print_recent_mod_activity(array $activity, int $courseid, stdClass $detail, stdClass $modnames, stdClass $viewfullnames) {
+function ableplayer_print_recent_mod_activity(
+    array $activity,
+    int $courseid,
+    stdClass $detail,
+    stdClass $modnames,
+    stdClass $viewfullnames
+) {
 }
 
 /**
@@ -301,7 +315,7 @@ function ableplayer_scale_used_anywhere($scaleid) {
  * @param ableplayer $ableplayer instance object with extra cmidnumber and modname property
  * @return bool
  */
-function ableplayer_grade_item_update(stdClass $ableplayer) {
+function ableplayer_grade_item_update($ableplayer) {
     return false;
 }
 
@@ -314,7 +328,7 @@ function ableplayer_grade_item_update(stdClass $ableplayer) {
  * @param int $userid update grade of specific user only, 0 means all participants
  * @return bool
  */
-function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
+function ableplayer_update_grades($ableplayer, $userid = 0) {
     return false;
 }
 
@@ -497,7 +511,7 @@ function ableplayer_reset_userdata(stdClass $data) {
  * @param stdClass $module
  * @param cm_info $cm
  */
-function ableplayer_extend_navigation(navigation_node $navref, stdclass $course, stdclass $module, cm_info $cm) {
+function ableplayer_extend_navigation(navigation_node $navref, stdClass $course, stdClass $module, cm_info $cm) {
 }
 
 /**

@@ -15,22 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * mod_ableplayer data generator.
- *
- * @package    mod_ableplayer
- * @category   test
- * @copyright  2013 Frédéric Massart
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-defined('MOODLE_INTERNAL') || die();
-
-/**
  * mod_ableplayer data generator class.
  *
  * @package    mod_ableplayer
  * @category   test
- * @copyright  2013 Frédéric Massart
+ * @copyright  2024 Wunderbyte GmbH
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_ableplayer_generator extends testing_module_generator {
@@ -55,7 +44,7 @@ class mod_ableplayer_generator extends testing_module_generator {
      * @param array|null $options
      * @return stdClass
      */
-    public function create_instance($record = null, array $options = null) {
+    public function create_instance($record = null, ?array $options = null) {
         global $CFG;
         $record = (object)(array)$record;
 
@@ -66,10 +55,10 @@ class mod_ableplayer_generator extends testing_module_generator {
         $record->mode = isset($record->mode) ? $record->mode : 'EMPTY';      // Set default mode.
         $record->lang = isset($record->lang) ? $record->lang : 'EMPTY';      // Set default language.
 
-       // Create the basic instance (without the file).
+        // Create the basic instance (without the file).
         $instance = parent::create_instance($record, (array)$options);
 
-       // Check if a media file path is provided in the options.
+        // Check if a media file path is provided in the options.
         if (isset($options['media file'])) {
             $mediafilepath = '/mod/ableplayer/tests/fixtures/deadline.mp4';
             $this->add_file_to_instance($instance->id, $mediafilepath);
@@ -86,6 +75,8 @@ class mod_ableplayer_generator extends testing_module_generator {
      * Add file to the ableplayer instance.
      * @param int $instanceid
      * @param string $filepath
+     * @param string $filearea
+     * @return void
      */
     protected function add_file_to_instance($instanceid, $filepath, $filearea) {
         global $DB, $CFG;
@@ -94,14 +85,14 @@ class mod_ableplayer_generator extends testing_module_generator {
         $fs = get_file_storage();
         $context = context_module::instance($instanceid);
 
-        $filerecord = array(
+        $filerecord = [
             'contextid' => $context->id,
-            'component' => 'ableplayer',  // Your activity module name.
-            'filearea'  => $fielarea,          // File area defined in your plugin.
+            'component' => 'ableplayer', // Your activity module name.
+            'filearea'  => $filearea, // File area defined in your plugin.
             'itemid'    => 0,
             'filepath'  => '/',
-            'filename'  => basename($filepath)
-        );
+            'filename'  => basename($filepath),
+        ];
 
         // Get the file from fixtures and add it to the activity.
         $fullpath = $CFG->dirroot . $filepath;

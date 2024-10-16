@@ -154,7 +154,6 @@ class mod_ableplayer_mod_form extends moodleform_mod {
             true                    // Allow deletion of repeated elements.
         );
 
-
         // Captions.
         $mform->addElement('header', 'ableplayercaptions', get_string('ableplayercaptions', 'ableplayer'));
         $repeatarray = [];
