@@ -55,10 +55,10 @@ class mod_ableplayer_generator extends testing_module_generator {
         $record->mode = isset($record->mode) ? $record->mode : 'EMPTY';      // Set default mode.
         $record->lang = isset($record->lang) ? $record->lang : 'EMPTY';      // Set default language.
 
-       // Create the basic instance (without the file).
+        // Create the basic instance (without the file).
         $instance = parent::create_instance($record, (array)$options);
 
-       // Check if a media file path is provided in the options.
+        // Check if a media file path is provided in the options.
         if (isset($options['media file'])) {
             $mediafilepath = '/mod/ableplayer/tests/fixtures/deadline.mp4';
             $this->add_file_to_instance($instance->id, $mediafilepath);
@@ -75,6 +75,8 @@ class mod_ableplayer_generator extends testing_module_generator {
      * Add file to the ableplayer instance.
      * @param int $instanceid
      * @param string $filepath
+     * @param string $filearea
+     * @return void
      */
     protected function add_file_to_instance($instanceid, $filepath, $filearea) {
         global $DB, $CFG;

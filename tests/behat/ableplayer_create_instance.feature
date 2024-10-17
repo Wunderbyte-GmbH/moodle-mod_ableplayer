@@ -1,5 +1,5 @@
 @mod @mod_ableplayer
-Feature: In a ableplayer instance
+Feature: Create ableplayer instance
   As a teacher with editing permissions
   I need to set up an ableplayer instance
   I should be able to add an activity anywhere in a section

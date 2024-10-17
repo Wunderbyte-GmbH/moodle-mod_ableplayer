@@ -1,5 +1,5 @@
 @mod @mod_ableplayer
-Feature: In a ableplayer instance
+Feature: Check ableplayer instance
   As a student
   I need to check an ableplayer instance
 

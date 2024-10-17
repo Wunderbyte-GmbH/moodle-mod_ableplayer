@@ -331,11 +331,11 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      * HTML.
      *
      * @param int $contextid
-     * @param stored_file $file
+     * @param \stored_file $file
      * @param array $captionsettings
      * @return string HTML
      */
-    private function get_captions_html($contextid, $file, $captionssettings) {
+    private function get_captions_html($contextid, \stored_file $file, array $captionssettings) {
         $output = '';
 
         if ($mimetype = $file->get_mimetype()) {

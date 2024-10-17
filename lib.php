@@ -239,7 +239,7 @@ function ableplayer_get_recent_mod_activity(
 
 /**
  * Prints single activity item prepared by {@see ableplayer_get_recent_mod_activity()}
- * @param array $activities sequentially indexed array of objects with the 'cmid' property
+ * @param array $activity sequentially indexed array of objects with the 'cmid' property
  * @param int $courseid the id of the course we produce the report for
  * @param stdClass $detail
  * @param stdClass $modnames
@@ -315,7 +315,7 @@ function ableplayer_scale_used_anywhere($scaleid) {
  * @param ableplayer $ableplayer instance object with extra cmidnumber and modname property
  * @return bool
  */
-function ableplayer_grade_item_update(stdClass $ableplayer) {
+function ableplayer_grade_item_update($ableplayer) {
     return false;
 }
 
@@ -328,7 +328,7 @@ function ableplayer_grade_item_update(stdClass $ableplayer) {
  * @param int $userid update grade of specific user only, 0 means all participants
  * @return bool
  */
-function ableplayer_update_grades(stdClass $ableplayer, $userid = 0) {
+function ableplayer_update_grades($ableplayer, $userid = 0) {
     return false;
 }
 
@@ -511,7 +511,7 @@ function ableplayer_reset_userdata(stdClass $data) {
  * @param stdClass $module
  * @param cm_info $cm
  */
-function ableplayer_extend_navigation(navigation_node $navref, stdclass $course, stdclass $module, cm_info $cm) {
+function ableplayer_extend_navigation(navigation_node $navref, stdClass $course, stdClass $module, cm_info $cm) {
 }
 
 /**

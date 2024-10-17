@@ -1,5 +1,5 @@
-@core @core_backup @_file_upload
-Feature: Duplicate ableplayer activity
+@mod @mod_ableplayer @_file_upload
+Feature: Backup Test Media
   In order to set up my course contents quickly
   As a teacher with editing permissions
   I need to duplicate activities inside the same course
@@ -50,4 +50,3 @@ Feature: Duplicate ableplayer activity
     And I click on "Settings" "link"
     And I click on "Expand all" "button"
     Then I should see "footballfielddrone.mp4"
-
