@@ -332,7 +332,7 @@ class mod_ableplayer_renderer extends plugin_renderer_base {
      *
      * @param int $contextid
      * @param stored_file $file
-     * @param array $captionsettings
+     * @param array $captionssettings
      * @return string HTML
      */
     private function get_captions_html($contextid, stored_file $file, array $captionssettings) {
