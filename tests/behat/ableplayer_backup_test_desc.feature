@@ -1,4 +1,4 @@
-@core @core_backup @_file_upload
+@mod @mod_ableplayer @_file_upload
 Feature: Backup Test Descriptions
   In order to set up my course contents quickly
   As a teacher with editing permissions
