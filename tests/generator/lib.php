@@ -66,7 +66,7 @@ class mod_ableplayer_generator extends testing_module_generator {
         // Check if a description file path is provided in the options.
         if (isset($options['captions'])) {
             $captionsfilepath = '/mod/ableplayer/tests/fixtures/sample_description.vtt';
-            $this->add_file_to_instance($instance->id, $captionsfilepath, 'media');
+            $this->add_file_to_instance($instance->id, $captionsfilepath, 'captions');
         }
 
         return $instance;

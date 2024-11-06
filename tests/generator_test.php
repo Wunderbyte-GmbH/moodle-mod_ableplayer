@@ -24,8 +24,16 @@ namespace mod_ableplayer;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers \mod_ableplayer_generator::create_instance
  */
-class generator_test extends \advanced_testcase {
-    public function test_create_instance() {
+final class generator_test extends \advanced_testcase {
+    /**
+     * Test create abplayer instance
+     *
+     * @covers \create_instance
+     *
+     * @return void
+     *
+     */
+    public function test_create_instance(): void {
         global $DB;
         $this->resetAfterTest();
         $this->setAdminUser();
