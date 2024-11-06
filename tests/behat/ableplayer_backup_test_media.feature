@@ -25,18 +25,20 @@ Feature: Backup Test Media
       | mode                                |                                                      |
       | lang                                |                                                      |
       | poster                              |                                                      |
-      | media file[0]                       | /mod/ableplayer/tests/fixtures/footballfielddrone.mp4          |
+      ##| media file[0]                       | /mod/ableplayer/tests/fixtures/footballfielddrone.mp4          |
+      | media file[0]                       | /mod/ableplayer/tests/fixtures/deadline.mp4          |
     And the following config values are set as admin:
       | backup_import_activities | 0 | backup |
 
   @javascript
-  Scenario: Duplicate an ableplayer
+  Scenario: Duplicate an ableplayer - simple
     Given I log in as "teacher1"
     And I am on "Course 1" course homepage with editing mode on
     And I click on "My First Ableplayer" "link" in the "General" "section"
     And I click on "Settings" "link"
     And I click on "Expand all" "button"
-    And I upload "/mod/ableplayer/tests/fixtures/footballfielddrone.mp4" file to "Media file" filemanager
+    ##And I upload "/mod/ableplayer/tests/fixtures/footballfielddrone.mp4" file to "Media file" filemanager
+    And I upload "/mod/ableplayer/tests/fixtures/deadline.mp4" file to "Media file" filemanager
     #And I click on "Media file" "fieldset"
     #And I wait "7" seconds
     #And I set the following fields to these values:
@@ -49,4 +51,5 @@ Feature: Backup Test Media
     And I click on "My First Ableplayer (copy)" "link" in the "General" "section"
     And I click on "Settings" "link"
     And I click on "Expand all" "button"
-    Then I should see "footballfielddrone.mp4"
+    ##Then I should see "footballfielddrone.mp4"
+    Then I should see "deadline.mp4"
