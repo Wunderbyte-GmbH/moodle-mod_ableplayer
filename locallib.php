@@ -546,7 +546,7 @@ class ableplayer {
     protected function save_files($formdata) {
         global $DB;
         // Storage of files from the filemanager (poster).
-        $draftitemid = $formdata->poster;
+        $draftitemid = $formdata->poster ?? null;
         if ($draftitemid) {
             file_save_draft_area_files(
                 $draftitemid,
