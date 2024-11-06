@@ -127,7 +127,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: ${{ matrix.extensions }}
-          ini-values: max_input_vars=5000
+          ini-values: max_input_vars=5000, post_max_size=30M, upload_max_filesize = 30M
           coverage: none
 
       - name: Initialise moodle-plugin-ci
