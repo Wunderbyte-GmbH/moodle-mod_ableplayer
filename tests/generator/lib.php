@@ -52,8 +52,8 @@ class mod_ableplayer_generator extends testing_module_generator {
         $record->course = isset($record->course) ? $record->course : $this->courseid;
         $record->name = isset($record->name) ? $record->name : 'Test AblePlayer';
         $record->playlist = isset($record->playlist) ? $record->playlist : 0; // Default to 0 if not provided.
-        $record->mode = isset($record->mode) ? $record->mode : 'EMPTY';      // Set default mode.
-        $record->lang = isset($record->lang) ? $record->lang : 'EMPTY';      // Set default language.
+        $record->mode = isset($record->mode) ? $record->mode : '';      // Set default mode.
+        $record->lang = isset($record->lang) ? $record->lang : '';      // Set default language.
 
         // Create the basic instance (without the file).
         $instance = parent::create_instance($record, (array)$options);
@@ -61,12 +61,12 @@ class mod_ableplayer_generator extends testing_module_generator {
         // Check if a media file path is provided in the options.
         if (isset($options['media file'])) {
             $mediafilepath = '/mod/ableplayer/tests/fixtures/deadline.mp4';
-            $this->add_file_to_instance($instance->id, $mediafilepath);
+            $this->add_file_to_instance($instance->id, $mediafilepath, 'media');
         }
         // Check if a description file path is provided in the options.
         if (isset($options['captions'])) {
             $captionsfilepath = '/mod/ableplayer/tests/fixtures/sample_description.vtt';
-            $this->add_file_to_instance($instance->id, $captionsfilepath);
+            $this->add_file_to_instance($instance->id, $captionsfilepath, 'media');
         }
 
         return $instance;
