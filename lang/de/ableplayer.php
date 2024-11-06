@@ -27,16 +27,16 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['ableplayer'] = 'AblePlayer hinzufügen';
 $string['ableplayer:addinstance'] = 'Eine neue AblePlayer-Instanz hinzufügen';
-$string['ableplayer:addinstance'] = 'AblePlayer hinzufügen';
 $string['ableplayercaptions'] = 'Untertitel';
 $string['ableplayercaptions_help'] = 'Hilfe zu Untertiteln';
 $string['ableplayerdescriptionfile'] = 'Beschreibung Datei';
 $string['ableplayergeneral'] = 'Allgemeine Einstellungen';
-$string['ableplayername'] = 'AblePlayer Name';
-$string['ableplayername_help'] = 'Dies ist der Inhalt des Tooltip-Hilfetextes, der dem Feld "AblePlayer Name" zugeordnet ist.';
 $string['ableplayermedia'] = 'Mediendatei';
 $string['ableplayermediaurl'] = 'Medien-URL';
+$string['ableplayername'] = 'AblePlayer Name';
+$string['ableplayername_help'] = 'Dies ist der Inhalt des Tooltip-Hilfetextes, der dem Feld "AblePlayer Name" zugeordnet ist.';
 $string['bgcolor1'] = 'Dunkel';
 $string['bgcolor1_desc'] = 'Hintergrundfarbe';
 $string['bgcolor2'] = 'Standard';

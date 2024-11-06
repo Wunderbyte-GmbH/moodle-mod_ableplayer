@@ -27,16 +27,16 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['ableplayer'] = 'Add AblePlayer';
 $string['ableplayer:addinstance'] = 'Add a new Able Player instance';
-$string['ableplayer:addinstance'] = 'Add AblePlayer';
 $string['ableplayercaptions'] = 'Captions';
 $string['ableplayercaptions_help'] = 'Captions help';
 $string['ableplayerdescriptionfile'] = 'Description file';
 $string['ableplayergeneral'] = 'General settings';
-$string['ableplayername'] = 'AblePlayer name';
-$string['ableplayername_help'] = 'This is the content of the help tooltip associated with the ableplayername field.';
 $string['ableplayermedia'] = 'Media file';
 $string['ableplayermediaurl'] = 'Media URL';
+$string['ableplayername'] = 'AblePlayer name';
+$string['ableplayername_help'] = 'This is the content of the help tooltip associated with the ableplayername field.';
 $string['bgcolor1'] = 'Dark';
 $string['bgcolor1_desc'] = 'Background colour';
 $string['bgcolor2'] = 'Standard';
