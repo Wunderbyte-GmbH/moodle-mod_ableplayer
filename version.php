@@ -27,6 +27,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2024110500;       // If version == 0 then module will not be installed.
+$plugin->version   = 2024110700;       // If version == 0 then module will not be installed.
 $plugin->requires  = 2022112800;      // Requires this Moodle version.
 $plugin->component = 'mod_ableplayer'; // To check on upgrade, that module sits in correct place.
