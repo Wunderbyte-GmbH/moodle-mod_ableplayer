@@ -1,4 +1,4 @@
-AblePlayer for Moodle 3.x
+AblePlayer for Moodle 3.x and upwards
 (A video player module)
 
 This module is a lightweight version of MPlayer. It is based on the AblePlayer.
@@ -15,12 +15,3 @@ it to just 'ableplayer'.
 
 More info can be found in the docs here:
 http://docs.moodle.org/30/en/Installing_contributed_modules_or_plugins
-
-
- * BUGS / ISSUES / TODO *
-
-https://github.com/t6nis/moodle-mod_ableplayer/issues
-
- * HOMEPAGE *
-
-https://github.com/t6nis/moodle-mod_ableplayer
