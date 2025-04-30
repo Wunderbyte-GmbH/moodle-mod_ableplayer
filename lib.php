@@ -202,11 +202,11 @@ function ableplayer_user_complete($course, $user, $mod, $ableplayer) {
  * that has occurred in ableplayer activities and print it out.
  * Return true if there was output, or false is there was none.
  * @param stdClass $course
- * @param stdClass $viewfullnames
+ * @param bool $viewfullnames
  * @param int $timestart
  * @return boolean
  */
-function ableplayer_print_recent_activity(stdClass $course, stdClass $viewfullnames, int $timestart) {
+function ableplayer_print_recent_activity(stdClass $course, bool $viewfullnames, int $timestart) {
     return false;  // True if anything was printed, otherwise false.
 }
 
